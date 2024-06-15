@@ -304,7 +304,9 @@ PRODUCT_PACKAGES += \
     NfcOverlayRodin \
     SettingsResOverlayRodin \
     SettingsProviderResOverlayRodin \
-    SystemUIOverlayRodin
+    SystemUIOverlayRodin \
+    TetheringResOverlayRodin \
+    WifiResOverlayRodin
 
 # Parts
 PRODUCT_PACKAGES += \
