@@ -325,6 +325,7 @@ $(call inherit-product, hardware/mediatek/overlay/mssi.mk)
 PRODUCT_PACKAGES += \
     FrameworksResOverlayRodin \
     FrameworksResOverlayRodinIN \
+    FrameworksSettingsLib \
     NfcOverlayRodin \
     SettingsResOverlayRodin \
     SettingsProviderResOverlayRodin \
