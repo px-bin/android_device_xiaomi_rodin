@@ -157,6 +157,7 @@ BOARD_KERNEL_CMDLINE += kasan=off
 BOARD_KERNEL_CMDLINE += sysctl.kernel.sched_pelt_multiplier=4
 BOARD_KERNEL_CMDLINE += cgroup.memory=nokmem
 BOARD_KERNEL_CMDLINE += cgroup_disable=memory
+BOARD_KERNEL_CMDLINE += androidboot.console=0
 
 BOARD_BOOT_HEADER_VERSION := 4
 
