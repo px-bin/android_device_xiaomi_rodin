@@ -265,7 +265,7 @@ vendor/lib64/vendor.mediatek.hardware.bluetooth.audio@2.2.so
 vendor/etc/init/init.bt_drv.rc
 vendor/firmware/BT_FW.cfg
 
-# Camera
+# SQLite Modules
 odm/bin/crossbuild/DataSet/SQLiteModule/db/ae/mt6899/ParameterDB_ae.db;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/ae/ParameterDB_ae.db;MAKE_COPY_RULE_ONLY
 odm/bin/crossbuild/DataSet/SQLiteModule/db/af/mt6899/ParameterDB_af.db;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/af/ParameterDB_af.db;MAKE_COPY_RULE_ONLY
 odm/bin/crossbuild/DataSet/SQLiteModule/db/awb/mt6899/ParameterDB_awb.db;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/awb/ParameterDB_awb.db;MAKE_COPY_RULE_ONLY
@@ -311,6 +311,8 @@ odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB/rodinsc820csultra_mipi_raw_
 odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/default_sensor/mt6899/ISP_mapping.db;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/default_sensor/ISP_mapping.db;MAKE_COPY_RULE_ONLY
 odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/default_sensor/mt6899/ISP_param.db;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/default_sensor/ISP_param.db;MAKE_COPY_RULE_ONLY
 odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/mt6899/ISP_info.db;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/tuning_DB_aov/ISP_info.db;MAKE_COPY_RULE_ONLY
+
+# Camera 
 odm/lib64/camera/plugins/capture/com.xiaomi.plugin.arcrawhdr.so
 odm/lib64/camera/plugins/capture/com.xiaomi.plugin.arcsoftsr.so
 odm/lib64/camera/plugins/capture/com.xiaomi.plugin.beautydeformation.so
@@ -918,6 +920,12 @@ odm/lib64/libarcsoft_turbo_fusion_raw_portrait_super_night.so
 odm/lib64/libarcsoft_turbo_fusion_raw_super_night.so
 odm/lib64/libarcsoft_turbo_hdr_detection.so
 odm/lib64/libarcsoft_turbo_sr_detection.so
+
+# Camera Extensions
+system_ext/framework/camerax-vendor-extensions.jar:system/framework/camerax-vendor-extensions.jar;BOOT_JAR
+vendor/etc/permissions/camera_extensions.xml
+vendor/framework/androidx.camera.extensions.impl.jar
+system/app/CameraExtensionsProxy/CameraExtensionsProxy.apk
 
 # Camera-bin
 vendor/bin/camera_cal
