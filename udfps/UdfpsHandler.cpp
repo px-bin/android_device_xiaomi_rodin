@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2022 The LineageOS Project
- *
+ * SPDX-FileCopyrightText: The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -12,8 +11,12 @@
 
 #include <poll.h>
 #include <sys/ioctl.h>
+#include <atomic>
+#include <bitset>
+#include <chrono>
 #include <fstream>
 #include <thread>
+#include <fcntl.h>
 
 #include "UdfpsHandler.h"
 #include "mi_disp.h"
@@ -165,15 +168,31 @@ class XiaomiRodinUdfpsHandler : public UdfpsHandler {
 
                 bool localHbmUiReady = value & LOCAL_HBM_UI_READY;
 
+                // If authentication has already completed, do not re-enable the
+                // FOD NIT even if the display driver fires LOCAL_HBM_UI_READY
+                // late (which happens when the panel finishes waking up after
+                // auth is already done). Sending PARAM_NIT_FOD here in that
+                // case is what causes the FOD circle to reappear and get stuck.
+                if (localHbmUiReady && mAuthCompleted.load()) {
+                    LOG(DEBUG) << "LOCAL_HBM_UI_READY ignored - auth already completed";
+                    mDevice->extCmd(mDevice, COMMAND_NIT, PARAM_NIT_NONE);
+                    continue;
+                }
+
                 mDevice->extCmd(mDevice, COMMAND_NIT,
                                 localHbmUiReady ? PARAM_NIT_FOD : PARAM_NIT_NONE);
             }
         }).detach();
     }
 
-    void onFingerDown(uint32_t /*x*/, uint32_t /*y*/, float /*minor*/, float /*major*/) { setFingerDown(true); }
+    void onFingerDown(uint32_t /*x*/, uint32_t /*y*/, float /*minor*/, float /*major*/) {
+        mAuthCompleted.store(false);
+        setFingerDown(true);
+    }
 
-    void onFingerUp() { setFingerDown(false); }
+    void onFingerUp() {
+        setFingerDown(false);
+    }
 
     void onAcquired(int32_t result, int32_t vendorCode) {
         LOG(DEBUG) << __func__ << " result: " << result << " vendorCode: " << vendorCode;
@@ -198,14 +217,37 @@ class XiaomiRodinUdfpsHandler : public UdfpsHandler {
         }
     }
 
-    void onAuthenticationSucceeded() { onFingerUp(); }
+    void onAuthenticationSucceeded() {
+        // Arm the flag immediately so the background thread suppresses any
+        // LOCAL_HBM_UI_READY NIT_FOD event that fires while we wait.
+        mAuthCompleted.store(true);
 
-    void onAuthenticationFailed() { onFingerUp(); }
+        // The panel may still be mid-wake when auth completes (screen-off
+        // unlock). Sending LHBM_OFF while the panel is in a wake transition
+        // causes the display driver to silently discard the ioctl, leaving the
+        // FOD circle on. A short delay lets the panel finish its wake sequence
+        // so LHBM_OFF lands on a ready panel and is actually processed.
+        // 300 ms comfortably covers the typical panel wake time (~60-80 ms)
+        // without any perceptible delay to the user.
+        std::thread([this]() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
+            onFingerUp();
+        }).detach();
+    }
+
+    void onAuthenticationFailed() {
+        mAuthCompleted.store(false);
+        onFingerUp();
+    }
 
   private:
     fingerprint_device_t* mDevice;
     android::base::unique_fd disp_fd_;
     android::base::unique_fd touch_fd_;
+
+    // Written by HAL callback thread, read by display-event background thread.
+    // Must be atomic to avoid data races.
+    std::atomic<bool> mAuthCompleted{false};
 
     void setFodStatus(int value) {
         ioctl(touch_fd_.get(), TOUCH_IOC_SELECT_TOUCH_ID, MI_DISP_PRIMARY);
