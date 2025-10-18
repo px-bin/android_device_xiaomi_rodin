@@ -18,6 +18,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 # Inherit common MediaTek IMS
 $(call inherit-product, vendor/mediatek/ims/ims.mk)
 
+PRODUCT_PACKAGES += \
+    MinRefreshRateCtrl
+
 # Dolby
 $(call inherit-product-if-exists, hardware/dolby/dolby.mk)
 
@@ -439,4 +442,3 @@ PRODUCT_PRODUCT_PROPERTIES += ro.arm64.memtag.bootctl_supported=0
 
 # Global MTE for all processes ( Match To Stock )
 PRODUCT_PRODUCT_PROPERTIES += persist.arm64.memtag.default=off
-
