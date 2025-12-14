@@ -333,6 +333,7 @@ PRODUCT_PACKAGES += \
     SettingsResOverlayRodin \
     SettingsProviderResOverlayRodin \
     SystemUIOverlayRodin \
+    Launcher3DeviceOverlay \
     TetheringConfigOverlay \
     WifiOverlay
 
