@@ -238,6 +238,9 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so')
         .replace_needed('libxlog.so', 'libxlog_stub.so'),
 
+    'vendor/lib64/hw/android.hardware.soundtrigger3-impl.so': blob_fixup()
+        .replace_needed('android.hardware.soundtrigger3-V2-ndk.so', 'android.hardware.soundtrigger3-V3-ndk.so'),
+
     # Codec2
     (
         'vendor/lib64/libcodec2_hidl_plugin.so',
