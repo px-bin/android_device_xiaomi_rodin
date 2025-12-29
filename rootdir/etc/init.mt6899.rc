@@ -228,10 +228,6 @@ on post-fs-data
     # We chown/chmod /mnt/vendor/md_sec again so because mount is run as root + defaults
     chown root system /mnt/vendor/md_sec
     chmod 0771 /mnt/vendor/md_sec
-	
-    # Create Audio HAL data directory
-    mkdir /data/vendor/audiohal 0771 system audio
-    mkdir /data/vendor/audio 0771 system audio
 
     #Create cct mount point
     mkdir /mnt/vendor/cct
@@ -1268,16 +1264,6 @@ on property:sys.boot_completed=1 && property:ro.build.type=user && property:ro.d
 on property:sys.boot_completed=1
     restart android-hardware-media-c2-hal
 
-service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
-    override
-    class hal
-    user audioserver
-    # media gid needed for /dev/fm (radio) and for /data/misc/media (tee)
-    group audio camera drmrpc inet media mediadrm net_bt net_bt_admin net_bw_acct wakelock context_hub system
-    capabilities BLOCK_SUSPEND SYS_NICE
-    # setting RLIMIT_RTPRIO allows binder RT priority inheritance
-    rlimit rtprio 10 10
-    ioprio rt 4
-    task_profiles ProcessCapacityHigh HighPerformance
-    socket audio_hw_socket seqpacket 0666 system system
-    onrestart restart audioserver
+on post-fs-data
+    mkdir /data/vendor/audiohal 0771 system audio
+    mkdir /data/vendor/audio 0771 system audio
