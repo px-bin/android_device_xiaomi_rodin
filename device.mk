@@ -19,7 +19,11 @@ PRODUCT_PACKAGES += \
     MinRefreshRateCtrl
 
 # Dolby
-$(call inherit-product-if-exists, hardware/dolby/dolby.mk)
+ifeq ($(TARGET_SHIPS_DOLBY), true)
+    $(call inherit-product-if-exists, hardware/dolby/dolby.mk)
+    PRODUCT_PACKAGES += \
+        LunarisDolby
+endif
 
 PRODUCT_PACKAGES += \
     LunarisDolby
