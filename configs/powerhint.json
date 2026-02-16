@@ -4,7 +4,6 @@
       "Name": "MemFreq",
       "Path": "/sys/devices/platform/soc/1c00f000.dvfsrc/mtk-dvfsrc-devfreq/devfreq/mtk-dvfsrc-devfreq/userspace/set_freq",
       "Values": [
-        "9999999999",
         "8533000000",
         "7500000000",
         "6378000000",
@@ -118,7 +117,6 @@
       "Name": "CPULittleClusterMaxFreq",
       "Path": "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
       "Values": [
-        "9999999",
         "2100000",
         "2000000",
         "1900000",
@@ -146,7 +144,6 @@
       "Name": "CPULittleClusterMinFreq",
       "Path": "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
       "Values": [
-        "9999999",
         "2100000",
         "2000000",
         "1900000",
@@ -173,7 +170,6 @@
       "Name": "CPUMidClusterMaxFreq",
       "Path": "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq",
       "Values": [
-        "9999999",
         "3000000",
         "2900000",
         "2800000",
@@ -209,7 +205,6 @@
       "Name": "CPUMidClusterMinFreq",
       "Path": "/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq",
       "Values": [
-        "9999999",
         "3000000",
         "2900000",
         "2800000",
@@ -244,7 +239,6 @@
       "Name": "CPUBigClusterMaxFreq",
       "Path": "/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq",
       "Values": [
-        "9999999",
         "3250000",
         "3200000",
         "3100000",
@@ -277,7 +271,6 @@
       "Name": "CPUBigClusterMinFreq",
       "Path": "/sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq",
       "Values": [
-        "9999999",
         "3250000",
         "3200000",
         "3100000",
@@ -340,7 +333,13 @@
     {
       "Name": "CAMUClampBoost",
       "Path": "/dev/cpuctl/camera-daemon/cpu.uclamp.min",
-      "Values": ["100", "75", "50", "25", "0"],
+      "Values": [
+        "100",
+        "75",
+        "50",
+        "25",
+        "0"
+      ],
       "ResetOnInit": true
     },
     {
@@ -373,7 +372,12 @@
     {
       "Name": "GPUBlockBoost",
       "Path": "/sys/kernel/ged/hal/gpu_boost_level",
-      "Values": ["100", "50", "0", "-1"],
+      "Values": [
+        "101",
+        "50",
+        "0",
+        "-1"
+      ],
       "ResetOnInit": true,
       "DefaultIndex": 2
     },
@@ -407,20 +411,74 @@
         "0,1,2,3,4,5,6,7"
       ],
       "Type": "Property"
+    },
+    {
+      "Name": "PowerHALCameraRunning",
+      "Path": "vendor.powerhal.camerarunning",
+      "Values": [
+        "1",
+        "0"
+      ],
+      "Type": "Property",
+      "ResetOnInit": true
+    },
+    {
+      "Name": "LimitFlashCurrent",
+      "Path": "vendor.camera.max_flash_current",
+      "Values": [
+        "100",
+        "1500"
+      ],
+      "ResetOnInit": true,
+      "Type": "Property"
+    },
+    {
+      "Name": "CDCpuset",
+      "Path": "/dev/cpuset/camera-daemon/cpus",
+      "Values": [
+        "0-3",
+        "4-7",
+        "0-7"
+      ],
+      "ResetOnInit": true
+    },
+    {
+      "Name": "CDHighCpusetCpus",
+      "Path": "/dev/cpuset/camera-daemon-high-group/cpus",
+      "Values": [
+        "0-7"
+      ],
+      "ResetOnInit": true
+    },
+    {
+      "Name": "CDMidCpusetCpus",
+      "Path": "/dev/cpuset/camera-daemon-mid-group/cpus",
+      "Values": [
+        "4-7"
+      ],
+      "ResetOnInit": true
+    },
+    {
+      "Name": "CDMidHighCpusetCpus",
+      "Path": "/dev/cpuset/camera-daemon-mid-high-group/cpus",
+      "Values": [
+        "0-6"
+      ],
+      "ResetOnInit": true
     }
   ],
-"Actions": [
+  "Actions": [
     {
       "PowerHint": "INTERACTION",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 1000,
-      "Value": "1300000"
+      "Value": "1000000"
     },
     {
       "PowerHint": "INTERACTION",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 1000,
-      "Value": "1300000"
+      "Value": "2100000"
     },
     {
       "PowerHint": "INTERACTION",
@@ -432,37 +490,67 @@
       "PowerHint": "INTERACTION",
       "Node": "UclampTAMin",
       "Duration": 58,
-      "Value": "40"
+      "Value": "100"
+    },
+    {
+      "PowerHint": "INTERACTION",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 1000,
+      "Value": "2200000"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 5000,
+      "Value": "3250000"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 2000,
-      "Value": "9999999"
+      "Value": "3250000"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 5000,
+      "Value": "3000000"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 2000,
-      "Value": "9999999"
+      "Value": "2900000"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 5000,
+      "Value": "2100000"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 2000,
-      "Value": "9999999"
+      "Value": "2000000"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "MemFreq",
-      "Duration": 2000,
-      "Value": "9999999999"
+      "Duration": 5000,
+      "Value": "8533000000"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "UclampTAMin",
       "Duration": 2000,
       "Value": "100"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "UclampFGMin",
+      "Duration": 2000,
+      "Value": "30"
     },
     {
       "PowerHint": "LAUNCH",
@@ -477,6 +565,30 @@
       "Value": "6"
     },
     {
+      "PowerHint": "LAUNCH",
+      "Node": "TopAppCpuset",
+      "Duration": 2000,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "ForegroundCpuset",
+      "Duration": 2000,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 2000,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 2000,
+      "Value": "51"
+    },
+    {
       "PowerHint": "FIXED_PERFORMANCE",
       "Node": "GpuPwrLevel",
       "Duration": 0,
@@ -484,39 +596,45 @@
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "101"
+    },
+    {
+      "PowerHint": "FIXED_PERFORMANCE",
       "Node": "CPUBigClusterMaxFreq",
       "Duration": 0,
-      "Value": "9999999"
+      "Value": "3250000"
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 0,
-      "Value": "9999999"
+      "Value": "3250000"
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
       "Node": "CPUMidClusterMaxFreq",
       "Duration": 0,
-      "Value": "9999999"
+      "Value": "3000000"
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
-      "Value": "9999999"
+      "Value": "3000000"
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
       "Node": "CPULittleClusterMaxFreq",
       "Duration": 0,
-      "Value": "9999999"
+      "Value": "2100000"
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 0,
-      "Value": "9999999"
+      "Value": "2100000"
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
@@ -526,27 +644,116 @@
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "FIXED_PERFORMANCE",
       "Node": "MemFreq",
       "Duration": 0,
-      "Value": "9999999999"
+      "Value": "8533000000"
     },
     {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CAMUClampBoost",
-      "Duration": 1000,
-      "Value": "100"
+      "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 0,
+      "Value": "51"
     },
     {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "MemFreq",
-      "Duration": 1000,
-      "Value": "9999999999"
+      "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-7"
     },
     {
-      "PowerHint": "CAMERA_LAUNCH",
+      "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "GAME",
+      "Type": "EndHint",
+      "Value": "INTERACTION"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 0,
+      "Value": "2000000"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "2900000"
+    },
+    {
+      "PowerHint": "GAME",
       "Node": "CPUBigClusterMinFreq",
-      "Duration": 1000,
-      "Value": "2200000"
+      "Duration": 0,
+      "Value": "3250000"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "3"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "8533000000"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "40"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "15"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 0,
+      "Value": "51"
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
@@ -580,6 +787,18 @@
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 0,
+      "Value": "1300000"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "4218000000"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "UclampFGMin",
       "Duration": 0,
       "Value": "30"
@@ -592,14 +811,282 @@
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 0,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
       "Type": "EndHint",
       "Value": "INTERACTION"
     },
     {
-      "PowerHint": "ML_ACC",
+      "PowerHint": "LOW_POWER",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2200000"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2000000"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1600000"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "20"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "2068000000"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CAMUClampBoost",
+      "Duration": 1000,
+      "Value": "100"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "MemFreq",
+      "Duration": 1000,
+      "Value": "8533000000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 1000,
+      "Value": "3250000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 1000,
+      "Value": "2200000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 1000,
+      "Value": "3000000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 1000,
+      "Value": "2000000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 1000,
+      "Value": "2100000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 1000,
+      "Value": "1700000"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "GPUBlockBoost",
+      "Duration": 1000,
+      "Value": "101"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "GpuPwrLevel",
+      "Duration": 1000,
+      "Value": "5"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "UclampTAMin",
+      "Duration": 1000,
+      "Value": "100"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "UclampFGMin",
+      "Duration": 1000,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "TopAppCpuset",
+      "Duration": 1000,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "ForegroundCpuset",
+      "Duration": 1000,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 1000,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CDCpuset",
+      "Duration": 1000,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 1000,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 1000,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 1000,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
       "Node": "PMQoSCpuDmaLatency",
-      "Duration": 2000,
+      "Duration": 1000,
       "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "LimitFlashCurrent",
+      "Duration": 1000,
+      "Value": "1500"
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "PowerHALCameraRunning",
+      "Duration": 1000,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 0,
+      "Value": "300000"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "400000"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "1000000"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "757000000"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-2"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 0,
+      "Value": "0-2"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-3"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Type": "EndHint",
+      "Value": "DISPLAY_UPDATE_IMMINENT"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Type": "EndHint",
+      "Value": "INTERACTION"
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
@@ -621,15 +1108,33 @@
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1600000"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 0,
       "Value": "400000"
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2000000"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
       "Value": "400000"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2200000"
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
@@ -644,57 +1149,141 @@
       "Value": "20"
     },
     {
-      "PowerHint": "GAME",
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "1542000000"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
       "Type": "EndHint",
-      "Value": "INTERACTION"
+      "Value": "DISPLAY_UPDATE_IMMINENT"
     },
     {
-      "PowerHint": "GAME",
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "CPULittleClusterMinFreq",
-      "Duration": 0,
-      "Value": "1500000"
+      "Duration": 50,
+      "Value": "2100000"
     },
     {
-      "PowerHint": "GAME",
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
+      "Duration": 50,
       "Value": "2000000"
     },
     {
-      "PowerHint": "GAME",
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "2200000"
+      "Duration": 50,
+      "Value": "2500000"
     },
     {
-      "PowerHint": "GAME",
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 50,
+      "Value": "2100000"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 50,
+      "Value": "3000000"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 50,
+      "Value": "3250000"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "3"
+      "Duration": 50,
+      "Value": "8"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "GPUBlockBoost",
+      "Duration": 50,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "MemFreq",
+      "Duration": 50,
+      "Value": "5480000000"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "UclampTAMin",
+      "Duration": 50,
+      "Value": "40"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 50,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 5000,
+      "Value": "3000000"
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 2000,
-      "Value": "2200000"
+      "Value": "2800000"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 5000,
+      "Value": "2700000"
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 2000,
-      "Value": "2000000"
+      "Value": "2700000"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 5000,
+      "Value": "1900000"
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 2000,
-      "Value": "1500000"
+      "Value": "1700000"
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "MemFreq",
-      "Duration": 2000,
-      "Value": "9999999999"
+      "Duration": 5000,
+      "Value": "7500000000"
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
@@ -703,22 +1292,1174 @@
       "Value": "12"
     },
     {
-      "PowerHint": "LOW_POWER",
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "GPUBlockBoost",
+      "Duration": 2000,
+      "Value": "101"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "UclampTAMin",
+      "Duration": 5000,
+      "Value": "100"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "UclampFGMin",
+      "Duration": 5000,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "TopAppCpuset",
+      "Duration": 5000,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "ForegroundCpuset",
+      "Duration": 5000,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 5000,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 2000,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "CAMUClampBoost",
+      "Duration": 100,
+      "Value": "100"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
       "Node": "CPUBigClusterMaxFreq",
+      "Duration": 100,
+      "Value": "3250000"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 100,
+      "Value": "3250000"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 100,
+      "Value": "3000000"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 100,
+      "Value": "3000000"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 100,
+      "Value": "2100000"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 100,
+      "Value": "2100000"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "MemFreq",
+      "Duration": 100,
+      "Value": "8533000000"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "GPUBlockBoost",
+      "Duration": 100,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "GpuPwrLevel",
+      "Duration": 100,
+      "Value": "5"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "UclampTAMin",
+      "Duration": 100,
+      "Value": "100"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "UclampFGMin",
+      "Duration": 100,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 100,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "MemFreq",
+      "Duration": 1000,
+      "Value": "8533000000"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 1000,
+      "Value": "2500000"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 1000,
+      "Value": "2200000"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 1000,
+      "Value": "1700000"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "GPUBlockBoost",
+      "Duration": 1000,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "GpuPwrLevel",
+      "Duration": 1000,
+      "Value": "8"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "CAMUClampBoost",
+      "Duration": 1000,
+      "Value": "75"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "UclampTAMin",
+      "Duration": 1000,
+      "Value": "40"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 1000,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 3000,
+      "Value": "2200000"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 3000,
+      "Value": "1600000"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 3000,
+      "Value": "1400000"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "CAMUClampBoost",
+      "Duration": 3000,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "GpuPwrLevel",
+      "Duration": 3000,
+      "Value": "12"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 3000,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "CAMUClampBoost",
+      "Duration": 100,
+      "Value": "100"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "MemFreq",
+      "Duration": 100,
+      "Value": "8533000000"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 100,
+      "Value": "2200000"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 100,
+      "Value": "2000000"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 100,
+      "Value": "1500000"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "GPUBlockBoost",
+      "Duration": 100,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "GpuPwrLevel",
+      "Duration": 100,
+      "Value": "8"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "UclampTAMin",
+      "Duration": 100,
+      "Value": "40"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "CDCpuset",
+      "Duration": 100,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 100,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 100,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 100,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 100,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "CAMUClampBoost",
+      "Duration": 100,
+      "Value": "75"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "MemFreq",
+      "Duration": 100,
+      "Value": "5480000000"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 100,
+      "Value": "2000000"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 100,
+      "Value": "1800000"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 100,
+      "Value": "1300000"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "GPUBlockBoost",
+      "Duration": 100,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "GpuPwrLevel",
+      "Duration": 100,
+      "Value": "10"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "UclampTAMin",
+      "Duration": 100,
+      "Value": "40"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "CDCpuset",
+      "Duration": 100,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 100,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 100,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 100,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 100,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "PowerHALCameraRunning",
+      "Duration": 0,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CAMUClampBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "5480000000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2800000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "1400000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2400000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "1200000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1900000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 0,
+      "Value": "800000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "10"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CDCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 0,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 0,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "LimitFlashCurrent",
+      "Duration": 0,
+      "Value": "1500"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "PowerHALCameraRunning",
+      "Duration": 0,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CAMUClampBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "4218000000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2700000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "1200000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CPUMidClusterMaxFreq",
       "Duration": 0,
       "Value": "2200000"
     },
     {
-      "PowerHint": "LOW_POWER",
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "1000000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1800000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 0,
+      "Value": "700000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "12"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CDCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 0,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 0,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "LimitFlashCurrent",
+      "Duration": 0,
+      "Value": "1500"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "PowerHALCameraRunning",
+      "Duration": 0,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CAMUClampBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "3094000000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2500000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "1100000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
       "Node": "CPUMidClusterMaxFreq",
       "Duration": 0,
       "Value": "2000000"
     },
     {
-      "PowerHint": "LOW_POWER",
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "900000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1700000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 0,
+      "Value": "600000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "15"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CDCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 0,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 0,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "LimitFlashCurrent",
+      "Duration": 0,
+      "Value": "1500"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "PowerHALCameraRunning",
+      "Duration": 0,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "CAMUClampBoost",
+      "Duration": 0,
+      "Value": "25"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "2068000000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2200000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1600000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1400000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
       "Node": "GpuPwrLevel",
       "Duration": 0,
       "Value": "20"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "CDCpuset",
+      "Duration": 0,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 0,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "PowerHALCameraRunning",
+      "Duration": 0,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CAMUClampBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "3094000000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2500000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "1100000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2000000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "900000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1700000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 0,
+      "Value": "600000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "15"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CDCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 0,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 0,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "PowerHALCameraRunning",
+      "Duration": 0,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CAMUClampBoost",
+      "Duration": 0,
+      "Value": "75"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "4218000000"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2700000"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "2000000"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CPUMidClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2200000"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "1800000"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1900000"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 0,
+      "Value": "1300000"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "10"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "UclampTAMin",
+      "Duration": 0,
+      "Value": "30"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "UclampFGMin",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "TopAppCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "ForegroundCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "ForegroundWindowCpuset",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CDCpuset",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CDHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-7"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CDMidCpusetCpus",
+      "Duration": 0,
+      "Value": "4-7"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "CDMidHighCpusetCpus",
+      "Duration": 0,
+      "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 0,
+      "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "LimitFlashCurrent",
+      "Duration": 0,
+      "Value": "1500"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "4"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "4218000000"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "1500000"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "1200000"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "GpuPwrLevel",
+      "Duration": 0,
+      "Value": "12"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "MemFreq",
+      "Duration": 0,
+      "Value": "3094000000"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "1100000"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 0,
+      "Value": "900000"
+    },
+    {
+      "PowerHint": "ML_ACC",
+      "Node": "PMQoSCpuDmaLatency",
+      "Duration": 2000,
+      "Value": "51"
     }
   ]
 }

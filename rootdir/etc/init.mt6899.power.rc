@@ -23,6 +23,26 @@ on init
     write /dev/cpuset/system-background/cpus 0-2
     write /dev/cpuset/top-app/cpus 0-7
 
+    # Camera-daemon cpuset groups (fixes: libperfmgr "Failed to write to node" fd=-1)
+    # These groups are referenced by powerhint.json but were not created, causing
+    mkdir /dev/cpuset/camera-daemon-high-group
+    write /dev/cpuset/camera-daemon-high-group/cpus 0-7
+    write /dev/cpuset/camera-daemon-high-group/mems 0
+    chown system system /dev/cpuset/camera-daemon-high-group
+    chmod 0664 /dev/cpuset/camera-daemon-high-group/cpus
+
+    mkdir /dev/cpuset/camera-daemon-mid-high-group
+    write /dev/cpuset/camera-daemon-mid-high-group/cpus 0-6
+    write /dev/cpuset/camera-daemon-mid-high-group/mems 0
+    chown system system /dev/cpuset/camera-daemon-mid-high-group
+    chmod 0664 /dev/cpuset/camera-daemon-mid-high-group/cpus
+
+    mkdir /dev/cpuset/camera-daemon-mid-group
+    write /dev/cpuset/camera-daemon-mid-group/cpus 4-7
+    write /dev/cpuset/camera-daemon-mid-group/mems 0
+    chown system system /dev/cpuset/camera-daemon-mid-group
+    chmod 0664 /dev/cpuset/camera-daemon-mid-group/cpus
+
     setprop dalvik.vm.dex2oat-cpu-set 0,1,2,3,4,5,6
     setprop dalvik.vm.dex2oat-threads 6
 
@@ -102,6 +122,10 @@ on init
     write /dev/cpuctl/camera-daemon/cpu.uclamp.max max
     write /dev/cpuctl/camera-daemon/cpu.uclamp.min 70
     write /dev/cpuctl/camera-daemon/cpu.shares 20480
+
+    # cpu_dma_latency: grant hal_power_default open access (fixes 1,224 fd=-1 write failures)
+    chmod 0660 /dev/cpu_dma_latency
+    chown system system /dev/cpu_dma_latency
 
     # dex2oat tasks
     write /dev/cpuctl/dex2oat/cpu.uclamp.latency_sensitive 0
