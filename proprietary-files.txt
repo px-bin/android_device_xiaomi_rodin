@@ -49,7 +49,6 @@ vendor/lib64/libaurisysdemo.so
 vendor/lib64/libawinicsmartpaparse.so
 vendor/lib64/libbessound_hd_mtk_vendor.so
 vendor/lib64/libblisrc32_vendor.so
-vendor/lib64/libbluetooth_audio_session_aidl_mtk.so
 vendor/lib64/libcvsd_mtk.so
 vendor/lib64/libfsmsmartpaparse.so
 vendor/lib64/libfvaudio.so
@@ -79,15 +78,11 @@ vendor/lib64/libvow_ap_test_vaca_hh.so
 vendor/lib64/libvow_ap_test_vaca_nn.so
 vendor/lib64/libvow_comp_test.so
 vendor/lib64/vendor.mediatek.hardware.audio@6.1.so
-vendor/lib64/vendor.mediatek.hardware.bluetooth.audio-V1-ndk.so
-vendor/lib64/vendor.mediatek.hardware.bluetooth.audio@2.1.so
-vendor/lib64/vendor.mediatek.hardware.bluetooth.audio@2.2.so
 
 # Audio Configs
 vendor/etc/audio_device.xml
 vendor/etc/audio_device_fs.xml
 vendor/etc/audio_em.xml
-vendor/etc/a2dp_in_audio_policy_configuration.xml
 vendor/etc/audio_spatial_db_reduce.xml
 vendor/etc/aurisys_config.xml
 vendor/etc/aurisys_config_hifi3.xml
@@ -250,6 +245,15 @@ vendor/firmware/BT_FW.cfg
 vendor/lib64/libbluetooth_mtk.so
 vendor/lib64/libbluetooth_mtk_pure.so
 vendor/lib64/libbt-vendor.so
+
+# Bluetooth (A2DP)
+vendor/lib64/android.hardware.bluetooth.audio-V4-ndk.so:vendor/lib64/android.hardware.bluetooth.audio-V5-ndk-mtk.so;FIX_SONAME
+vendor/lib64/android.hardware.bluetooth.audio-impl-mediatek.so
+vendor/lib64/hw/audio.bluetooth.default.so
+vendor/lib64/libbluetooth_audio_session_aidl_mtk.so
+vendor/lib64/vendor.mediatek.hardware.bluetooth.audio-V1-ndk.so
+vendor/lib64/vendor.mediatek.hardware.bluetooth.audio@2.1.so
+vendor/lib64/vendor.mediatek.hardware.bluetooth.audio@2.2.so
 
 # Camera
 odm/bin/crossbuild/DataSet/SQLiteModule/db/ae/mt6899/ParameterDB_ae.db;SYMLINK=odm/bin/crossbuild/DataSet/SQLiteModule/db/ae/ParameterDB_ae.db;MAKE_COPY_RULE_ONLY

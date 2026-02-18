@@ -234,12 +234,30 @@ blob_fixups: blob_fixups_user_type = {
 
     # Audio
     'vendor/lib64/hw/audio.primary.mediatek.so': blob_fixup()
+        .replace_needed('android.hardware.audio.effect-V2-ndk.so', 'android.hardware.audio.effect-V3-ndk.so')
         .replace_needed('libalsautils.so', 'libalsautils-v34.so')
         .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so')
         .replace_needed('libxlog.so', 'libxlog_stub.so'),
 
     'vendor/lib64/hw/android.hardware.soundtrigger3-impl.so': blob_fixup()
         .replace_needed('android.hardware.soundtrigger3-V2-ndk.so', 'android.hardware.soundtrigger3-V3-ndk.so'),
+
+    # Bluetooth
+    (
+        'vendor/lib64/hw/audio.primary.mediatek.so',
+        'vendor/lib64/hw/audio.bluetooth.default.so',
+        'vendor/lib64/libbluetooth_audio_session_aidl_mtk.so',
+        'vendor/lib64/android.hardware.bluetooth.audio-impl-mediatek.so',
+    ): blob_fixup()
+        .replace_needed('android.hardware.bluetooth.audio-V4-ndk.so', 'android.hardware.bluetooth.audio-V5-ndk-mtk.so'),
+
+    (
+        'vendor/lib64/hw/audio.bluetooth.default.so',
+        'vendor/lib64/android.hardware.bluetooth.audio-V5-ndk-mtk.so',
+        'vendor/lib64/vendor.mediatek.hardware.bluetooth.audio-V1-ndk.so',
+    ): blob_fixup()
+        .replace_needed('android.hardware.audio.common-V3-ndk.so', 'android.hardware.audio.common-V4-ndk.so'),
+
 
     # Codec2
     (
