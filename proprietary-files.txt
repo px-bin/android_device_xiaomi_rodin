@@ -1778,6 +1778,8 @@ vendor/lib64/vendor.mediatek.hardware.mtkradioex.sim-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.mtkradioex.sim-V2-ndk.so
 vendor/lib64/vendor.mediatek.hardware.mtkradioex.smartratswitch-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.mtkradioex.voice-V1-ndk.so
+vendor/lib64/vendor.mediatek.hardware.netdagent-V1-ndk.so
+vendor/lib64/vendor.mediatek.hardware.netdagent@1.0.so
 vendor/lib64/vendor.mediatek.hardware.rcs-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.rcs@2.0.so
 
@@ -1905,8 +1907,6 @@ odm/etc/device_info_qr_config.yml
 vendor/bin/hw/tetheroffloadservice
 vendor/etc/init/android.hardware.tetheroffload-V1-service.rc
 vendor/etc/vintf/manifest/android.hardware.tetheroffload-V1-service.xml
-vendor/lib64/libforkexecwrap.so
-vendor/lib64/libifcutils_mtk.so
 
 # Touchfeature
 odm/bin/hw/vendor.xiaomi.hw.touchfeature-service
@@ -1968,15 +1968,11 @@ vendor/lib64/libjpegencoder.so:vendor/lib64/libjpegencoder_rodin.so;FIX_SONAME
 vendor/lib64/libultrahdr.so:vendor/lib64/libultrahdr_rodin.so;FIX_SONAME
 
 # WiFi
-vendor/bin/netdagent
 vendor/bin/wlan_assistant
 vendor/etc/init/init.wlan_drv.rc
-vendor/etc/init/netdagent.rc
 vendor/etc/init/wlan_assistant.rc
 vendor/etc/vintf/manifest/CommandService.xml
 vendor/lib64/libwifical.so
 vendor/lib64/libwifinvram.so
 vendor/lib64/libwifinvramdata.so
 vendor/lib64/libwpa_client.so
-vendor/lib64/vendor.mediatek.hardware.netdagent-V1-ndk.so
-vendor/lib64/vendor.mediatek.hardware.netdagent@1.0.so
