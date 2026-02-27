@@ -331,6 +331,11 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/com.nxp.mifare.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/com.nxp.mifare.xml
 
 # Overlays
+
+PRODUCT_ENFORCE_RRO_TARGETS := *
+
+$(call inherit-product, hardware/mediatek/overlay/mssi.mk)
+
 PRODUCT_PACKAGES += \
     FrameworksResOverlayRodin \
     FrameworksResOverlayRodinIN \
@@ -370,6 +375,8 @@ PRODUCT_COPY_FILES += \
 include $(DEVICE_PATH)/vendor_logtag.mk
 
 # Radio
+ENABLE_VENDOR_RIL_SERVICE := true
+
 PRODUCT_PACKAGES += \
     vendor_mdota_symlink
 
