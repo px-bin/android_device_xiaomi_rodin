@@ -32,9 +32,7 @@ from extract_utils.utils import (
 namespace_imports = [
     'device/xiaomi/rodin',
     'hardware/mediatek',
-    'hardware/mediatek/libaedv',
     'hardware/mediatek/libmtkperf_client',
-    'hardware/lineage/compat',
     'hardware/xiaomi',
 ]
 
@@ -81,7 +79,6 @@ lib_fixups: lib_fixups_user_type = {
         'vendor.mediatek.hardware.apuware.apusys-V5-ndk',
         'vendor.mediatek.hardware.videotelephony-V1-ndk',
     ): lib_fixup_vendor_suffix,
-    ('odm/lib64/libMiVideoFilter.so'): lib_fixup_odm_suffix,
 }
 
 blob_fixups: blob_fixups_user_type = {

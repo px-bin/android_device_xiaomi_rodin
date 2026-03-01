@@ -78,7 +78,6 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/interfaces \
     hardware/lineage/interfaces/power-libperfmgr \
     hardware/mediatek \
-    hardware/mediatek/libaedv \
     hardware/mediatek/libmtkperf_client \
     hardware/mediatek/wlan/wifi_hal \
     hardware/xiaomi
@@ -86,6 +85,9 @@ PRODUCT_SOONG_NAMESPACES += \
 # Linker config
 PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += \
     $(DEVICE_PATH)/configs/linker.config.json
+
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/permissions/privapp-permissions-com.xiaomi.settings.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-com.xiaomi.settings.xml
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal
