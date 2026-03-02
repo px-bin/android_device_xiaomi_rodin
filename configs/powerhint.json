@@ -465,20 +465,108 @@
         "0-6"
       ],
       "ResetOnInit": true
+    },
+    {
+      "Name": "GEDDvfsMargin",
+      "Path": "/sys/kernel/ged/hal/dvfs_margin_value",
+      "Values": [
+        "6553599",
+        "1000000",
+        "329234",
+        "50000",
+        "10000",
+        "1000",
+        "138",
+        "120",
+        "110",
+        "20",
+        "1"
+      ],
+      "ResetOnInit": true,
+      "Comments": [
+        "GPU DVFS margin. Range per powercontable.xml: Min=1, Max=6553599, Default=329234.",
+        "Higher = GPU stays at high freq longer (conservative). Lower = drops faster (power saving).",
+        "Values 20/110/120/138 extracted from power_app_cfg.xml gaming app entries.",
+        "6553599=max conservative, 329234=stock default, 138/120/110=gaming, 20=aggressive idle drop, 1=minimum."
+      ]
+    },
+    {
+      "Name": "GEDLoadingDvfsStep",
+      "Path": "/sys/kernel/ged/hal/loading_base_dvfs_step",
+      "Values": [
+        "25855",
+        "10000",
+        "2000",
+        "500",
+        "259",
+        "100",
+        "50",
+        "8",
+        "0"
+      ],
+      "ResetOnInit": true,
+      "Comments": [
+        "GPU loading-based DVFS step. Range per powercontable.xml: Min=0, Max=25855, Default=259.",
+        "Higher = GPU responds more aggressively to load spikes (performance). Lower = smoother, less reactive.",
+        "Value 8 extracted from power_app_cfg.xml gaming app entries (com.tencent.jkchess, com.netmarble.kofg).",
+        "25855=max aggressive, 259=stock default, 8=smooth gaming, 0=minimum step."
+      ]
+    },
+    {
+      "Name": "UFSClkScale",
+      "Path": "/sys/devices/platform/soc/112b0000.ufshci/clkscale/clkscale_control",
+      "Values": [
+        "powerhal_set:0",
+        "powerhal_set:1",
+        "powerhal_set:2"
+      ],
+      "ResetOnInit": true,
+      "Comments": [
+        "UFS clock scaling control from powercontable.xml PERF_RES_IO_UFS_CLKSCALE.",
+        "0=aggressive scaling (best battery), 1=balanced, 2=performance. Default: 0.",
+        "Enabling clkscale=0 during idle/inactive saves significant power."
+      ]
+    },
+    {
+      "Name": "DCSMode",
+      "Path": "/sys/kernel/ged/hal/dcs_mode",
+      "Values": [
+        "66",
+        "64",
+        "32",
+        "16",
+        "0"
+      ],
+      "ResetOnInit": true,
+      "Comments": [
+        "GPU Dynamic Clock Scaling mode. Range per powercontable.xml: Min=0, Max=66, Default=64.",
+        "64=stock default (DCS on, standard mode), 66=max DCS (most aggressive power-save scaling).",
+        "32/16=intermediate modes, 0=DCS off (GPU clocks freely, no dynamic scaling).",
+        "Use 66 for sustained load/gaming to reduce GPU idle power, 64 for balanced, 0 for FIXED_PERFORMANCE."
+      ]
     }
   ],
   "Actions": [
     {
       "PowerHint": "INTERACTION",
       "Node": "CPULittleClusterMinFreq",
-      "Duration": 1000,
-      "Value": "1000000"
+      "Duration": 500,
+      "Value": "800000",
+      "Comments": "Reduced from 1000000@1000ms. INTERACTION fires on every touch/scroll - 1s pin at 1GHz caused major drain."
     },
     {
       "PowerHint": "INTERACTION",
       "Node": "CPUMidClusterMinFreq",
-      "Duration": 1000,
-      "Value": "2100000"
+      "Duration": 500,
+      "Value": "1200000",
+      "Comments": "Reduced from 2100000@1000ms. Was pinning mid cluster nearly 3x higher than needed for UI responsiveness."
+    },
+    {
+      "PowerHint": "INTERACTION",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 500,
+      "Value": "1600000",
+      "Comments": "Reduced from 2200000@1000ms. Big core at 1.6GHz is sufficient for responsive UI interactions."
     },
     {
       "PowerHint": "INTERACTION",
@@ -494,51 +582,78 @@
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 1000,
-      "Value": "2200000"
+      "Node": "GEDDvfsMargin",
+      "Duration": 500,
+      "Value": "329234",
+      "Comments": "Stock default margin during touch - let GPU respond normally to interaction load spikes."
+    },
+    {
+      "PowerHint": "INTERACTION",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 500,
+      "Value": "259",
+      "Comments": "Stock default DVFS step during touch - standard GPU reactivity."
+    },
+    {
+      "PowerHint": "INTERACTION",
+      "Node": "DCSMode",
+      "Duration": 500,
+      "Value": "64",
+      "Comments": "Stock DCS mode during interaction - balanced, not restricting GPU during touch response."
+    },
+    {
+      "PowerHint": "INTERACTION",
+      "Node": "UFSClkScale",
+      "Duration": 500,
+      "Value": "powerhal_set:1",
+      "Comments": "Balanced UFS clock scaling during interaction."
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPUBigClusterMaxFreq",
-      "Duration": 5000,
-      "Value": "3250000"
+      "Duration": 3000,
+      "Value": "3250000",
+      "Comments": "Reduced duration from 5000ms to 3000ms. Max freq cap stays same."
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPUBigClusterMinFreq",
-      "Duration": 2000,
-      "Value": "3250000"
+      "Duration": 1500,
+      "Value": "2700000",
+      "Comments": "Reduced from 3250000@2000ms. 2.7GHz is still very responsive for app launch."
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPUMidClusterMaxFreq",
-      "Duration": 5000,
+      "Duration": 3000,
       "Value": "3000000"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPUMidClusterMinFreq",
-      "Duration": 2000,
-      "Value": "2900000"
+      "Duration": 1500,
+      "Value": "2400000",
+      "Comments": "Reduced from 2900000@2000ms."
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPULittleClusterMaxFreq",
-      "Duration": 5000,
+      "Duration": 3000,
       "Value": "2100000"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "CPULittleClusterMinFreq",
-      "Duration": 2000,
-      "Value": "2000000"
+      "Duration": 1500,
+      "Value": "1800000",
+      "Comments": "Reduced from 2000000@2000ms."
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "MemFreq",
-      "Duration": 5000,
-      "Value": "8533000000"
+      "Duration": 3000,
+      "Value": "8533000000",
+      "Comments": "Reduced duration from 5000ms to 3000ms. Max memory freq still provided for fast load."
     },
     {
       "PowerHint": "LAUNCH",
@@ -555,14 +670,16 @@
     {
       "PowerHint": "LAUNCH",
       "Node": "GPUBlockBoost",
-      "Duration": 5000,
-      "Value": "100"
+      "Duration": 3000,
+      "Value": "101",
+      "Comments": "Reduced duration from 5000ms to 3000ms."
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "GpuPwrLevel",
-      "Duration": 5000,
-      "Value": "6"
+      "Duration": 3000,
+      "Value": "8",
+      "Comments": "Slightly relaxed from index 6 (1144MHz) to index 8 (1092MHz). Saves ~50mW over the burst."
     },
     {
       "PowerHint": "LAUNCH",
@@ -587,6 +704,34 @@
       "Node": "PMQoSCpuDmaLatency",
       "Duration": 2000,
       "Value": "51"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "GEDDvfsMargin",
+      "Duration": 3000,
+      "Value": "1000",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 3000,
+      "Value": "500",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "DCSMode",
+      "Duration": 3000,
+      "Value": "0",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "UFSClkScale",
+      "Duration": 3000,
+      "Value": "powerhal_set:2",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
@@ -674,9 +819,37 @@
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "GEDDvfsMargin",
+      "Duration": 0,
+      "Value": "6553599",
+      "Comments": "Max margin - GPU never drops during fixed performance mode. Range max per powercontable.xml."
+    },
+    {
+      "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 0,
+      "Value": "25855",
+      "Comments": "Max DVFS step - GPU responds instantly to any load during fixed performance. Range max per powercontable.xml."
+    },
+    {
+      "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "DCSMode",
+      "Duration": 0,
+      "Value": "0",
+      "Comments": "Disable DCS in fixed performance - let GPU clock freely without dynamic scaling constraints."
+    },
+    {
+      "PowerHint": "FIXED_PERFORMANCE",
       "Node": "ForegroundWindowCpuset",
       "Duration": 0,
       "Value": "0-6"
+    },
+    {
+      "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:2",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "GAME",
@@ -687,31 +860,57 @@
       "PowerHint": "GAME",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 0,
-      "Value": "2000000"
+      "Value": "1500000",
+      "Comments": "Reduced from 2000000. Stock OEM gaming apps (powercontable/app_cfg) use 1500-1800MHz for little cluster."
     },
     {
       "PowerHint": "GAME",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
-      "Value": "2900000"
+      "Value": "2100000",
+      "Comments": "Reduced from 2900000. 2.1GHz sustained mid minimum prevents thermal throttle over long gaming sessions."
     },
     {
       "PowerHint": "GAME",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 0,
-      "Value": "3250000"
+      "Value": "2400000",
+      "Comments": "Reduced from 3250000 (ABSOLUTE MAX). 3.25GHz sustained causes throttle within minutes. 2.4GHz is optimal sustained."
     },
     {
       "PowerHint": "GAME",
       "Node": "GpuPwrLevel",
       "Duration": 0,
-      "Value": "3"
+      "Value": "5",
+      "Comments": "Relaxed from index 3 (1222MHz) to index 5 (1170MHz). GED DVFS handles burst needs. Saves ~150mW sustained."
     },
     {
       "PowerHint": "GAME",
       "Node": "GPUBlockBoost",
       "Duration": 0,
-      "Value": "50"
+      "Value": "0",
+      "Comments": "Reduced from 50. Letting GED auto-manage GPU boost during gaming is more power-efficient than 50% forced floor."
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GEDDvfsMargin",
+      "Duration": 0,
+      "Value": "138",
+      "Comments": "Gaming-tuned GPU DVFS margin from power_app_cfg.xml. Allows GPU to drop freq faster when not needed vs stock 329234."
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 0,
+      "Value": "8",
+      "Comments": "Smooth GPU DVFS stepping for gaming from power_app_cfg.xml. Lower than stock 259 = GPU scales more gradually."
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "DCSMode",
+      "Duration": 0,
+      "Value": "66",
+      "Comments": "Max DCS (66) during gaming - aggressive GPU dynamic clock scaling reduces sustained heat and power draw."
     },
     {
       "PowerHint": "GAME",
@@ -723,7 +922,8 @@
       "PowerHint": "GAME",
       "Node": "UclampTAMin",
       "Duration": 0,
-      "Value": "40"
+      "Value": "30",
+      "Comments": "Reduced from 40. Uclamp 30 is sufficient; app_cfg stock OEM entries don't rely on global uclamp min for gaming."
     },
     {
       "PowerHint": "GAME",
@@ -756,6 +956,13 @@
       "Value": "51"
     },
     {
+      "PowerHint": "GAME",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "PowerHALRenderingState",
       "Duration": 0,
@@ -765,7 +972,8 @@
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "GpuPwrLevel",
       "Duration": 0,
-      "Value": "10"
+      "Value": "12",
+      "Comments": "Relaxed from index 10 (1040MHz) to index 12 (988MHz). Sufficient for sustained rendering with GED headroom."
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
@@ -777,25 +985,29 @@
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 0,
-      "Value": "2200000"
+      "Value": "1800000",
+      "Comments": "Reduced from 2200000. Sustained 2.2GHz big core for rendering is excessive and hot."
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
-      "Value": "2000000"
+      "Value": "1500000",
+      "Comments": "Reduced from 2000000."
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 0,
-      "Value": "1300000"
+      "Value": "1000000",
+      "Comments": "Reduced from 1300000."
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "MemFreq",
       "Duration": 0,
-      "Value": "4218000000"
+      "Value": "3094000000",
+      "Comments": "Reduced from 4218000000. Sufficient memory BW for most rendering workloads."
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
@@ -826,6 +1038,34 @@
       "Node": "PMQoSCpuDmaLatency",
       "Duration": 0,
       "Value": "51"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "GEDDvfsMargin",
+      "Duration": 0,
+      "Value": "110",
+      "Comments": "Moderate GPU DVFS margin during rendering - from power_app_cfg.xml gaming tuning. Allows GPU to drop when idle."
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 0,
+      "Value": "8",
+      "Comments": "Smooth GPU DVFS stepping during rendering - from power_app_cfg.xml. Prevents GPU from spiking unnecessarily."
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "DCSMode",
+      "Duration": 0,
+      "Value": "66",
+      "Comments": "Max DCS during sustained rendering - GPU dynamically scales on idle frames to save power and reduce heat."
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "UFSClkScale",
+      "Duration": 0,
+      "Value": "powerhal_set:1",
+      "Comments": "Balanced UFS scaling during rendering - not fully aggressive to avoid storage latency spikes."
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
@@ -879,6 +1119,62 @@
       "Node": "UclampFGMin",
       "Duration": 0,
       "Value": "0"
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "GEDDvfsMargin",
+      "Duration": 0,
+      "Value": "20",
+      "Comments": "Most aggressive GPU downscaling margin in low power mode. From power_app_cfg.xml (com.tencent.jkchess @60fps). Min=1, Max=6553599."
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 0,
+      "Value": "0",
+      "Comments": "Zero DVFS step in low power - GPU frequency changes minimally under light load. Min per powercontable.xml."
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "DCSMode",
+      "Duration": 0,
+      "Value": "66",
+      "Comments": "Max DCS power saving in low power mode. Max=66 per powercontable.xml."
+    },
+    {
+      "PowerHint": "LOW_POWER",
+      "Node": "UFSClkScale",
+      "Duration": 0,
+      "Value": "powerhal_set:0",
+      "Comments": "Enable aggressive UFS clock scaling in low power mode per powercontable.xml PERF_RES_IO_UFS_CLKSCALE."
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1000,
+      "Value": "1000",
+      "Comments": "Low margin during camera launch burst - GPU should ramp up quickly for viewfinder/preview init."
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1000,
+      "Value": "500",
+      "Comments": "Higher DVFS step during camera launch - GPU responds aggressively to load for fast preview start."
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "DCSMode",
+      "Duration": 1000,
+      "Value": "0",
+      "Comments": "Disable DCS during camera launch burst - let GPU clock freely for maximum responsiveness."
+    },
+    {
+      "PowerHint": "CAMERA_LAUNCH",
+      "Node": "UFSClkScale",
+      "Duration": 1000,
+      "Value": "powerhal_set:2",
+      "Comments": "Full UFS performance during camera launch - fast storage access needed for camera lib loading."
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
@@ -1032,6 +1328,20 @@
     },
     {
       "PowerHint": "DISPLAY_IDLE",
+      "Node": "GEDDvfsMargin",
+      "Duration": 0,
+      "Value": "20",
+      "Comments": "Aggressive GPU downscaling during display idle. Min=1, Max=6553599."
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "DCSMode",
+      "Duration": 0,
+      "Value": "66",
+      "Comments": "Max DCS when display idle. Max=66 per powercontable.xml."
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
       "Node": "GpuPwrLevel",
       "Duration": 0,
       "Value": "30"
@@ -1087,6 +1397,20 @@
       "PowerHint": "DISPLAY_IDLE",
       "Type": "EndHint",
       "Value": "INTERACTION"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "0",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:0",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
@@ -1174,6 +1498,34 @@
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "GEDDvfsMargin",
+      "Duration": 0,
+      "Value": "20",
+      "Comments": "Aggressive GPU downclocking when screen off. Min=1, Max=6553599, Default=329234."
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 0,
+      "Value": "0",
+      "Comments": "Minimal GPU DVFS step when display off - GPU almost static at low freq."
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "DCSMode",
+      "Duration": 0,
+      "Value": "66",
+      "Comments": "Max DCS when display off. Max=66 per powercontable.xml."
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "UFSClkScale",
+      "Duration": 0,
+      "Value": "powerhal_set:0",
+      "Comments": "Enable UFS clock scaling when display is off for power saving."
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
       "Type": "EndHint",
       "Value": "DISPLAY_UPDATE_IMMINENT"
     },
@@ -1181,19 +1533,22 @@
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 50,
-      "Value": "2100000"
+      "Value": "1500000",
+      "Comments": "Reduced from 2100000. At 120Hz this fires every 8.3ms - the SINGLE BIGGEST heat source. 1.5GHz is adequate."
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 50,
-      "Value": "2000000"
+      "Value": "1400000",
+      "Comments": "Reduced from 2000000. Critical fix - mid cluster was being pinned at 2GHz minimum per frame at 120fps."
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 50,
-      "Value": "2500000"
+      "Value": "1800000",
+      "Comments": "Reduced from 2500000. Was forcing big core to 2.5GHz every single frame at 120Hz = constant high load."
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
@@ -1217,7 +1572,8 @@
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "GpuPwrLevel",
       "Duration": 50,
-      "Value": "8"
+      "Value": "8",
+      "Comments": "Relaxed from index 8 (1092MHz) - unchanged, this was already reasonable."
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
@@ -1229,7 +1585,8 @@
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "MemFreq",
       "Duration": 50,
-      "Value": "5480000000"
+      "Value": "4218000000",
+      "Comments": "Reduced from 5480000000. 4.2GHz memory is plenty for a single frame draw window."
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
@@ -1239,9 +1596,65 @@
     },
     {
       "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "GEDDvfsMargin",
+      "Duration": 50,
+      "Value": "110",
+      "Comments": "Moderate GPU DVFS margin per frame. From power_app_cfg.xml (com.tencent.cf @60fps). Balances responsiveness vs power."
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 50,
+      "Value": "259",
+      "Comments": "Stock default DVFS step during frame render window - responsive but not excessive."
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
       "Node": "PMQoSCpuDmaLatency",
       "Duration": 50,
       "Value": "51"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "DCSMode",
+      "Duration": 50,
+      "Value": "64",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "UFSClkScale",
+      "Duration": 50,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "GEDDvfsMargin",
+      "Duration": 5000,
+      "Value": "329234",
+      "Comments": "Stock default GPU DVFS margin during display change - let GPU handle transition load normally."
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 5000,
+      "Value": "259",
+      "Comments": "Stock default DVFS step during display change - normal GPU reactivity for transition."
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "DCSMode",
+      "Duration": 5000,
+      "Value": "64",
+      "Comments": "Stock DCS mode during display change - standard balanced mode, not restricting GPU during transition."
+    },
+    {
+      "PowerHint": "DISPLAY_CHANGE",
+      "Node": "UFSClkScale",
+      "Duration": 5000,
+      "Value": "powerhal_set:1",
+      "Comments": "Balanced UFS scaling during display change transition."
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
@@ -1253,7 +1666,8 @@
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "CPUBigClusterMinFreq",
       "Duration": 2000,
-      "Value": "2800000"
+      "Value": "2200000",
+      "Comments": "Reduced from 2800000. 2.2GHz is sufficient for display mode transitions."
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
@@ -1265,7 +1679,8 @@
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 2000,
-      "Value": "2700000"
+      "Value": "2000000",
+      "Comments": "Reduced from 2700000."
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
@@ -1277,13 +1692,15 @@
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 2000,
-      "Value": "1700000"
+      "Value": "1500000",
+      "Comments": "Reduced from 1700000."
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "MemFreq",
       "Duration": 5000,
-      "Value": "7500000000"
+      "Value": "6378000000",
+      "Comments": "Reduced from 7500000000. 6.4GHz memory sufficient for display transition."
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
@@ -1412,6 +1829,34 @@
       "Value": "51"
     },
     {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "GEDDvfsMargin",
+      "Duration": 100,
+      "Value": "1000",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 100,
+      "Value": "500",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "DCSMode",
+      "Duration": 100,
+      "Value": "0",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_SHOT",
+      "Node": "UFSClkScale",
+      "Duration": 100,
+      "Value": "powerhal_set:2",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "CAMERA_BACKEND_BOOST",
       "Node": "MemFreq",
       "Duration": 1000,
@@ -1466,6 +1911,34 @@
       "Value": "51"
     },
     {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1000,
+      "Value": "329234",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1000,
+      "Value": "259",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "DCSMode",
+      "Duration": 1000,
+      "Value": "64",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_BACKEND_BOOST",
+      "Node": "UFSClkScale",
+      "Duration": 1000,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
       "Node": "CPUBigClusterMaxFreq",
       "Duration": 3000,
@@ -1500,6 +1973,34 @@
       "Node": "PMQoSCpuDmaLatency",
       "Duration": 3000,
       "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "GEDDvfsMargin",
+      "Duration": 3000,
+      "Value": "138",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 3000,
+      "Value": "8",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "DCSMode",
+      "Duration": 3000,
+      "Value": "66",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
+      "Node": "UFSClkScale",
+      "Duration": 3000,
+      "Value": "powerhal_set:0",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_MULTICAM_BOOST",
@@ -1580,6 +2081,34 @@
       "Value": "51"
     },
     {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "GEDDvfsMargin",
+      "Duration": 100,
+      "Value": "1000",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 100,
+      "Value": "500",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "DCSMode",
+      "Duration": 100,
+      "Value": "0",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_MULTICAM_BOOST",
+      "Node": "UFSClkScale",
+      "Duration": 100,
+      "Value": "powerhal_set:2",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "CAMERA_ZOOMING_BOOST",
       "Node": "CAMUClampBoost",
       "Duration": 100,
@@ -1656,6 +2185,34 @@
       "Node": "PMQoSCpuDmaLatency",
       "Duration": 100,
       "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "GEDDvfsMargin",
+      "Duration": 100,
+      "Value": "329234",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 100,
+      "Value": "259",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "DCSMode",
+      "Duration": 100,
+      "Value": "64",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_ZOOMING_BOOST",
+      "Node": "UFSClkScale",
+      "Duration": 100,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_STREAMING_EXTREME",
@@ -1790,6 +2347,34 @@
       "Value": "1500"
     },
     {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1,
+      "Value": "110",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "8",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "DCSMode",
+      "Duration": 1,
+      "Value": "66",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "CAMERA_STREAMING_HIGH",
       "Node": "PowerHALCameraRunning",
       "Duration": 0,
@@ -1922,6 +2507,34 @@
       "Value": "1500"
     },
     {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1,
+      "Value": "110",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "8",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "DCSMode",
+      "Duration": 1,
+      "Value": "66",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "CAMERA_STREAMING_STANDARD",
       "Node": "PowerHALCameraRunning",
       "Duration": 0,
@@ -2054,6 +2667,34 @@
       "Value": "1500"
     },
     {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1,
+      "Value": "138",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "8",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "DCSMode",
+      "Duration": 1,
+      "Value": "66",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:0",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "CAMERA_STREAMING_LOW",
       "Node": "PowerHALCameraRunning",
       "Duration": 0,
@@ -2136,6 +2777,34 @@
       "Node": "CDMidHighCpusetCpus",
       "Duration": 0,
       "Value": "0-6"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1,
+      "Value": "138",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "8",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "DCSMode",
+      "Duration": 1,
+      "Value": "66",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_LOW",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:0",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
@@ -2262,6 +2931,34 @@
       "Node": "PMQoSCpuDmaLatency",
       "Duration": 0,
       "Value": "51"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1,
+      "Value": "138",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "8",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "DCSMode",
+      "Duration": 1,
+      "Value": "66",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:0",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_VIDEO_RECORDING",
@@ -2396,6 +3093,34 @@
       "Value": "1500"
     },
     {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1,
+      "Value": "110",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "8",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "DCSMode",
+      "Duration": 1,
+      "Value": "66",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "CAMERA_GPU_HIGH",
       "Node": "GpuPwrLevel",
       "Duration": 0,
@@ -2424,6 +3149,34 @@
       "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
       "Value": "1200000"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1,
+      "Value": "10000",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "500",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "DCSMode",
+      "Duration": 1,
+      "Value": "0",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_HIGH",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_GPU_STANDARD",
@@ -2456,10 +3209,66 @@
       "Value": "900000"
     },
     {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "GEDDvfsMargin",
+      "Duration": 1,
+      "Value": "329234",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 1,
+      "Value": "259",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "DCSMode",
+      "Duration": 1,
+      "Value": "64",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "CAMERA_GPU_STANDARD",
+      "Node": "UFSClkScale",
+      "Duration": 1,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
+    },
+    {
       "PowerHint": "ML_ACC",
       "Node": "PMQoSCpuDmaLatency",
       "Duration": 2000,
       "Value": "51"
+    },
+    {
+      "PowerHint": "ML_ACC",
+      "Node": "GEDDvfsMargin",
+      "Duration": 2000,
+      "Value": "329234",
+      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
+    },
+    {
+      "PowerHint": "ML_ACC",
+      "Node": "GEDLoadingDvfsStep",
+      "Duration": 2000,
+      "Value": "259",
+      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
+    },
+    {
+      "PowerHint": "ML_ACC",
+      "Node": "DCSMode",
+      "Duration": 2000,
+      "Value": "64",
+      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+    },
+    {
+      "PowerHint": "ML_ACC",
+      "Node": "UFSClkScale",
+      "Duration": 2000,
+      "Value": "powerhal_set:1",
+      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     }
   ]
 }
