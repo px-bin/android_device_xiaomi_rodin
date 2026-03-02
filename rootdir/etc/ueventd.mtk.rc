@@ -152,6 +152,21 @@
 /sys/devices/system/cpu/cpu* cpufreq/sugov_ext/down_rate_limit_us 0664 system system
 /sys/devices/system/cpu/cpu* cpufreq/sugov_ext/up_rate_limit_us 0664 system system
 
+# PowerHAL GED sysfs nodes
+# gpu_boost_level: used by stock powerhint.json (GPUBlockBoost node) but no
+#   explicit permission defined anywhere in any rc file.
+# dvfs_margin_value: new node added to powerhint.json for GPU DVFS margin tuning.
+#   Other ged nodes are written by power.rc on init confirming kernel writability,
+#   but the power HAL process (system user) needs explicit group-write permission.
+/sys/kernel/ged/hal gpu_boost_level    0664 system system
+/sys/kernel/ged/hal dvfs_margin_value  0664 system system
+
+# PowerHAL UFS clock scaling node
+# clkscale_control: new node added to powerhint.json for UFS idle power savings.
+#   No existing reference in any rc file; ueventd sets permissions when the
+#   ufshci driver registers the sysfs attribute at boot.
+/sys/devices/platform/soc/112b0000.ufshci/clkscale clkscale_control 0664 system system
+
 # gzvm for AVF
 /dev/gzvm 0666 root root
 

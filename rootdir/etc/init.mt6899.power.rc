@@ -87,6 +87,14 @@ on init
     write /sys/kernel/ged/hal/fallback_window_size 1
     write /sys/kernel/ged/hal/force_loading_base 0
 
+    # gpufreqv2 proc node permission
+    # fix_target_opp_index is used by powerhint.json (GpuPwrLevel node) to pin
+    # GPU OPP. /proc files default to root:root and are NOT handled by ueventd,
+    # so explicit chmod/chown here is the only way to grant the power HAL
+    # (running as system) write access.
+    chmod 0664 /proc/gpufreqv2/fix_target_opp_index
+    chown system system /proc/gpufreqv2/fix_target_opp_index
+
     # Boot time tuning
     write /sys/devices/system/cpu/cpufreq/policy0/scaling_governor "performance"
     write /sys/devices/system/cpu/cpufreq/policy4/scaling_governor "performance"
