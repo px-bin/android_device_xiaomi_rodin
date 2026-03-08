@@ -25,7 +25,7 @@
         <!-- Transition point brightness from normal to HBM mode -->
         <transitionPoint>0.499938</transitionPoint>
         <!-- Minimum lux to enter HBM -->
-        <minimumLux>6500</minimumLux>
+        <minimumLux>6400</minimumLux>
         <!-- Time limitation for HBM-->
         <timing>
             <timeWindowSecs>0</timeWindowSecs>
