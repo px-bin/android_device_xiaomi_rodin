@@ -12,6 +12,52 @@ ro.vendor.sre.enable=false
 ro.vendor.xiaomi.bl.poll=true
 sys.displayfeature_hidl=false
 vendor.displayfeature.entry.enable=true
+ro.vendor.display.type=oled
+ro.vendor.fps.switch.default=true
+ro.vendor.fps.switch.thermal=true
+ro.vendor.disable_idle_fps.threshold=966
+ro.vendor.hbm_backlight.enable=true
+ro.vendor.idle_fps=60
+ro.vendor.display.tp_idle_fps=60
+ro.vendor.display.touch.idle.enable=true
+ro.vendor.display.fod_monitor_default_fps=120
+ro.vendor.display.aod_monitor_default_fps=30
+ro.vendor.display.frame_capture_manager.enable=true
+
+# SurfaceFlinger
+ro.surface_flinger.enable_frame_rate_override=false
+ro.surface_flinger.set_touch_timer_ms=1100
+debug.sf.set_idle_timer_ms=1100
+debug.sf.default_idle_timer_ms=1100
+
+# NFC
+ro.vendor.se.type=HCE,UICC
+ro.vendor.se.chip.model=SN220T
+ro.vendor.nfc.disable.i2c=false
+ro.vendor.nfc.repair=1
+ro.vendor.nfc.dispatch_optim=2
+ro.vendor.nfc.wallet_fusion=1
+ro.vendor.nfc.aclog=1
+ro.vendor.nfc.debounce_field_on=1
+ro.vendor.nfc.field_on_debounce=800
+
+# Charging
+persist.vendor.smartchg=854
+persist.vendor.accelerate.charge=true
+persist.vendor.battery.health=true
+persist.vendor.battery.health.optimise=true
+persist.vendor.extreme.mode=true
+persist.vendor.battery.erp=true
+persist.vendor.tracking.dfs=true
+persist.vendor.doublentc=1
+persist.vendor.low.cutoff=true
+persist.vendor.hightemp.notice=true
+persist.vendor.night.charge=true
+persist.vendor.smart.battMntor.V2=true
+persist.vendor.region.charger=default
+
+# Radio
+persist.vendor.radio.dynamic_sar=1
 
 # SKU
 ro.product.property_source_order=odm,product,vendor,system_ext,system
