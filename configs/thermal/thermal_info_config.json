@@ -15,7 +15,7 @@
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
-	{
+        {
             "Name":"cpu-little-core1",
             "Type":"CPU",
             "HotThreshold":[
@@ -30,7 +30,7 @@
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
-	{
+        {
             "Name":"cpu-little-core2",
             "Type":"CPU",
             "HotThreshold":[
@@ -45,7 +45,7 @@
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
-	{
+        {
             "Name":"cpu-little-core3",
             "Type":"CPU",
             "HotThreshold":[
@@ -60,7 +60,7 @@
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
-	{
+        {
             "Name":"cpu-medium-core4-0",
             "Type":"CPU",
             "HotThreshold":[
@@ -75,7 +75,7 @@
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
-	{
+        {
             "Name":"cpu-medium-core4-1",
             "Type":"CPU",
             "HotThreshold":[
@@ -181,6 +181,66 @@
             "Multiplier":0.001
         },
         {
+            "Name":"cpu-dsu0",
+            "Type":"CPU",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                117.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"cpu-dsu1",
+            "Type":"CPU",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                117.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"cpu-dsu2",
+            "Type":"CPU",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                117.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"cpu-dsu3",
+            "Type":"CPU",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                117.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
             "Name":"gpu0",
             "Type":"GPU",
             "HotThreshold":[
@@ -195,7 +255,7 @@
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
-	{
+        {
             "Name":"gpu1",
             "Type":"GPU",
             "HotThreshold":[
@@ -210,7 +270,7 @@
             "VrThreshold":50.0,
             "Multiplier":0.001
         },
-   	{
+        {
             "Name":"gpu2",
             "Type":"GPU",
             "HotThreshold":[
@@ -223,6 +283,156 @@
                 117.0
             ],
             "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"apu-a0",
+            "Type":"NPU",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc-top0",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc-top1",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc-top2",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc-top3",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc-bot0",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc-bot1",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc-bot2",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc-bot3",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"soc_max",
+            "Type":"SOC",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                85.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
             "Multiplier":0.001
         },
         {
@@ -241,6 +451,261 @@
             "Multiplier":0.001
         },
         {
+            "Name":"bms",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"mt6375-gauge",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"mtk-master-charger",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"mtk-slave-charger",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"mtk-mst-div-chg",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"mtk-slv-div-chg",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"mtk-mst-hvdiv-chg",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"mtk-slv-hvdiv-chg",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"charger1_therm",
+            "Type":"BATTERY",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                50.0,
+                55.0,
+                59.0,
+                60.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"pmic6363-vio18",
+            "Type":"BCL_VOLTAGE",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                105.0,
+                110.0,
+                115.0,
+                125.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"pmic6363-vs1-vs3",
+            "Type":"BCL_VOLTAGE",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                105.0,
+                110.0,
+                115.0,
+                125.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"pmic6363-bk3-bk7",
+            "Type":"BCL_VOLTAGE",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                105.0,
+                110.0,
+                115.0,
+                125.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"pmic6363-vs2",
+            "Type":"BCL_VOLTAGE",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                105.0,
+                110.0,
+                115.0,
+                125.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"pmic6368-buck1",
+            "Type":"BCL_VOLTAGE",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                105.0,
+                110.0,
+                115.0,
+                125.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"pmic6368-vpa",
+            "Type":"BCL_VOLTAGE",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                105.0,
+                110.0,
+                115.0,
+                125.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"pmic6368-vcn33-1",
+            "Type":"BCL_VOLTAGE",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                105.0,
+                110.0,
+                115.0,
+                125.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"pmic6368-vrf18-aif",
+            "Type":"BCL_VOLTAGE",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                105.0,
+                110.0,
+                115.0,
+                125.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
             "Name":"mtktsbtsmdpa",
             "Type":"POWER_AMPLIFIER",
             "HotThreshold":[
@@ -256,6 +721,96 @@
             "Multiplier":0.001
         },
         {
+            "Name":"mtktsbtsnrpa",
+            "Type":"POWER_AMPLIFIER",
+            "HotThreshold":[
+                "NAN",
+                "NAN",
+                "NAN",
+                68.0,
+                90.0,
+                100.0,
+                110.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"consys",
+            "Type":"WIFI",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                70.0,
+                80.0,
+                90.0,
+                100.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"wifi_therm",
+            "Type":"WIFI",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                70.0,
+                80.0,
+                90.0,
+                100.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"flash_therm",
+            "Type":"CAMERA",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                60.0,
+                70.0,
+                80.0,
+                90.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"ScreenPmic_therm",
+            "Type":"DISPLAY",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                70.0,
+                80.0,
+                90.0,
+                100.0
+            ],
+            "VrThreshold":"NAN",
+            "Multiplier":0.001
+        },
+        {
+            "Name":"quiet_therm",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                48.0,
+                52.0,
+                57.0,
+                62.0
+            ],
+            "VrThreshold":48.0,
+            "Multiplier":0.001
+        },
+        {
             "Name":"mtktsAP",
             "Type":"SKIN",
             "HotThreshold":[
@@ -268,8 +823,172 @@
                 65.0
             ],
             "VrThreshold":50.0,
-            "Multiplier":0.001,
-            "Monitor":true
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin-max",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin1",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin2",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin3",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin4",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin5",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin6",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin7",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin8",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin9",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
+        },
+        {
+            "Name":"vtskin10",
+            "Type":"SKIN",
+            "HotThreshold":[
+                "NaN",
+                "NaN",
+                "NaN",
+                50.0,
+                55.0,
+                60.0,
+                65.0
+            ],
+            "VrThreshold":50.0,
+            "Multiplier":0.001
         }
     ],
     "CoolingDevices":[
@@ -280,6 +999,62 @@
         {
             "Name":"charger-cooler",
             "Type":"BATTERY"
+        },
+        {
+            "Name":"battery",
+            "Type":"BATTERY"
+        },
+        {
+            "Name":"cpu-pause-0",
+            "Type":"CPU"
+        },
+        {
+            "Name":"cpu-pause-1",
+            "Type":"CPU"
+        },
+        {
+            "Name":"cpu-pause-2",
+            "Type":"CPU"
+        },
+        {
+            "Name":"cpu-pause-3",
+            "Type":"CPU"
+        },
+        {
+            "Name":"cpu-pause-4",
+            "Type":"CPU"
+        },
+        {
+            "Name":"cpu-pause-5",
+            "Type":"CPU"
+        },
+        {
+            "Name":"cpu-pause-6",
+            "Type":"CPU"
+        },
+        {
+            "Name":"cpu-pause-7",
+            "Type":"CPU"
+        },
+        {
+            "Name":"apu_cooler",
+            "Type":"NPU"
+        },
+        {
+            "Name":"lcd-backlight",
+            "Type":"DISPLAY"
+        },
+        {
+            "Name":"brightness0-clone",
+            "Type":"DISPLAY"
+        },
+        {
+            "Name":"wifi-cooler",
+            "Type":"WIFI"
+        },
+        {
+            "Name":"flashlight_cooler",
+            "Type":"FLASHLIGHT"
         }
     ]
 }
