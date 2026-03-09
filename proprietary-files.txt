@@ -53,6 +53,7 @@ vendor/lib64/libmsbc_mtk.so
 vendor/lib64/libmtklimiter_vendor.so
 vendor/lib64/libmtkshifter_vendor.so
 vendor/lib64/libmtkspparser.so
+vendor/lib64/libnxp_extamp_intf.so
 vendor/lib64/librt_extamp_intf.so
 vendor/lib64/libspeech_enh_lib.so;FIX_SONAME
 vendor/lib64/libspeechparser_vendor.so
@@ -370,6 +371,7 @@ vendor/etc/vintf/manifest/manifest_uievent.xml
 vendor/etc/vintf/manifest/vendor.xiaomi.hardware.aidlbgservice-service.xml
 vendor/etc/vintf/manifest/vendor.xiaomi.hardware.dynamiccameraserver.xml
 vendor/lib64/com.xiaomi.camdfx.so
+vendor/lib64/com.xiaomi.immunesystem.bigdata2.so
 vendor/lib64/hw/mt6899/android.hardware.camera.provider@2.6-impl-mediatek.so;SYMLINK=vendor/lib64/hw/android.hardware.camera.provider@2.6-impl-mediatek.so
 vendor/lib64/hw/mt6899/vendor.mediatek.hardware.camera.atms@1.0-impl.so;SYMLINK=vendor/lib64/hw/vendor.mediatek.hardware.camera.atms@1.0-impl.so
 vendor/lib64/hw/mt6899/vendor.mediatek.hardware.camera.bgservice@1.1-impl.so;SYMLINK=vendor/lib64/hw/vendor.mediatek.hardware.camera.bgservice@1.1-impl.so
@@ -413,8 +415,6 @@ vendor/lib64/libcom.xiaomi.debug.so
 vendor/lib64/libcom.xiaomi.ecoenginemonitor.so
 vendor/lib64/libcom.xiaomi.eventcallback.so
 vendor/lib64/libcom.xiaomi.grallocutils.so
-vendor/lib64/libcom.xiaomi.hwadapter.decoupleutil.so
-vendor/lib64/libcom.xiaomi.hwadapter.postprocinterface.so
 vendor/lib64/libcom.xiaomi.metadatautils.so
 vendor/lib64/libcom.xiaomi.mivihal.cpupolicy.so
 vendor/lib64/libcom.xiaomi.pluginutils.so
@@ -434,7 +434,6 @@ vendor/lib64/libmialgoengine.so
 vendor/lib64/libmialgoengine_custom.so
 vendor/lib64/libmibokeh_mt6873.so
 vendor/lib64/libmicamGlobalPool.so
-vendor/lib64/libmicamera_adapter.so
 vendor/lib64/libmicamera_aidl_device.so
 vendor/lib64/libmicamera_aidl_provider.so
 vendor/lib64/libmicamera_aidl_utils.so
@@ -678,7 +677,7 @@ vendor/lib64/mt6899/liblpnr.so;SYMLINK=vendor/lib64/liblpnr.so
 vendor/lib64/mt6899/libmdla_ut.so;SYMLINK=vendor/lib64/libmdla_ut.so
 vendor/lib64/mt6899/libmfllcore.so;SYMLINK=vendor/lib64/libmfllcore.so
 vendor/lib64/mt6899/libmgr3a.adapt.so;SYMLINK=vendor/lib64/libmgr3a.adapt.so
-vendor/lib64/mt6899/libmtkcam.atmseventmgr.so;SYMLINK=vendor/lib64/libmtkcam.atmseventmgr.so
+vendor/lib64/mt6899/libmtkcam.atmseventmgr.so;SYMLINK=odm/lib64/temp/mt6899/libmtkcam.atmseventmgr.so;SYMLINK=odm/lib64/temp/libmtkcam.atmseventmgr.so;SYMLINK=vendor/lib64/libmtkcam.atmseventmgr.so
 vendor/lib64/mt6899/libmtkcam.debugwrapper.so;SYMLINK=vendor/lib64/libmtkcam.debugwrapper.so
 vendor/lib64/mt6899/libmtkcam.eventcallback.so;SYMLINK=vendor/lib64/libmtkcam.eventcallback.so
 vendor/lib64/mt6899/libmtkcam.featurepipe.capture.linux.so;SYMLINK=vendor/lib64/libmtkcam.featurepipe.capture.linux.so
@@ -764,7 +763,7 @@ vendor/lib64/mt6899/libmtkcam_mae.so;SYMLINK=vendor/lib64/libmtkcam_mae.so
 vendor/lib64/mt6899/libmtkcam_mapping_mgr.so;SYMLINK=vendor/lib64/libmtkcam_mapping_mgr.so
 vendor/lib64/mt6899/libmtkcam_memorypool.so;SYMLINK=vendor/lib64/libmtkcam_memorypool.so
 vendor/lib64/mt6899/libmtkcam_metaconv.so;SYMLINK=vendor/lib64/libmtkcam_metaconv.so
-vendor/lib64/mt6899/libmtkcam_metadata.so;SYMLINK=vendor/lib64/libmtkcam_metadata.so
+vendor/lib64/mt6899/libmtkcam_metadata.so;SYMLINK=odm/lib64/temp/mt6899/libmtkcam_metadata.so;SYMLINK=odm/lib64/temp/libmtkcam_metadata.so;SYMLINK=vendor/lib64/libmtkcam_metadata.so
 vendor/lib64/mt6899/libmtkcam_metastore.so;SYMLINK=vendor/lib64/libmtkcam_metastore.so
 vendor/lib64/mt6899/libmtkcam_modulefactory_custom.so;SYMLINK=vendor/lib64/libmtkcam_modulefactory_custom.so
 vendor/lib64/mt6899/libmtkcam_modulefactory_utils.so;SYMLINK=vendor/lib64/libmtkcam_modulefactory_utils.so
@@ -805,7 +804,7 @@ vendor/lib64/mt6899/libmtkcam_thirdparty.customzone.so;SYMLINK=vendor/lib64/libm
 vendor/lib64/mt6899/libmtkcam_thirdparty.mtk.so;SYMLINK=vendor/lib64/libmtkcam_thirdparty.mtk.so
 vendor/lib64/mt6899/libmtkcam_thirdparty.so;SYMLINK=vendor/lib64/libmtkcam_thirdparty.so
 vendor/lib64/mt6899/libmtkcam_tuning_utils.so;SYMLINK=vendor/lib64/libmtkcam_tuning_utils.so
-vendor/lib64/mt6899/libmtkcam_ulog.so;SYMLINK=vendor/lib64/libmtkcam_ulog.so
+vendor/lib64/mt6899/libmtkcam_ulog.so;SYMLINK=vendor/lib64/temp/mt6899/libmtkcam_ulog.so;SYMLINK=vendor/lib64/temp/libmtkcam_ulog.so;SYMLINK=vendor/lib64/libmtkcam_ulog.so
 vendor/lib64/mt6899/libmtkcam_zsl_customselector.so;SYMLINK=vendor/lib64/libmtkcam_zsl_customselector.so
 vendor/lib64/mt6899/libmtkltm.so;SYMLINK=vendor/lib64/libmtkltm.so
 vendor/lib64/mt6899/libn3d_tuning.so;SYMLINK=vendor/lib64/libn3d_tuning.so
@@ -864,6 +863,9 @@ vendor/lib64/vendor.xiaomi.hardware.camera.injection-client.so
 vendor/lib64/vendor.xiaomi.hardware.camera.injection-service.so
 vendor/lib64/vendor.xiaomi.hardware.camera.synthetic-V1-ndk.so
 vendor/lib64/vendor.xiaomi.hardware.camera.synthetic-impl.so
+vendor/lib64/libcom.xiaomi.hwadapter.decoupleutil.so;SYMLINK=odm/lib64/temp/libcom.xiaomi.hwadapter.decoupleutil.so
+vendor/lib64/libcom.xiaomi.hwadapter.postprocinterface.so;SYMLINK=odm/lib64/temp/libcom.xiaomi.hwadapter.postprocinterface.so
+vendor/lib64/libmicamera_adapter.so;SYMLINK=odm/lib64/temp/libmicamera_adapter.so
 
 # Camera-arcsoft
 odm/lib64/libarc.ion.so
@@ -1328,6 +1330,7 @@ vendor/etc/init/mtk_agpsd_p.rc
 vendor/etc/vintf/manifest/gnss-default.xml:vendor/etc/vintf/manifest/gnss-mtk-default.xml
 vendor/etc/vintf/manifest/gnss-mtk.xml
 vendor/lib64/hw/android.hardware.gnss-impl-mediatek.so
+vendor/lib64/mtk_lbs_service-impl.so
 vendor/lib64/hw/gps.default.so
 vendor/lib64/hw/mtkgeofence.default.so
 vendor/lib64/hw/vendor.mediatek.hardware.gnss-impl.so
