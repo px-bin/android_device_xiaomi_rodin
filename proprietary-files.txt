@@ -1183,13 +1183,47 @@ odm/lib64/libmfido_mitee.so
 vendor/lib64/vendor.xiaomi.hardware.mfidoca-V1-ndk.so
 
 # Fingerprint
-odm/app/JVFactoryTest/JVFactoryTest.apk
-odm/app/goodix_sz_rodin/goodix_sz_rodin.apk
 odm/lib64/anc.hal.so
 odm/lib64/hw/fingerprint.goodix_fod.so:odm/lib64/hw/fingerprint.goodix_fod.default.so;FIX_SONAME
 odm/lib64/hw/fingerprint.jiiov.so:odm/lib64/hw/fingerprint.jiiov.default.so;FIX_SONAME
 odm/lib64/libgf_hal.so
 vendor/lib64/vendor.xiaomi.hardware.fx.tunnel-V1-ndk.so
+
+# Xiaomi CIT App
+product/app/MiuiCit/MiuiCit.apk
+odm/etc/cit_param_config.json
+
+# Fingerprint Calibration
+odm/app/JVFactoryTest/JVFactoryTest.apk
+odm/app/goodix_sz_rodin/goodix_sz_rodin.apk
+
+# Speaker Calibration
+system_ext/bin/spkcal_88263s_n12a
+system_ext/bin/spkcal_88263s_n12
+system_ext/bin/spkcal_88263s_o10
+system_ext/bin/spkcal_tfa
+system_ext/bin/spkcal_88263s_m9
+system_ext/bin/spkcal_88263s
+system_ext/bin/climax_tfa9873
+system_ext/bin/spkcal
+system_ext/bin/spkcal_88263s_m16
+system_ext/lib64/libtfa98xx_cal.so
+vendor/etc/spk_cal_silence.wav
+odm/etc/spk.wav
+odm/etc/bottom_spk.wav
+odm/etc/bottom_spk_hp.wav
+odm/etc/top_spk.wav
+odm/etc/spk_cal_silence.wav
+odm/etc/spk_cal_sweep.wav
+odm/etc/spk_cal_whitenoise.wav
+odm/etc/spk_hp.wav
+odm/etc/stereo.wav
+odm/etc/1khz.wav
+odm/etc/coverVibrationTest.wav
+odm/etc/rcv_pink.wav
+odm/etc/RES1K.wav
+odm/etc/rcv.wav
+odm/etc/ultrasound.wav
 
 # Firmware
 odm/firmware/Conf_MultipleTest.ini
