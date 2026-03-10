@@ -5,6 +5,7 @@ ccu.img;AB
 connsys_bt.img;AB
 connsys_gnss.img;AB
 connsys_wifi.img;AB
+countrycode.img;AB
 dpm.img;AB
 gpueb.img;AB
 gz.img;AB

@@ -1186,13 +1186,38 @@ odm/lib64/libmfido_mitee.so
 vendor/lib64/vendor.xiaomi.hardware.mfidoca-V1-ndk.so
 
 # Fingerprint
-odm/app/JVFactoryTest/JVFactoryTest.apk
-odm/app/goodix_sz_rodin/goodix_sz_rodin.apk
 odm/lib64/anc.hal.so
 odm/lib64/hw/fingerprint.goodix_fod.so:odm/lib64/hw/fingerprint.goodix_fod.default.so;FIX_SONAME
 odm/lib64/hw/fingerprint.jiiov.so:odm/lib64/hw/fingerprint.jiiov.default.so;FIX_SONAME
 odm/lib64/libgf_hal.so
 vendor/lib64/vendor.xiaomi.hardware.fx.tunnel-V1-ndk.so
+
+# Sensor Calibration
+odm/app/JVFactoryTest/JVFactoryTest.apk|8290bfb8cad4d1e1079b7367f2052ce0b3e77bb1
+odm/app/goodix_sz_rodin/goodix_sz_rodin.apk|7e09a157409f7b478e879fd03213dc82cad3d475
+product/app/MiuiCit/MiuiCit.apk|7f0d4f3790f7577106510e2339cb00ea4c5d823d
+odm/etc/cit_param_config.json
+system_ext/bin/spkcal_88263s_n12a|134c5432213a5e04d327da0593287dc88cd8aaba
+system_ext/bin/spkcal_88263s_n12|e2ae8570e4e2383013e2d607d44b78ab3b330132
+system_ext/bin/spkcal_88263s_o10|6334336771c819882af03e37be48288b5d73d64d
+system_ext/bin/spkcal_tfa|5bc9184b29aea0b42afdc702ad4507b429684e87
+system_ext/bin/spkcal_88263s_m9|aa9eee09d14ce5fdaa53df1661417e74c42afd9c
+system_ext/bin/spkcal_88263s|c5a3c04196a5f23668a7d150f659cfd4c7376b51
+system_ext/bin/climax_tfa9873|fcc8c0542bc3b9fa721bffd72598aad24fe4c232
+system_ext/bin/spkcal|342f05ebcb1efc68aeef3b441be60815dfcb7148
+system_ext/bin/spkcal_88263s_m16|fa3efffa0ce9c1e44a5540c6ef946ca58d841315
+system_ext/lib64/libtfa98xx_cal.so|aaf0a3d144ba280945e861201328ee63dc7911d3
+vendor/etc/spk_cal_silence.wav
+odm/etc/spk.wav
+odm/etc/bottom_spk.wav
+odm/etc/bottom_spk_hp.wav
+odm/etc/top_spk.wav
+odm/etc/spk_cal_silence.wav
+odm/etc/spk_cal_sweep.wav
+odm/etc/spk_cal_whitenoise.wav
+odm/etc/spk_hp.wav
+odm/etc/stereo.wav
+
 
 # Firmware
 odm/firmware/Conf_MultipleTest.ini
