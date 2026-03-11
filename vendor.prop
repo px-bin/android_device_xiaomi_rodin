@@ -167,7 +167,7 @@ ro.vendor.wlan.chrdev=wmt_chrdev_wifi_connac2
 ro.vendor.wlan.gen=gen4m_6899
 ro.vendor.wlan.standalone.log=y
 ro.vendor.mtk_wapi_support=1
-vendor.connsys.driver.ready=no
+vendor.connsys.driver.ready=yes
 
 # ConsumerIR
 ro.hardware.consumerir=common
@@ -532,7 +532,7 @@ ro.surface_flinger.use_content_detection_for_refresh_rate=false
 ro.surface_flinger.has_HDR_display=true
 ro.surface_flinger.has_wide_color_display=true
 ro.surface_flinger.ignore_hdr_camera_layers=true
-ro.surface_flinger.max_frame_buffer_acquired_buffers=4
+ro.surface_flinger.max_frame_buffer_acquired_buffers=3
 ro.surface_flinger.primary_display_orientation=ORIENTATION_0
 ro.surface_flinger.protected_contents=true
 ro.surface_flinger.set_idle_timer_ms=80
