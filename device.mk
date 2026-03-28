@@ -38,24 +38,6 @@ else
         vendor.camera.aux.packagelist=org.lineageos.aperture,com.meitu.meiyancamera,com.ss.android.ugc.aweme
 endif
 
-# Inherit BCR
-ifeq ($(TARGET_SHIPS_BCR), true)
-    $(call inherit-product-if-exists, vendor/bcr/bcr.mk)
-endif
-
-# Inherit PixelPlay Music Player
-ifeq ($(TARGET_SHIPS_PIXELPLAY), true)
-    $(call inherit-product-if-exists, vendor/PixelPlay/PixelPlay.mk)
-endif
-
-# Inherit ViPER4Android FX
-ifeq ($(TARGET_SHIPS_VIPERFX), true)
-$(call inherit-product-if-exists, packages/apps/ViPER4AndroidFX/config.mk)
-endif
-
-# Keys
--include vendor/infinity-priv/keys/keys.mk
-
 $(call soong_config_set,surfaceflinger,frame_rate_category_high,120)
 $(call soong_config_set,surfaceflinger,frame_rate_category_min,60)
 

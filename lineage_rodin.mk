@@ -14,31 +14,6 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Inherit from rodin device
 $(call inherit-product, device/xiaomi/rodin/device.mk)
 
-# AOSP Flags
-TARGET_BOOT_ANIMATION_RES := 1080
-TARGET_FACE_UNLOCK_SUPPORTED := true
-EXTRA_UDFPS_ANIMATIONS := true
-TORCH_STR_SUPPORTED := true
-TARGET_ENABLE_BLUR := true
-TARGET_INCLUDE_LIVE_WALLPAPERS := true
-TARGET_INCLUDE_WEATHER := true
-TARGET_SUPPORTS_GOOGLE_FILES := true
-TARGET_SUPPORTS_64_BIT_APPS := true
-TARGET_SHIPS_VIPERFX := false
-TARGET_SHIPS_PIXELPLAY := true
-TARGET_SHIPS_BCR := false
-TARGET_SHIPS_GCAM := true
-TARGET_SHIPS_MIUICAMERA := false
-TARGET_SUPPORTS_GOOGLE_TELEPHONY := false
-TARGET_OPTIMIZED_DEXOPT := true
-WITH_GMS := true
-WITH_GMS_COMMS_SUITE := false
-WITH_GMS_AICORE := true
-WITH_BCR := false
-TARGET_CUSTOM_UDFPS := true
-TARGET_SUPPORTS_BLUR := true
-TARGET_SUPPORTED_REFRESH_RATES := 60,120
-
 PRODUCT_DEVICE := rodin
 PRODUCT_NAME := lineage_rodin
 PRODUCT_BRAND := POCO
@@ -50,6 +25,8 @@ PRODUCT_SYSTEM_NAME := rodin_global
 PRODUCT_SYSTEM_DEVICE := rodin
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+
+TARGET_UNOFFICIAL_BUILD_ID := Elvettorato
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildDesc="missi-user 16 BP2A.250605.031.A3 OS3.0.9.0.WOJMIXM release-keys" \
