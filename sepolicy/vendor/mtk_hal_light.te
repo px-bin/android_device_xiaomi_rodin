@@ -1,0 +1,3 @@
+ # Allow the Light HAL to find and write to the AW21024 LED nodes
+allow mtk_hal_light vendor_sysfs_led_file:dir search;
+allow mtk_hal_light vendor_sysfs_led_file:file rw_file_perms;

@@ -38,3 +38,11 @@ type proc_tp_file, fs_type, proc_type;
 
 # Binder priority kernel module
 type proc_binder_prio, fs_type, proc_type;
+
+# CIT
+type vendor_audio_data_file, file_type, data_file_type;
+type vendor_fingerprint_data_file, file_type, data_file_type;
+type vendor_fingerprint_data_file_fpdump, file_type, data_file_type;
+
+# LED sysfs files
+type vendor_sysfs_led_file, fs_type, sysfs_type;

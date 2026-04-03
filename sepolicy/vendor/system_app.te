@@ -12,3 +12,15 @@ rw_dir_file(system_app, sysfs_therm)
 
 # CPU
 allow system_app proc_stat:file { read open getattr };
+
+# CIT App
+get_prop(system_app, vendor_fingerprint_prop)
+allow system_app fs16xx_device:chr_file rw_file_perms;
+allow system_app sysfs_fsm_re25:file rw_file_perms;
+allow system_app sysfs_fsm_f0:file rw_file_perms;
+allow system_app vendor_audio_data_file:dir { write add_name search read getattr };
+allow system_app vendor_audio_data_file:file { read write create getattr append open lock };
+
+# LED
+allow system_app vendor_sysfs_led_file:dir search;
+allow system_app vendor_sysfs_led_file:file rw_file_perms;

@@ -4,3 +4,11 @@ allow tee mitee_data_file:file create_file_perms;
 allow tee nfc_device:chr_file { ioctl open read write };
 
 allow tee proc_mitee_log:file { read getattr open };
+
+# Allow tee to access fpdump data
+allow tee vendor_fingerprint_data_file_fpdump:dir rw_dir_perms;
+allow tee vendor_fingerprint_data_file_fpdump:file create_file_perms;
+
+# TEE access to fingerprint calibration data
+allow tee fingerprint_vendor_data_file:dir { ioctl read write getattr lock open add_name remove_name search };
+allow tee fingerprint_vendor_data_file:file { ioctl read write create getattr setattr lock append map unlink rename open };
