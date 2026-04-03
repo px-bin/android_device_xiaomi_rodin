@@ -14,29 +14,13 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Inherit from rodin device
 $(call inherit-product, device/xiaomi/rodin/device.mk)
 
-# AOSP Flags
-TARGET_SHIPS_DOLBY := true
-TARGET_BOOT_ANIMATION_RES := 1080
+
+#crDroid flags
+IS_PHONE := true
 TARGET_FACE_UNLOCK_SUPPORTED := true
-EXTRA_UDFPS_ANIMATIONS := true
-TORCH_STR_SUPPORTED := true
-TARGET_ENABLE_BLUR := true
-TARGET_INCLUDE_LIVE_WALLPAPERS := true
-TARGET_INCLUDE_WEATHER := true
-TARGET_SUPPORTS_GOOGLE_FILES := true
-TARGET_SUPPORTS_64_BIT_APPS := true
-TARGET_SHIPS_VIPERFX := false
-TARGET_SHIPS_PIXELPLAY := true
-TARGET_SHIPS_BCR := true
-TARGET_SHIPS_GCAM := true
-TARGET_SHIPS_MIUICAMERA := false
-TARGET_SUPPORTS_GOOGLE_TELEPHONY := false
-TARGET_OPTIMIZED_DEXOPT := true
-WITH_GMS := true
-WITH_BCR := true
-PERF_ANIM_OVERRIDE := true
-TARGET_CUSTOM_UDFPS := true
-WITH_GMS_COMMS_SUITE := true
+TARGET_SUPPORTS_QUICK_TAP := true
+TARGET_SUPPORTS_BLUR := true
+TARGET_HAS_UDFPS := true
 
 PRODUCT_DEVICE := rodin
 PRODUCT_NAME := lineage_rodin
