@@ -423,16 +423,6 @@
       "ResetOnInit": true
     },
     {
-      "Name": "LimitFlashCurrent",
-      "Path": "vendor.camera.max_flash_current",
-      "Values": [
-        "100",
-        "1500"
-      ],
-      "ResetOnInit": true,
-      "Type": "Property"
-    },
-    {
       "Name": "CDCpuset",
       "Path": "/dev/cpuset/camera-daemon/cpus",
       "Values": [
@@ -513,21 +503,6 @@
       ]
     },
     {
-      "Name": "UFSClkScale",
-      "Path": "/sys/devices/platform/soc/112b0000.ufshci/clkscale/clkscale_control",
-      "Values": [
-        "powerhal_set:0",
-        "powerhal_set:1",
-        "powerhal_set:2"
-      ],
-      "ResetOnInit": true,
-      "Comments": [
-        "UFS clock scaling control from powercontable.xml PERF_RES_IO_UFS_CLKSCALE.",
-        "0=aggressive scaling (best battery), 1=balanced, 2=performance. Default: 0.",
-        "Enabling clkscale=0 during idle/inactive saves significant power."
-      ]
-    },
-    {
       "Name": "DCSMode",
       "Path": "/sys/kernel/ged/hal/dcs_mode",
       "Values": [
@@ -600,13 +575,6 @@
       "Duration": 500,
       "Value": "64",
       "Comments": "Stock DCS mode during interaction - balanced, not restricting GPU during touch response."
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "UFSClkScale",
-      "Duration": 500,
-      "Value": "powerhal_set:1",
-      "Comments": "Balanced UFS clock scaling during interaction."
     },
     {
       "PowerHint": "LAUNCH",
@@ -727,13 +695,6 @@
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
     },
     {
-      "PowerHint": "LAUNCH",
-      "Node": "UFSClkScale",
-      "Duration": 3000,
-      "Value": "powerhal_set:2",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "FIXED_PERFORMANCE",
       "Node": "GpuPwrLevel",
       "Duration": 0,
@@ -845,13 +806,6 @@
       "Value": "0-6"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:2",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "GAME",
       "Type": "EndHint",
       "Value": "INTERACTION"
@@ -956,13 +910,6 @@
       "Value": "51"
     },
     {
-      "PowerHint": "GAME",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "PowerHALRenderingState",
       "Duration": 0,
@@ -1062,13 +1009,6 @@
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "UFSClkScale",
-      "Duration": 0,
-      "Value": "powerhal_set:1",
-      "Comments": "Balanced UFS scaling during rendering - not fully aggressive to avoid storage latency spikes."
-    },
-    {
-      "PowerHint": "EXPENSIVE_RENDERING",
       "Type": "EndHint",
       "Value": "INTERACTION"
     },
@@ -1142,13 +1082,6 @@
       "Comments": "Max DCS power saving in low power mode. Max=66 per powercontable.xml."
     },
     {
-      "PowerHint": "LOW_POWER",
-      "Node": "UFSClkScale",
-      "Duration": 0,
-      "Value": "powerhal_set:0",
-      "Comments": "Enable aggressive UFS clock scaling in low power mode per powercontable.xml PERF_RES_IO_UFS_CLKSCALE."
-    },
-    {
       "PowerHint": "CAMERA_LAUNCH",
       "Node": "GEDDvfsMargin",
       "Duration": 1000,
@@ -1168,13 +1101,6 @@
       "Duration": 1000,
       "Value": "0",
       "Comments": "Disable DCS during camera launch burst - let GPU clock freely for maximum responsiveness."
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "UFSClkScale",
-      "Duration": 1000,
-      "Value": "powerhal_set:2",
-      "Comments": "Full UFS performance during camera launch - fast storage access needed for camera lib loading."
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
@@ -1298,12 +1224,6 @@
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
-      "Node": "LimitFlashCurrent",
-      "Duration": 1000,
-      "Value": "1500"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
       "Node": "PowerHALCameraRunning",
       "Duration": 1000,
       "Value": "1"
@@ -1404,13 +1324,6 @@
       "Duration": 1,
       "Value": "0",
       "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:0",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
@@ -1519,13 +1432,6 @@
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "UFSClkScale",
-      "Duration": 0,
-      "Value": "powerhal_set:0",
-      "Comments": "Enable UFS clock scaling when display is off for power saving."
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
       "Type": "EndHint",
       "Value": "DISPLAY_UPDATE_IMMINENT"
     },
@@ -1622,13 +1528,6 @@
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
     },
     {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "UFSClkScale",
-      "Duration": 50,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "DISPLAY_CHANGE",
       "Node": "GEDDvfsMargin",
       "Duration": 5000,
@@ -1648,13 +1547,6 @@
       "Duration": 5000,
       "Value": "64",
       "Comments": "Stock DCS mode during display change - standard balanced mode, not restricting GPU during transition."
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "UFSClkScale",
-      "Duration": 5000,
-      "Value": "powerhal_set:1",
-      "Comments": "Balanced UFS scaling during display change transition."
     },
     {
       "PowerHint": "DISPLAY_CHANGE",
@@ -1850,13 +1742,6 @@
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
     },
     {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "UFSClkScale",
-      "Duration": 100,
-      "Value": "powerhal_set:2",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "CAMERA_BACKEND_BOOST",
       "Node": "MemFreq",
       "Duration": 1000,
@@ -1932,13 +1817,6 @@
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
     },
     {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "UFSClkScale",
-      "Duration": 1000,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
       "Node": "CPUBigClusterMaxFreq",
       "Duration": 3000,
@@ -1994,13 +1872,6 @@
       "Duration": 3000,
       "Value": "66",
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "UFSClkScale",
-      "Duration": 3000,
-      "Value": "powerhal_set:0",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_MULTICAM_BOOST",
@@ -2102,13 +1973,6 @@
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
     },
     {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "UFSClkScale",
-      "Duration": 100,
-      "Value": "powerhal_set:2",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "CAMERA_ZOOMING_BOOST",
       "Node": "CAMUClampBoost",
       "Duration": 100,
@@ -2206,13 +2070,6 @@
       "Duration": 100,
       "Value": "64",
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "UFSClkScale",
-      "Duration": 100,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_STREAMING_EXTREME",
@@ -2342,12 +2199,6 @@
     },
     {
       "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "LimitFlashCurrent",
-      "Duration": 0,
-      "Value": "1500"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
       "Node": "GEDDvfsMargin",
       "Duration": 1,
       "Value": "110",
@@ -2366,13 +2217,6 @@
       "Duration": 1,
       "Value": "66",
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_STREAMING_HIGH",
@@ -2502,12 +2346,6 @@
     },
     {
       "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "LimitFlashCurrent",
-      "Duration": 0,
-      "Value": "1500"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
       "Node": "GEDDvfsMargin",
       "Duration": 1,
       "Value": "110",
@@ -2526,13 +2364,6 @@
       "Duration": 1,
       "Value": "66",
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_STREAMING_STANDARD",
@@ -2662,12 +2493,6 @@
     },
     {
       "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "LimitFlashCurrent",
-      "Duration": 0,
-      "Value": "1500"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
       "Node": "GEDDvfsMargin",
       "Duration": 1,
       "Value": "138",
@@ -2686,13 +2511,6 @@
       "Duration": 1,
       "Value": "66",
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:0",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_STREAMING_LOW",
@@ -2800,13 +2618,6 @@
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
     },
     {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:0",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
       "Node": "PowerHALCameraRunning",
       "Duration": 0,
@@ -2952,13 +2763,6 @@
       "Duration": 1,
       "Value": "66",
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:0",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_VIDEO_RECORDING",
@@ -3088,12 +2892,6 @@
     },
     {
       "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "LimitFlashCurrent",
-      "Duration": 0,
-      "Value": "1500"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
       "Node": "GEDDvfsMargin",
       "Duration": 1,
       "Value": "110",
@@ -3112,13 +2910,6 @@
       "Duration": 1,
       "Value": "66",
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     },
     {
       "PowerHint": "CAMERA_GPU_HIGH",
@@ -3172,13 +2963,6 @@
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
     },
     {
-      "PowerHint": "CAMERA_GPU_HIGH",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "CAMERA_GPU_STANDARD",
       "Node": "GpuPwrLevel",
       "Duration": 0,
@@ -3230,13 +3014,6 @@
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
     },
     {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "UFSClkScale",
-      "Duration": 1,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
-    },
-    {
       "PowerHint": "ML_ACC",
       "Node": "PMQoSCpuDmaLatency",
       "Duration": 2000,
@@ -3262,13 +3039,6 @@
       "Duration": 2000,
       "Value": "64",
       "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "ML_ACC",
-      "Node": "UFSClkScale",
-      "Duration": 2000,
-      "Value": "powerhal_set:1",
-      "Comments": "UFS clock scaling (0=aggressive, 1=balanced, 2=performance)"
     }
   ]
 }
