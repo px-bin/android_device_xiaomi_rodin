@@ -1196,6 +1196,7 @@ vendor/lib64/vendor.xiaomi.hardware.fx.tunnel-V1-ndk.so
 odm/app/JVFactoryTest/JVFactoryTest.apk|8290bfb8cad4d1e1079b7367f2052ce0b3e77bb1
 odm/app/goodix_sz_rodin/goodix_sz_rodin.apk|7e09a157409f7b478e879fd03213dc82cad3d475
 product/app/MiuiCit/MiuiCit.apk|7f0d4f3790f7577106510e2339cb00ea4c5d823d
+product/etc/device_features/rodin.xml
 odm/etc/cit_param_config.json
 system_ext/bin/spkcal_88263s_n12a|134c5432213a5e04d327da0593287dc88cd8aaba
 system_ext/bin/spkcal_88263s_n12|e2ae8570e4e2383013e2d607d44b78ab3b330132
