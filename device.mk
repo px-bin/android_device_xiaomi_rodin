@@ -321,6 +321,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/com.nxp.mifare.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/com.nxp.mifare.xml
 
 # Overlays
+$(call inherit-product, hardware/mediatek/overlay/mssi.mk)
+
 PRODUCT_PACKAGES += \
     FrameworksResOverlayRodin \
     FrameworksResOverlayRodinIN \
@@ -328,8 +330,7 @@ PRODUCT_PACKAGES += \
     SettingsResOverlayRodin \
     SettingsProviderResOverlayRodin \
     SystemUIOverlayRodin \
-    TetheringConfigOverlay \
-    WifiOverlay
+    TetheringConfigOverlay
 
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
