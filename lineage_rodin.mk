@@ -14,6 +14,9 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Inherit from rodin device
 $(call inherit-product, device/xiaomi/rodin/device.mk)
 
+# FOD
+TARGET_HAS_UDFPS := true
+
 #crDroid flags
 IS_PHONE := true
 TARGET_FACE_UNLOCK_SUPPORTED := true
