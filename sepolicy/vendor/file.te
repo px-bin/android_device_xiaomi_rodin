@@ -20,6 +20,8 @@ type vendor_display_data_file, data_file_type, file_type;
 
 # Fingerprint
 type vendor_fingerprint_sysfs, sysfs_type, fs_type;
+type vendor_fingerprint_data_file, file_type, data_file_type;
+type vendor_fingerprint_data_file_fpdump, file_type, data_file_type;
 
 # Power
 type vendor_touchfeature_device, dev_type;
@@ -35,3 +37,6 @@ type hal_touchfeature_xiaomi_default_exec, exec_type, file_type, vendor_file_typ
 
 # CIT
 type vendor_audio_data_file, file_type, data_file_type;
+
+# LED sysfs files
+type vendor_sysfs_led_file, fs_type, sysfs_type;

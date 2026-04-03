@@ -19,3 +19,7 @@ allow system_app sysfs_fsm_re25:file { read write open getattr };
 allow system_app sysfs_fsm_f0:file { read write open getattr };
 allow system_app vendor_audio_data_file:dir { read write open create search add_name };
 allow system_app vendor_audio_data_file:file { read write open create getattr };
+
+# Allow system apps (like Settings) to interact with the LED
+allow system_app vendor_sysfs_led_file:dir search;
+allow system_app vendor_sysfs_led_file:file rw_file_perms;
