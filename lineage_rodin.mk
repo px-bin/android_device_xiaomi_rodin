@@ -14,6 +14,12 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Inherit from rodin device
 $(call inherit-product, device/xiaomi/rodin/device.mk)
 
+#crDroid flags
+IS_PHONE := true
+TARGET_FACE_UNLOCK_SUPPORTED := true
+TARGET_SUPPORTS_QUICK_TAP := true
+TARGET_SUPPORTS_BLUR := true
+
 PRODUCT_DEVICE := rodin
 PRODUCT_NAME := lineage_rodin
 PRODUCT_BRAND := POCO
@@ -26,7 +32,6 @@ PRODUCT_SYSTEM_DEVICE := rodin
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-TARGET_UNOFFICIAL_BUILD_ID := Elvettorato
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildDesc="missi-user 16 BP2A.250605.031.A3 OS3.0.9.0.WOJMIXM release-keys" \
