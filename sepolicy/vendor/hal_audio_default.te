@@ -14,3 +14,5 @@ allow hal_audio_default sysfs_fsm_f0:file rw_file_perms;
 
 set_prop(hal_audio_default, vendor_mtk_audio_prop)
 
+# Allow Audio HAL to read generic sysfs (f0_value)
+allow hal_audio_default sysfs:file r_file_perms;
