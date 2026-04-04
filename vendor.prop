@@ -61,6 +61,7 @@ vendor.streamin.pcm.dump=0
 ro.apk_verity.mode=2
 
 # Bluetooth
+ro.vendor.bt.platform=6899
 persist.bluetooth.a2dp_offload.coex_buf_count=3
 persist.bluetooth.a2dp_offload.disabled=false
 persist.bluetooth.a2dp_offload.mtk_coex=true
@@ -78,7 +79,7 @@ persist.vendor.connsys.coredump.mode=0
 persist.vendor.connsys.dynamic.dump=0
 persist.vendor.connsys.fm_chipid=connac2x
 persist.vendor.connsys.patch.version=-1
-persist.vendor.connsysfw.enable=false
+persist.vendor.connsysfw.enable=true
 ro.hardware.wlan.chip=mt663x
 ro.hardware.wlan.dbs=1
 ro.hardware.wlan.vendor=mediatek
@@ -141,6 +142,9 @@ ro.vendor.mtk_blulight_def_support=0
 ro.vendor.mtk_dre30_support=1
 ro.vendor.mtk_sdr_adaptive_support=0
 ro.vendor.mtk_svp_on_mtee_support=1
+ro.vendor.mtk_wfd_support=1
+ro.vendor.wfd.dummy.enable=0
+ro.vendor.wfd.iframesize.level=0
 
 # DRM
 drm.service.enabled=true
@@ -245,10 +249,13 @@ debug.hwui.render_dirty_regions=false
 debug.renderengine.backend=skiaglthreaded
 
 # IMS
+persist.vendor.ims_support=1
+persist.vendor.volte_support=1
 persist.vendor.mtk.volte.enable=1
 persist.vendor.mtk_ct_volte_support=3
 persist.vendor.mtk_dynamic_ims_switch=1
 persist.vendor.mtk_wfc_support=1
+persist.vendor.vilte_support=1
 persist.vendor.viwifi_support=1
 persist.vendor.vonr_setting_support=1
 persist.radio.is_vonr_enabled_0=true
@@ -259,6 +266,7 @@ ro.vendor.mtk_data_config=1
 ro.vendor.mtk_telephony_add_on_policy=0
 ro.vendor.vodata_support=1
 ro.vendor.vt_hevc_support=1
+ro.vendor.ril.set_sbp_place=0
 
 # NeuralNetworks
 debug.mtk_tflite.target_nnapi=29
@@ -363,6 +371,7 @@ persist.vendor.mtk.dch.enable.2=0
 persist.vendor.mtk.vodata.allow_rat=1
 persist.vendor.mtk.vodata.data_mode=1
 persist.vendor.mtk_sim_switch_policy=2
+ro.vendor.mtk_sim_switch_policy=2
 persist.vendor.radio.dynamic_sar=1
 persist.vendor.radio.flashless.fsm=0
 persist.vendor.radio.flashless.fsm_cst=0
@@ -377,7 +386,6 @@ ro.telephony.default_network=32,32,32,32
 ro.telephony.iwlan_operation_mode=AP-assisted
 ro.telephony.sim.count=2
 ro.vendor.md_prop_ver=1
-ro.vendor.mtk_c2k_lte_mode=2
 ro.vendor.mtk_c2k_support=1
 ro.vendor.mtk_eccci_c2k=1
 ro.vendor.mtk_external_sim_only_slots=0
@@ -386,6 +394,7 @@ ro.vendor.mtk_fd_support=1
 ro.vendor.mtk_gwsd_capability=2
 ro.vendor.mtk_gwsd_support=1
 ro.vendor.mtk_lte_support=1
+ro.vendor.mtk_c2k_lte_mode=0
 ro.vendor.mtk_mcf_support=1
 ro.vendor.mtk_md_world_mode_support=1
 ro.vendor.mtk_mipc_support=1
@@ -398,6 +407,7 @@ ro.vendor.mtk_sim_card_onoff=3
 ro.vendor.mtk_sim_hot_swap_common_slot=1
 ro.vendor.mtk_world_phone_policy=0
 ro.vendor.num_md_protocol=2
+ro.vendor.mtk_single_bin_modem_support=1
 ro.vendor.radio.max.multisim=dsds
 ro.vendor.sim_me_lock_mode=3
 telephony.active_modems.max_count=2

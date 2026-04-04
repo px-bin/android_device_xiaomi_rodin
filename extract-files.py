@@ -79,15 +79,18 @@ lib_fixups: lib_fixups_user_type = {
     (
         'libneuron_graph_delegate.mtk',
         'libtflite_mtk',
-        'vendor.mediatek.hardware.apuware.apusys@2.0',
-        'vendor.mediatek.hardware.apuware.apusys@2.1',
-        'vendor.mediatek.hardware.apuware.hmp@1.0',
         'vendor.mediatek.hardware.apuware.utils@2.0',
-        'vendor.mediatek.hardware.videotelephony@1.0',
+        'vendor.mediatek.hardware.apuware.utils-V1-ndk',
+        'vendor.mediatek.hardware.apuware.apusys-V5-ndk',
+        'vendor.mediatek.hardware.videotelephony-V1-ndk',
     ): lib_fixup_vendor_suffix,
 }
 
 blob_fixups: blob_fixups_user_type = {
+    'system_ext/priv-app/ImsService/ImsService.apk': blob_fixup()
+        .apktool_patch('blob-patches/ImsService/'),
+    'system_ext/lib64/libimsma.so': blob_fixup()
+        .replace_needed('libsink.so', 'libsink-mtk.so'),
     ('odm/lib64/libmt_mitee.so', 'vendor/bin/hw/android.hardware.security.keymint@3.0-service.mitee'): blob_fixup()
         .replace_needed('android.hardware.security.keymint-V3-ndk.so', 'android.hardware.security.keymint-V3-ndk-v34.so'),
     'odm/bin/hw/vendor.xiaomi.sensor.citsensorservice.aidl': blob_fixup()

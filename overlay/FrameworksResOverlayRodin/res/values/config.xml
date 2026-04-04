@@ -351,7 +351,7 @@
     <integer name="config_screenBrightnessDim">5</integer>
     <integer name="config_screenBrightnessDim_hyper">15</integer>
     <integer name="config_screenBrightnessDoze">5</integer>
-    <integer name="config_screenBrightnessSettingDefault">40</integer>
+    <integer name="config_screenBrightnessSettingDefault">25</integer>
     <integer name="config_screenBrightnessSettingDefault_hyper">1229</integer>
     <integer name="config_screenBrightnessSettingMaximum">255</integer>
     <integer name="config_screenBrightnessSettingMaximum_hyper">16383</integer>
@@ -559,12 +559,6 @@
          Otherwise, the device may fail to wake out of suspend reliably.
          The default is false. -->
     <bool name="config_suspendWhenScreenOffDueToProximity">true</bool>
-
-    <!-- Whether the device enable the non-standalone (NSA) mode of 5G NR.-->
-    <bool name="config_telephony5gNonStandalone">true</bool>
-
-    <!-- Whether the device enable the standalone (SA) mode of 5G NR.-->
-    <bool name="config_telephony5gStandalone">true</bool>
 
     <!-- If this is true, the screen will come on when you unplug usb/power/whatever. -->
     <bool name="config_unplugTurnsOnScreen">true</bool>
