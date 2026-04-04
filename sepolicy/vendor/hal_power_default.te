@@ -11,3 +11,6 @@ allow hal_power_default sysfs_gpu:file rw_file_perms;
 allow hal_power_default sysfs_ged:dir search;
 allow hal_power_default sysfs_ged:file rw_file_perms;
 allow hal_power_default cpu_dma_latency_device:chr_file rw_file_perms;
+
+set_prop(hal_power_default, vendor_mtk_camera_prop)
+allow hal_power_default sysfs:file { write open };
