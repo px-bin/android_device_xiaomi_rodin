@@ -1222,7 +1222,6 @@ odm/etc/spk_cal_whitenoise.wav
 odm/etc/spk_hp.wav
 odm/etc/stereo.wav
 
-
 # Firmware
 odm/firmware/Conf_MultipleTest.ini
 odm/firmware/focaltech_ts_fw_rodin.bin
@@ -1232,7 +1231,6 @@ odm/firmware/goodix_test_limits_255.csv
 odm/firmware/rodin_fts_thp_config.ini
 odm/firmware/rodin_gtp_thp_config.ini
 odm/firmware/rodin_gtp_thp_config_vendor.ini
-vendor/firmware/BT_FW.cfg
 vendor/firmware/aw8697_haptic.bin
 vendor/firmware/aw8697_rtp_1.bin
 vendor/firmware/aw882xx_acf.bin
@@ -1451,10 +1449,37 @@ system_ext/etc/permissions/com.android.hotwordenrollment.common.util.xml
 system_ext/framework/com.android.hotwordenrollment.common.util.jar
 
 # IMS
+system_ext/bin/vtservice
+system_ext/etc/init/init.vtservice.rc
+system_ext/framework/mediatek-ims-base.jar
+system_ext/framework/mediatek-ims-common.jar
+system_ext/framework/mediatek-ims-extension-plugin.jar
+system_ext/framework/mediatek-telecom-common.jar
+system_ext/framework/mediatek-telephony-base.jar
+system_ext/framework/mediatek-telephony-common.jar
+system_ext/etc/sysconfig/com.mediatek.ims.config.xml
+system_ext/lib64/libcomutils.so
+system_ext/lib64/libimsma.so
+system_ext/lib64/libimsma_adapt.so
+system_ext/lib64/libimsma_rtp.so
+system_ext/lib64/libimsma_socketwrapper.so
+system_ext/lib64/libmtk_vt_service.so
+system_ext/lib64/libmtk_vt_wrapper.so
+system_ext/lib64/libsignal.so
+system_ext/lib64/libsink.so
+system_ext/lib64/libsource.so
+system_ext/lib64/libvcodec_cap.so
+system_ext/lib64/libvcodec_capenc.so
+system_ext/lib64/libvt_avsync.so
+system_ext/lib64/vendor.mediatek.hardware.videotelephony@1.0.so
+system_ext/priv-app/ImsService/ImsService.apk
+system_ext/priv-app/MtkGbaService/MtkGbaService.apk
 vendor/bin/hw/vtservice_aidl
 vendor/etc/init/init.vtservice_aidl.rc
+vendor/etc/permissions/android.hardware.telephony.ims.prebuilt.xml
 vendor/lib64/hw/vendor.mediatek.hardware.videotelephony-impl.so
-vendor/lib64/vendor.mediatek.hardware.videotelephony-V1-ndk.so
+vendor/lib64/vendor.mediatek.hardware.videotelephony-V1-ndk.so;MODULE_SUFFIX=-vendor
+system_ext/lib64/vendor.mediatek.hardware.videotelephony-V1-ndk.so
 
 # Init modules
 vendor/bin/init.insmod.sh
@@ -1694,6 +1719,10 @@ vendor/lib64/vendor.mediatek.hardware.pq_aidl-V4-ndk.so
 vendor/lib64/vendor.mediatek.hardware.pq_aidl-V7-ndk.so
 
 # Radio
+system_ext/lib64/lib_remote_simlock.so
+system_ext/lib64/libccci_util_sys.so
+system_ext/lib64/libsysenv_system.so
+system_ext/lib64/vendor.mediatek.hardware.mtkradioex@3.0.so
 vendor/bin/ccci_mdinit
 vendor/bin/ccci_rpcd
 vendor/bin/hw/mtkfusionrild
@@ -1734,17 +1763,19 @@ vendor/lib64/libmtktinyxml.so
 vendor/lib64/libmtkutils.so
 vendor/lib64/libratconfig.so
 vendor/lib64/librcs_volte_core.so
+vendor/lib64/libril.so
 vendor/lib64/librilfusion.so
+vendor/lib64/librilutils.so
 vendor/lib64/libsimlock.so
 vendor/lib64/libsimmelock.so
 vendor/lib64/libstorage_otp.so
 vendor/lib64/libsysenv.so
 vendor/lib64/libtrm.so
+vendor/lib64/libudf.so
 vendor/lib64/libvia-ril.so
 vendor/lib64/libviamipc-ril.so
 vendor/lib64/libwpfa.so
 vendor/lib64/libxiaomi_mtkril.so
-vendor/lib64/libudf.so
 vendor/lib64/vendor.mediatek.hardware.clientapi-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.mdmonitor-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.mdmonitor@1.0.so
@@ -1770,7 +1801,6 @@ vendor/lib64/vendor.mediatek.hardware.rcs-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.rcs@2.0.so
 
 # Radio (Configs)
-vendor/etc/MNL_Config.xml
 vendor/etc/apdb/APDB_MT6899___W2439
 vendor/etc/apdb/APDB_MT6899___W2439_ENUM
 vendor/etc/ecc_list.xml
@@ -1789,6 +1819,7 @@ vendor/etc/virtual-spn-conf-by-efgid1.xml
 vendor/etc/virtual-spn-conf-by-efpnn.xml
 vendor/etc/virtual-spn-conf-by-efspn.xml
 vendor/etc/virtual-spn-conf-by-imsi.xml
+system_ext/etc/permissions/com.android.carrierconfig.xml
 
 # Secure element
 vendor/bin/hw/android.hardware.secure_element@1.2-service-mediatek
