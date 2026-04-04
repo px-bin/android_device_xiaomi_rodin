@@ -462,11 +462,11 @@
         <item>1000</item>
     </array>
 
-    <item type="dimen" name="config_brightnessRampRateFast">0.41590282</item>
-    <item type="dimen" name="config_screenBrightnessDimFloat">8.54597E-4</item>
-    <item type="dimen" name="config_screenBrightnessSettingDefaultFloat">0.07496032</item>
-    <item type="dimen" name="config_screenBrightnessSettingMaximumFloat">1.0</item>
-    <item type="dimen" name="config_screenBrightnessSettingMinimumFloat">8.54597E-4</item>
+    <dimen name="config_brightnessRampRateFast">0.41590282</dimen>
+    <dimen name="config_screenBrightnessDimFloat">0.002380662</dimen>
+    <dimen name="config_screenBrightnessSettingDefaultFloat">0.4</dimen>
+    <dimen name="config_screenBrightnessSettingMaximumFloat">1.0</dimen>
+    <dimen name="config_screenBrightnessSettingMinimumFloat">0.002380662</dimen>
 
     <integer name="config_brightness_ramp_rate_fast">4932</integer>
     <integer name="config_brightness_ramp_rate_slow">3946</integer>
