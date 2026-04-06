@@ -288,9 +288,6 @@ $(call soong_config_set_bool,lineagelight,scan_for_backlight_devices,$(TARGET_LI
 PRODUCT_PACKAGES += \
     android.hardware.light-service.lineage
 
-# Media
-PRODUCT_PACKAGES += \
-    android.hardware.media.c2-mtk-service
 
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)

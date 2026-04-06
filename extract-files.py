@@ -88,7 +88,7 @@ blob_fixups: blob_fixups_user_type = {
 
     'system_ext/lib64/libimsma.so': blob_fixup()
         .replace_needed('libsink.so', 'libsink-mtk.so'),
-    
+
     # KeyMint
     (
         'odm/lib64/libmt_mitee.so',
@@ -154,8 +154,6 @@ blob_fixups: blob_fixups_user_type = {
     (
         'vendor/bin/hw/mt6899/android.hardware.graphics.allocator-V2-service-mediatek.mt6899',
         'vendor/lib64/libaimemc.so',
-        'vendor/lib64/libcodec2_vpp_AIMEMC_plugin.so',
-        'vendor/lib64/libcodec2_vpp_AISR_plugin.so',
         'vendor/lib64/libgpud.so',
         'vendor/lib64/mt6899/libmtkcam_grallocutils.so',
         'vendor/lib64/libmtkcam_grallocutils_aidlv2helper.so',
@@ -249,7 +247,110 @@ blob_fixups: blob_fixups_user_type = {
     # Telephony
     'vendor/bin/hw/mtkfusionrild': blob_fixup()
         .add_needed('libutils-v32.so'),
-}  # fmt: skip
+
+    # Codec2
+    (
+        'vendor/lib64/libcodec2_hidl_plugin.so',
+        'vendor/lib64/libcodec2_mtk_c2store.so',
+        'vendor/lib64/libcodec2_vpp_mi_plugin.so',
+        'vendor/lib64/libcodec2_vpp_qt_plugin.so',
+        'vendor/lib64/libcodec2_vpp_fa_plugin.so',
+        'vendor/lib64/libcodec2_vpp_frc_plugin.so',
+        'vendor/lib64/libcodec2_vpp_rs_plugin.so',
+        'vendor/lib64/libcodec2_vpp_ve_plugin.so',
+    ): blob_fixup()
+        .replace_needed('libcodec2.so', 'libcodec2-mtk.so')
+        .replace_needed('libcodec2_soft_common.so', 'libcodec2_soft_common-mtk.so')
+        .replace_needed('libcodec2_vndk.so', 'libcodec2_vndk-mtk.so'),
+
+    # Codec2
+    (
+        'vendor/lib64/libcodec2_vpp_AIMEMC_plugin.so',
+        'vendor/lib64/libcodec2_vpp_AISR_plugin.so',
+    ): blob_fixup()
+        .replace_needed('android.hardware.graphics.common-V5-ndk.so', 'android.hardware.graphics.common-V7-ndk.so')
+        .replace_needed('libcodec2.so', 'libcodec2-mtk.so')
+        .replace_needed('libcodec2_soft_common.so', 'libcodec2_soft_common-mtk.so')
+        .replace_needed('libcodec2_vndk.so', 'libcodec2_vndk-mtk.so'),
+
+    # Codec2 — full HIDL/AIDL/HAL dependents (vdec, venc, c2 service binaries)
+    (
+        'vendor/lib64/libcodec2_mtk_vdec.so',
+        'vendor/lib64/libcodec2_mtk_venc.so',
+        'vendor/bin/hw/android.hardware.media.c2-mediatek-64b',
+        'vendor/bin/hw/android.hardware.media.c2@1.2-mediatek-64b',
+    ): blob_fixup()
+        .replace_needed('libcodec2.so', 'libcodec2-mtk.so')
+        .replace_needed('libcodec2_aidl.so', 'libcodec2_aidl-mtk.so')
+        .replace_needed('libcodec2_hal_common.so', 'libcodec2_hal_common-mtk.so')
+        .replace_needed('libcodec2_hidl@1.0.so', 'libcodec2_hidl@1.0-mtk.so')
+        .replace_needed('libcodec2_hidl@1.1.so', 'libcodec2_hidl@1.1-mtk.so')
+        .replace_needed('libcodec2_hidl@1.2.so', 'libcodec2_hidl@1.2-mtk.so')
+        .replace_needed('libcodec2_soft_common.so', 'libcodec2_soft_common-mtk.so')
+        .replace_needed('libcodec2_vndk.so', 'libcodec2_vndk-mtk.so'),
+
+    # Codec2
+    (
+        'vendor/lib64/libcodec2_aidl-mtk.so',
+        'vendor/lib64/libcodec2_hal_common-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.0-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.1-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.2-mtk.so',
+        'vendor/lib64/libcodec2_soft_ac4dec-mtk.so',
+        'vendor/lib64/libcodec2_soft_common-mtk.so',
+        'vendor/lib64/libcodec2_soft_ddpdec-mtk.so',
+        'vendor/lib64/libcodec2_store_dolby-mtk.so',
+    ): blob_fixup()
+        .replace_needed('libcodec2.so', 'libcodec2-mtk.so')
+        .replace_needed('libcodec2_vndk.so', 'libcodec2_vndk-mtk.so'),
+
+    # Codec2
+    (
+        'vendor/lib64/libcodec2_aidl-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.0-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.1-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.2-mtk.so',
+        'vendor/lib64/libcodec2_soft_ac4dec-mtk.so',
+        'vendor/lib64/libcodec2_soft_common-mtk.so',
+        'vendor/lib64/libcodec2_soft_ddpdec-mtk.so',
+        'vendor/lib64/libcodec2_store_dolby-mtk.so',
+    ): blob_fixup()
+        .replace_needed('libcodec2_hal_common.so', 'libcodec2_hal_common-mtk.so'),
+
+    # Codec2
+    (
+        'vendor/lib64/libcodec2_aidl-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.0-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.1-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.2-mtk.so',
+    ): blob_fixup()
+        .replace_needed('libcodec2_hidl_plugin.so', 'libcodec2_hidl_plugin-mtk.so'),
+
+    # Codec2
+    (
+        'vendor/lib64/libcodec2_hidl@1.0-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.1-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.2-mtk.so',
+    ): blob_fixup()
+        .replace_needed('libstagefright_bufferqueue_helper.so', 'libstagefright_bufferqueue_helper-mtk.so'),
+
+    # Codec2
+    (
+        'vendor/lib64/libcodec2_hidl@1.1-mtk.so',
+        'vendor/lib64/libcodec2_hidl@1.2-mtk.so',
+    ): blob_fixup()
+        .replace_needed('libcodec2_hidl@1.0.so', 'libcodec2_hidl@1.0-mtk.so'),
+
+    # Codec2
+    'vendor/lib64/libcodec2_hidl@1.2-mtk.so': blob_fixup()
+        .replace_needed('libcodec2_hidl@1.1.so', 'libcodec2_hidl@1.1-mtk.so'),
+
+    # Codec2 Dolby store
+    'vendor/lib64/libcodec2_store_dolby-mtk.so': blob_fixup()
+        .replace_needed('libcodec2_soft_ac4dec.so', 'libcodec2_soft_ac4dec-mtk.so')
+        .replace_needed('libcodec2_soft_ddpdec.so', 'libcodec2_soft_ddpdec-mtk.so'),
+
+} # fmt: skip
 
 module = ExtractUtilsModule(
     'rodin',
