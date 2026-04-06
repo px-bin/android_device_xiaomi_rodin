@@ -1523,23 +1523,42 @@ vendor/lib64/vendor.mediatek.hardware.mbrain-V6-ndk.so
 
 # Media
 vendor/lib64/libbwc.so
-vendor/lib64/libcodec2_vpp_frc_plugin.so
-vendor/lib64/libcodec2_vpp_ve_plugin.so
 vendor/lib64/libvcodec_oal.so
 vendor/lib64/libvcodecdrv_header_stub.so
 
 # Media (Codec2)
+vendor/lib64/libstagefright_bufferqueue_helper.so:vendor/lib64/libstagefright_bufferqueue_helper-mtk.so;FIX_SONAME
+vendor/bin/hw/android.hardware.media.c2-mediatek-64b
+vendor/bin/hw/android.hardware.media.c2@1.2-mediatek-64b
+vendor/etc/init/android.hardware.media.c2-mediatek-64b.rc
+vendor/etc/seccomp_policy/android.hardware.media.c2@1.2-extended-seccomp-policy
+vendor/etc/seccomp_policy/android.hardware.media.c2@1.2-mediatek-seccomp-policy
+vendor/etc/vintf/manifest/manifest_media_c2_default.xml|949caf76ef5a13b32f0bc4c5b8aebadb08215ca3
 vendor/etc/VideoLog_dynamic.ds
+vendor/lib64/libcodec2.so:vendor/lib64/libcodec2-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_aidl.so:vendor/lib64/libcodec2_aidl-mtk.so;FIX_SONAME
 vendor/lib64/libcodec2_fsr.so
+vendor/lib64/libcodec2_hal_common.so:vendor/lib64/libcodec2_hal_common-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_hidl@1.0.so:vendor/lib64/libcodec2_hidl@1.0-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_hidl@1.1.so:vendor/lib64/libcodec2_hidl@1.1-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_hidl@1.2.so:vendor/lib64/libcodec2_hidl@1.2-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_hidl_plugin.so:vendor/lib64/libcodec2_hidl_plugin-mtk.so;FIX_SONAME
 vendor/lib64/libcodec2_mtk_c2store.so
 vendor/lib64/libcodec2_mtk_vdec.so
 vendor/lib64/libcodec2_mtk_venc.so
+vendor/lib64/libcodec2_soft_ac4dec.so:vendor/lib64/libcodec2_soft_ac4dec-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_soft_common.so:vendor/lib64/libcodec2_soft_common-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_soft_ddpdec.so:vendor/lib64/libcodec2_soft_ddpdec-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_store_dolby.so:vendor/lib64/libcodec2_store_dolby-mtk.so;FIX_SONAME
+vendor/lib64/libcodec2_vndk.so:vendor/lib64/libcodec2_vndk-mtk.so;FIX_SONAME
 vendor/lib64/libcodec2_vpp_AIMEMC_plugin.so
 vendor/lib64/libcodec2_vpp_AISR_plugin.so
 vendor/lib64/libcodec2_vpp_fa_plugin.so
+vendor/lib64/libcodec2_vpp_frc_plugin.so
 vendor/lib64/libcodec2_vpp_mi_plugin.so
 vendor/lib64/libcodec2_vpp_qt_plugin.so
 vendor/lib64/libcodec2_vpp_rs_plugin.so
+vendor/lib64/libcodec2_vpp_ve_plugin.so
 vendor/lib64/libformatter.so
 
 # Mlipay
