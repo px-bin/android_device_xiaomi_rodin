@@ -78,8 +78,27 @@ vendor/lib64/libvow_ap_test_vaca_nn.so
 vendor/lib64/libvow_comp_test.so
 vendor/lib64/vendor.mediatek.hardware.audio@6.1.so
 vendor/lib64/vendor.mediatek.hardware.bluetooth.audio-V1-ndk.so
+vendor/lib64/vendor.mediatek.hardware.bluetooth.audio@2.1.so
+vendor/lib64/vendor.mediatek.hardware.bluetooth.audio@2.2.so
 
 # Audio Configs
+vendor/etc/audio_device.xml
+vendor/etc/audio_device_fs.xml
+vendor/etc/audio_em.xml
+vendor/etc/a2dp_in_audio_policy_configuration.xml
+vendor/etc/audio_spatial_db_reduce.xml
+vendor/etc/aurisys_config.xml
+vendor/etc/aurisys_config_hifi3.xml
+vendor/etc/aurisys_config_hifi3_fs.xml
+vendor/etc/aurisys_config_rv.xml
+vendor/etc/le_audio_codec_capabilities.xml
+vendor/etc/usb_audio_accessory_only_policy_configuration.xml
+vendor/etc/usb_audio_policy_configuration.xml
+vendor/etc/aidl/hfp/hfp_codec_capabilities.xml
+vendor/etc/aidl/le_audio/aidl_audio_set_configurations.bfbs
+vendor/etc/aidl/le_audio/aidl_audio_set_configurations.json
+vendor/etc/aidl/le_audio/aidl_audio_set_scenarios.bfbs
+vendor/etc/aidl/le_audio/aidl_audio_set_scenarios.json
 vendor/etc/audio_param/AudioParamOptions_mgvi.xml
 vendor/etc/audio_param/AudioParamOptions_vext.xml
 vendor/etc/audio_param/BtInfo_AudioParam.xml
