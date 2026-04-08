@@ -296,10 +296,7 @@ blob_fixups: blob_fixups_user_type = {
         'vendor/lib64/libcodec2_hidl@1.0-mtk.so',
         'vendor/lib64/libcodec2_hidl@1.1-mtk.so',
         'vendor/lib64/libcodec2_hidl@1.2-mtk.so',
-        'vendor/lib64/libcodec2_soft_ac4dec-mtk.so',
         'vendor/lib64/libcodec2_soft_common-mtk.so',
-        'vendor/lib64/libcodec2_soft_ddpdec-mtk.so',
-        'vendor/lib64/libcodec2_store_dolby-mtk.so',
     ): blob_fixup()
         .replace_needed('libcodec2.so', 'libcodec2-mtk.so')
         .replace_needed('libcodec2_vndk.so', 'libcodec2_vndk-mtk.so'),
@@ -310,10 +307,7 @@ blob_fixups: blob_fixups_user_type = {
         'vendor/lib64/libcodec2_hidl@1.0-mtk.so',
         'vendor/lib64/libcodec2_hidl@1.1-mtk.so',
         'vendor/lib64/libcodec2_hidl@1.2-mtk.so',
-        'vendor/lib64/libcodec2_soft_ac4dec-mtk.so',
         'vendor/lib64/libcodec2_soft_common-mtk.so',
-        'vendor/lib64/libcodec2_soft_ddpdec-mtk.so',
-        'vendor/lib64/libcodec2_store_dolby-mtk.so',
     ): blob_fixup()
         .replace_needed('libcodec2_hal_common.so', 'libcodec2_hal_common-mtk.so'),
 
@@ -344,11 +338,6 @@ blob_fixups: blob_fixups_user_type = {
     # Codec2
     'vendor/lib64/libcodec2_hidl@1.2-mtk.so': blob_fixup()
         .replace_needed('libcodec2_hidl@1.1.so', 'libcodec2_hidl@1.1-mtk.so'),
-
-    # Codec2 Dolby store
-    'vendor/lib64/libcodec2_store_dolby-mtk.so': blob_fixup()
-        .replace_needed('libcodec2_soft_ac4dec.so', 'libcodec2_soft_ac4dec-mtk.so')
-        .replace_needed('libcodec2_soft_ddpdec.so', 'libcodec2_soft_ddpdec-mtk.so'),
 
 } # fmt: skip
 
