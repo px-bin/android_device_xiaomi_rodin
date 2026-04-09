@@ -1,0 +1,10 @@
+# rild needs to set and read device identity props
+set_prop(rild, vendor_deviceid_prop)
+get_prop(rild, vendor_deviceid_prop)
+
+# rild sets and reads serial number / CTA code props
+set_prop(rild, vendor_sno_prop)
+get_prop(rild, vendor_sno_prop)
+
+set_prop(rild, vendor_mtk_ril_vote_prop)
+get_prop(rild, vendor_mtk_ril_vote_prop)
