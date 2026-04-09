@@ -38,10 +38,6 @@
         <item>0</item>
     </integer-array>
 
-    <!-- Location on the screen of the center of the physical power button. This is a reasonable
-    default that should be overridden by device-specific overlays. -->
-    <dimen name="physical_power_button_center_screen_location_y">1175.0px</dimen>
-
     <!-- Preferred refresh rate at keyguard, if supported by the display. Overrides
          keyguardMaxRefreshRate. -->
     <integer name="config_keyguardMaxRefreshRate">60</integer>
