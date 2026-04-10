@@ -1,0 +1,14 @@
+type mtk_hal_uievent_service, hal_service_type, protected_service, service_manager_type;
+
+binder_call(mtk_hal_uievent, platform_app)
+allow mtk_hal_uievent_client mtk_hal_uievent_server:binder { call transfer };
+allow mtk_hal_uievent_client mtk_hal_uievent_server:binder transfer;
+allow mtk_hal_uievent_client mtk_hal_uievent_server:fd *;
+allow mtk_hal_uievent_client mtk_hal_uievent_service:service_manager find;
+allow mtk_hal_uievent_server mtk_hal_uievent_client:binder transfer;
+allow mtk_hal_uievent_server mtk_hal_uievent_client:binder { call transfer };
+allow mtk_hal_uievent_server mtk_hal_uievent_client:fd *;
+allow mtk_hal_uievent system_server:binder transfer;
+allow mtk_hal_uievent system_server:binder { call transfer };
+allow mtk_hal_uievent system_server:fd *;
+add_service(mtk_hal_uievent_server, mtk_hal_uievent_service)

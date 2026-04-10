@@ -1,7 +1,7 @@
 # Camera
-attribute hal_mtk_uievent;
-attribute hal_mtk_uievent_client;
-attribute hal_mtk_uievent_server;
+attribute mtk_hal_uievent;
+attribute mtk_hal_uievent_client;
+attribute mtk_hal_uievent_server;
 
 # Display
 attribute vendor_hal_displayfeature;
