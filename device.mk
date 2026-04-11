@@ -441,6 +441,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     CompanionDeviceManager \
+    vndservicemanager \
     sensorservice
 
 # Inherit the proprietary files
