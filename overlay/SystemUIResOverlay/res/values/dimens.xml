@@ -22,7 +22,7 @@
 
     <!-- Based on your device fp location -->
     <!-- This pushes the "Unlock" text safely above the sensor and ripple -->
-    <dimen name="keyguard_indication_margin_bottom">155dp</dimen>
+    <dimen name="keyguard_indication_margin_bottom">56px</dimen>
 
     <!-- Location on the screen of the center of the physical power button. This is a reasonable
     default that should be overridden by device-specific overlays. -->
