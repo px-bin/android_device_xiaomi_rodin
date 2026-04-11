@@ -1081,7 +1081,7 @@ vendor/etc/camera/mimotion_f4b.bin
 vendor/etc/camera/mimotion_f4w.bin
 vendor/etc/camera/mimotion_f5b.bin
 vendor/etc/camera/mimotion_f5w.bin
-vendor/etc/camera/mt6899/gma_custom.xml:vendor/etc/camera/mt6899/gma_custom.txt;SYMLINK=vendor/etc/camera/mt6899/gma_custom.xml
+vendor/etc/camera/mt6899/gma_custom.xml:vendor/etc/camera/gma_custom.txt;SYMLINK=vendor/etc/camera/gma_custom.xml
 
 # Chipinfo
 vendor/bin/chipinfo
@@ -1595,6 +1595,7 @@ system/etc/public.libraries-mtk.txt
 system/etc/public.libraries-xiaomi.txt
 system_ext/etc/public.libraries-hyperos.txt
 system_ext/etc/public.libraries-xiaomi.txt
+system_ext/lib64/libapu_mdw_ext.mtk.so
 system_ext/lib64/libapuwareapusys.mtk.so
 system_ext/lib64/libapuwareapusys_v2.mtk.so
 system_ext/lib64/libapuwarehmp.mtk.so
@@ -1606,22 +1607,35 @@ system_ext/lib64/libarmnn_ndk.mtk.so
 system_ext/lib64/libcmdl_ndk.mtk.so
 system_ext/lib64/libmvpu_cic_ci_compiler.mtk.so
 system_ext/lib64/libmvpu_cic_ci_compiler_25.mtk.so
+system_ext/lib64/libmvpu_cic_ci_compiler_30.mtk.so
+system_ext/lib64/libmvpu_clc_14_mvpu_debuginfo_25.mtk.so
 system_ext/lib64/libmvpu_clc_14_mvpu_elf_25.mtk.so
+system_ext/lib64/libmvpu_clc_14_mvpu_utility_25.mtk.so
+system_ext/lib64/libmvpu_clc_30_mvpu_debuginfo.mtk.so
+system_ext/lib64/libmvpu_clc_30_mvpu_elf.mtk.so
+system_ext/lib64/libmvpu_clc_30_mvpu_utility.mtk.so
+system_ext/lib64/libmvpu_clc_mvpu_debuginfo.mtk.so
 system_ext/lib64/libmvpu_clc_mvpu_elf.mtk.so
+system_ext/lib64/libmvpu_clc_mvpu_utility.mtk.so
 system_ext/lib64/libmvpu_config.mtk.so
 system_ext/lib64/libmvpu_engine.mtk.so
 system_ext/lib64/libmvpu_engine_25.mtk.so
 system_ext/lib64/libmvpu_engine_25_pub.mtk.so
+system_ext/lib64/libmvpu_engine_30.mtk.so
 system_ext/lib64/libmvpu_engine_pub.mtk.so
 system_ext/lib64/libmvpu_pattern.mtk.so
 system_ext/lib64/libmvpu_pattern_25.mtk.so
 system_ext/lib64/libmvpu_pattern_25_pub.mtk.so
+system_ext/lib64/libmvpu_pattern_30.mtk.so
 system_ext/lib64/libmvpu_pattern_pub.mtk.so
 system_ext/lib64/libmvpu_runtime.mtk.so
 system_ext/lib64/libmvpu_runtime_25.mtk.so
 system_ext/lib64/libmvpu_runtime_25_pub.mtk.so
+system_ext/lib64/libmvpu_runtime_30.mtk.so
 system_ext/lib64/libmvpu_runtime_builtin.mtk.so
+system_ext/lib64/libmvpu_runtime_builtin_25.mtk.so
 system_ext/lib64/libmvpu_runtime_pub.mtk.so
+system_ext/lib64/libmvpuop30_mtk_nn.mtk.so
 system_ext/lib64/libmvpuop25_mtk_cv.mtk.so
 system_ext/lib64/libmvpuop25_mtk_nn.mtk.so
 system_ext/lib64/libmvpuop_mtk_cv.mtk.so
@@ -1851,7 +1865,7 @@ vendor/etc/ecc_list_OP236.xml
 vendor/etc/ecc_list_preference.xml
 vendor/etc/mpe.conf
 vendor/etc/special_pws_channel.xml
-system/etc/apns-conf.xml:vendor/etc/apns-conf.xml
+vendor/etc/vendor-apns-conf.xml
 vendor/etc/virtual-spn-conf-by-efgid1.xml
 vendor/etc/virtual-spn-conf-by-efpnn.xml
 vendor/etc/virtual-spn-conf-by-efspn.xml
