@@ -428,3 +428,6 @@ PRODUCT_COPY_FILES += \
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/xiaomi/rodin/rodin-vendor.mk)
+
+# Disable Matlog
+TARGET_DISABLE_MATLOG := true
