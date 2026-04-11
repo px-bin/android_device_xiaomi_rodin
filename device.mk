@@ -468,3 +468,6 @@ PRODUCT_PRODUCT_PROPERTIES += ro.arm64.memtag.bootctl_supported=0
 # Global MTE for all processes ( Match To Stock )
 PRODUCT_PRODUCT_PROPERTIES += persist.arm64.memtag.default=off
 
+# Disable Matlog
+TARGET_DISABLE_MATLOG := true 
+
