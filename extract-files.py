@@ -107,12 +107,6 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('vendor.xiaomi.hw.touchfeature-V1-ndk.so', 'vendor.xiaomi.hw.touchfeature-V1-ndk-prebuilt.so'),
 
     # Display
-    'vendor/bin/hw/vendor.xiaomi.hardware.displayfeature_aidl-service': blob_fixup()
-        .add_needed('libutils-v32.so'),
-
-    'odm/lib64/libframecapturemanager.so': blob_fixup()
-        .add_needed('libutils-v32.so'),
-
     'odm/lib64/hw/displayfeature.default.so': blob_fixup()
         .replace_needed('android.hardware.sensors-V2-ndk.so', 'android.hardware.sensors-V3-ndk.so')
         .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so'),
@@ -278,10 +272,6 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('libalsautils.so', 'libalsautils-v34.so')
         .replace_needed('libtinyxml2.so', 'libtinyxml2-v34.so')
         .replace_needed('libxlog.so', 'libxlog_stub.so'),
-
-    # Telephony
-    'vendor/bin/hw/mtkfusionrild': blob_fixup()
-        .add_needed('libutils-v32.so'),
 
     # Codec2
     (
