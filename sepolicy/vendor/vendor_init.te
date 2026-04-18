@@ -6,3 +6,10 @@ set_prop(vendor_init, vendor_deviceid_prop)
 get_prop(vendor_init, vendor_deviceid_prop)
 set_prop(vendor_init, vendor_mtk_ril_vote_prop)
 get_prop(vendor_init, vendor_mtk_ril_vote_prop)
+
+# Mtk Fast Charge
+get_prop(vendor_init, vendor_mtk_fast_charging_support_prop)
+
+# batteryantiaging
+get_prop(vendor_init, vendor_batteryantiaging_prop)
+set_prop(vendor_init, vendor_batteryantiaging_prop)

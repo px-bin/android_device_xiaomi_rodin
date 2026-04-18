@@ -7,7 +7,7 @@ type sysfs_fsm_re25, fs_type, sysfs_type;
 type sysfs_fsm_f0, fs_type, sysfs_type;
 
 # Camera
-type camera_persist_file, file_type;
+type camera_persist_file, file_type, vendor_file_type;
 type vendor_camera_data_file, data_file_type, file_type;
 type vendor_camera_update_db_file, file_type, vendor_file_type;
 type procfs_memory, proc_type, fs_type;
@@ -40,3 +40,13 @@ type vendor_audio_data_file, file_type, data_file_type;
 
 # LED sysfs files
 type vendor_sysfs_led_file, fs_type, sysfs_type;
+
+# batteryantiaging_cache_fil
+type batteryantiaging_cache_file, data_file_type, file_type;
+
+# batteryantiaging_cfg_file
+type batteryantiaging_cfg_file, file_type, vendor_file_type;
+
+# Persist files
+type persist_file, file_type, vendor_file_type;
+

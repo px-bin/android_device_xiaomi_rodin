@@ -27,3 +27,9 @@ vendor.xiaomi.sensor.citsensorservice.ICitSensorService/default   u:object_r:ven
 
 # TouchFeature
 vendor.xiaomi.hw.touchfeature.ITouchFeature/default u:object_r:hal_touchfeature_xiaomi_service:s0
+
+# batteryantiaging
+vendor.xiaomi.hardware.batteryantiaging.IBatteryAntiAging/default                  u:object_r:hal_batteryantiaging_service:s0
+
+# Micharge
+vendor.xiaomi.hardware.micharge.IMiCharge/default                                  u:object_r:hal_micharge_service:s0
