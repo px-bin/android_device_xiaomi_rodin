@@ -1,0 +1,6 @@
+# Battery supply
+allow init sysfs_battery_supply:file setattr;
+
+# Usb PD
+allow init sysfs_usbpd_device:file setattr;
+
