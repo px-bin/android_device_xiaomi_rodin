@@ -1,4 +1,4 @@
-# Unpinned blobs from missi-user 15 AP3A.240905.015.A2 OS2.0.204.0.VOJMIXM release-keys
+# Unpinned blobs from missi-user 16 BP2A.250605.031.A3 OS3.0.9.0.WOJMIXM release-keys
 
 # AAL
 vendor/lib64/libaal_cust.so
@@ -223,6 +223,7 @@ vendor/bin/batterysecret
 vendor/etc/init/init.bt_drv.rc
 vendor/firmware/BT_FW.cfg
 vendor/lib64/libbluetooth_mtk.so
+vendor/lib64/libbluetooth_mtk_pure.so
 vendor/lib64/libbt-vendor.so
 
 # Camera
@@ -319,12 +320,13 @@ odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.mihisv3.so
 odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.mimotionvideo.so
 odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.misat.so
 odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.videofilter.so
+odm/lib64/camera/plugins/com.xiaomi.plugin.heifedit.so
 odm/lib64/camera/zsl/com.xiaomi.zsl.default.so
 odm/lib64/camera/zsl/com.xiaomi.zsl.dsac.so
 odm/lib64/camera/zsl/com.xiaomi.zsl.hdr.so
 odm/lib64/libHISCppAlgos.so
 odm/lib64/libMiEmojiEffect.so
-odm/lib64/libMiVideoFilter.so;MODULE_SUFFIX=-odm
+odm/lib64/libMiPhotoFilter.so
 odm/lib64/libalCFR.so
 odm/lib64/libanc_dc_base.so
 odm/lib64/libanc_single_bokeh.so
@@ -332,6 +334,7 @@ odm/lib64/libanc_single_rt_bokeh.so
 odm/lib64/libanc_supervq.so
 odm/lib64/libc++_shared.so
 odm/lib64/libcamera_scene.so
+odm/lib64/libcameraheif.so
 odm/lib64/libdeflicker.so
 odm/lib64/libhandgesture.arcsoft.so
 odm/lib64/libhis_motion_tracker.so
@@ -381,7 +384,6 @@ vendor/lib64/libAF.so
 vendor/lib64/libBasicModule.so
 vendor/lib64/libJpgEncPipe.so
 vendor/lib64/libMiMotion.so
-vendor/lib64/libMiPhotoFilter.so
 vendor/lib64/libXMFaceFocus.so
 vendor/lib64/libaaa_aaautil.so
 vendor/lib64/libaaa_afassist_V2.so
@@ -912,6 +914,7 @@ odm/etc/camera/beauty/beauty_config_in.json
 odm/etc/camera/beauty/beauty_config_ru.json
 odm/etc/camera/beauty/resources/style_xiaomi_o10.hdcg
 odm/etc/camera/camerabooster.json
+odm/etc/camera/cameraopt_reclaim.json
 odm/etc/camera/com.xiaomi.dcal.w1u1.golden
 odm/etc/camera/com.xiaomi.dcal.w2u2.golden
 odm/etc/camera/com.xiaomi.dcal.wu.golden
@@ -1361,6 +1364,7 @@ vendor/bin/hw/android.hardware.graphics.composer@3.3-service
 vendor/bin/hw/mt6899/android.hardware.graphics.allocator-V2-service-mediatek.mt6899;SYMLINK=vendor/bin/hw/android.hardware.graphics.allocator-V2-service-mediatek
 vendor/bin/hw/mt6899/arm.mali.platform-service.mediatek.mt6899;SYMLINK=vendor/bin/hw/arm.mali.platform-service.mediatek
 vendor/bin/hw/vendor.mediatek.hardware.gpuserv-service
+vendor/lib64/vendor.mediatek.hardware.gpuserv-V2-ndk.so
 vendor/etc/gralloc/cam.xml
 vendor/etc/gralloc/dpu.xml
 vendor/etc/gralloc/dpu_aeu.xml
@@ -1385,6 +1389,7 @@ vendor/lib64/hw/hwcomposer.mtk_common.so
 vendor/lib64/hw/mt6899/android.hardware.graphics.allocator-V2-mediatek.so;SYMLINK=vendor/lib64/hw/android.hardware.graphics.allocator-V2-mediatek.so
 vendor/lib64/hw/mt6899/mapper.mediatek.so;SYMLINK=vendor/lib64/hw/mapper.mediatek.so
 vendor/lib64/hw/mt6899/vulkan.mali.so;SYMLINK=vendor/lib64/hw/vulkan.mali.so
+vendor/lib64/hw/gralloc.default.so
 vendor/lib64/libDefaultFpsActor.so
 vendor/lib64/libFrameRecord.so
 vendor/lib64/libNoFpsActor.so
@@ -1493,6 +1498,9 @@ vendor/lib64/vendor.xiaomi.hardware.aidl.mtdservice-V1-ndk.so
 
 # Neural Networks
 system/etc/public.libraries-mtk.txt
+system/etc/public.libraries-xiaomi.txt
+system_ext/etc/public.libraries-hyperos.txt
+system_ext/etc/public.libraries-xiaomi.txt
 system_ext/lib64/libapuwareapusys.mtk.so
 system_ext/lib64/libapuwareapusys_v2.mtk.so
 system_ext/lib64/libapuwarehmp.mtk.so
@@ -1581,6 +1589,8 @@ vendor/lib64/mt6899/libneuron_runtime.8.so;SYMLINK=vendor/lib64/libneuron_runtim
 vendor/lib64/mt6899/libneuron_runtime.so;SYMLINK=vendor/lib64/libneuron_runtime.so
 vendor/lib64/mt6899/libneuron_wrapper.so;SYMLINK=vendor/lib64/libneuron_wrapper.so
 vendor/lib64/vendor.mediatek.hardware.mtkpower-V1-ndk.so
+vendor/lib64/vendor.mediatek.hardware.mtkpower-V2-ndk.so
+vendor/lib64/vendor.mediatek.hardware.mtkpower_applist-V2-ndk.so
 vendor/lib64/vendor.mediatek.hardware.neuropilot.agent-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.neuropilot.agent@1.0.so
 vendor/lib64/vendor.mediatek.hardware.neuropilot.agent@1.1.so
@@ -1702,6 +1712,7 @@ vendor/lib64/libvia-ril.so
 vendor/lib64/libviamipc-ril.so
 vendor/lib64/libwpfa.so
 vendor/lib64/libxiaomi_mtkril.so
+vendor/lib64/libudf.so
 vendor/lib64/vendor.mediatek.hardware.clientapi-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.mdmonitor-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.mdmonitor@1.0.so
@@ -1741,7 +1752,7 @@ vendor/etc/ecc_list_OP236.xml
 vendor/etc/ecc_list_preference.xml
 vendor/etc/mpe.conf
 vendor/etc/special_pws_channel.xml
-vendor/etc/vendor-apns-conf.xml
+system/etc/apns-conf.xml:vendor/etc/apns-conf.xml
 vendor/etc/virtual-spn-conf-by-efgid1.xml
 vendor/etc/virtual-spn-conf-by-efpnn.xml
 vendor/etc/virtual-spn-conf-by-efspn.xml
@@ -1783,6 +1794,7 @@ odm/etc/vintf/manifest/vendor.xiaomi.sensor.citsensorservice.aidl.xml
 vendor/lib64/vendor.xiaomi.sensor.citsensorservice-V1-ndk.so
 
 # TEE
+odm/mitee/ta/123af5d1-d6f5-cc54-f78fa19030b2e76a.ta
 odm/mitee/ta/a3ba6512-6e0e-4065-93165e4a7d04ca08.ta
 vendor/bin/miteelog
 vendor/bin/tee-supplicant

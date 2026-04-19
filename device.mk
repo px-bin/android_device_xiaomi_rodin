@@ -182,6 +182,7 @@ PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
 PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.camera.concurrent.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.concurrent.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml \
@@ -196,12 +197,41 @@ PRODUCT_COPY_FILES += \
 
 # Dalvik
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapstartsize=24m \
+    dalvik.vm.appimageformat=lz4 \
+    dalvik.vm.background-dex2oat-threads=4 \
+    dalvik.vm.boot-dex2oat-threads=6 \
+    dalvik.vm.dex2oat-Xms=64m \
+    dalvik.vm.dex2oat-Xmx=512m \
+    dalvik.vm.dex2oat-resolve-startup-strings=true \
+    dalvik.vm.dex2oat-threads=6 \
+    dalvik.vm.dex2oat64.enabled=true \
+    dalvik.vm.dexopt.secondary=true \
+    dalvik.vm.dexopt.thermal-cutoff=2 \
+    dalvik.vm.enable_pr_dexopt=true \
+    dalvik.vm.finalizer-timeout-ms=40000 \
     dalvik.vm.heapgrowthlimit=256m \
-    dalvik.vm.heapsize=512m \
-    dalvik.vm.heaptargetutilization=0.46 \
+    dalvik.vm.heapmaxfree=32m \
     dalvik.vm.heapminfree=8m \
-    dalvik.vm.heapmaxfree=48m
+    dalvik.vm.heapsize=512m \
+    dalvik.vm.heapstartsize=8m \
+    dalvik.vm.heaptargetutilization=0.5 \
+    dalvik.vm.image-dex2oat-Xms=64m \
+    dalvik.vm.image-dex2oat-Xmx=64m \
+    dalvik.vm.isa.arm64.features=default \
+    dalvik.vm.isa.arm64.variant=cortex-a55 \
+    dalvik.vm.ps-min-first-save-ms=8000 \
+    dalvik.vm.usap_pool_enabled=false \
+    dalvik.vm.usap_pool_refill_delay_ms=3000 \
+    dalvik.vm.usap_pool_size_max=3 \
+    dalvik.vm.usap_pool_size_min=1 \
+    dalvik.vm.usap_refill_threshold=1 \
+    dalvik.vm.useartservice=true \
+    dalvik.vm.usejit=true \
+    persist.dalvik.vm.dex2oat-threads=6 \
+    persist.sys.dalvik.vm.lib.2=libart.so \
+    ro.dalvik.vm.enable_uffd_gc=true \
+    ro.dalvik.vm.native.bridge=0
+
 
 # DRM (Clearkey)
 PRODUCT_PACKAGES += \
@@ -246,8 +276,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
-    frameworks/native/data/etc/android.software.vulkan.deqp.level-2023-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml \
-    frameworks/native/data/etc/android.software.opengles.deqp.level-2023-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level.xml
+    frameworks/native/data/etc/android.software.vulkan.deqp.level-2024-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml \
+    frameworks/native/data/etc/android.software.opengles.deqp.level-2024-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level.xml
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/display_id_4627039422300187648.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_id_4627039422300187648.xml
@@ -403,3 +433,10 @@ PRODUCT_COPY_FILES += \
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/xiaomi/rodin/rodin-vendor.mk)
+
+# MTE bootloader control ( Match To Stock )
+PRODUCT_PRODUCT_PROPERTIES += ro.arm64.memtag.bootctl_supported=0
+
+# Global MTE for all processes ( Match To Stock )
+PRODUCT_PRODUCT_PROPERTIES += persist.arm64.memtag.default=off
+

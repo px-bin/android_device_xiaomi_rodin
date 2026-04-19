@@ -6,6 +6,7 @@ libmiocr.so
 libanc_single_bokeh.so
 libmiphone_capture_bokeh.so
 libneuron_runtime.so
+libneuron_runtime.8.so
 libmvpu_pattern_25_pub.so
 libmvpu_engine_25_pub.so
 libmvpu_config.so
