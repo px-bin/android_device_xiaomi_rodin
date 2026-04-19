@@ -10,7 +10,6 @@ persist.vendor.audio.power.save.setting=47
 persist.vendor.audio.usb.offload=false
 persist.vendor.speech.usb.offload=false
 ro.audio.monitorRotation=true
-ro.audio.spatializer_enabled=true
 ro.audio.usb.period_us=16000
 ro.config.media_vol_default=20
 ro.config.vc_call_vol_default=4
