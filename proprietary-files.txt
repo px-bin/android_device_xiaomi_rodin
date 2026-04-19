@@ -1521,6 +1521,7 @@ vendor/lib64/mt6899/arm.mali.platform-V2-ndk.so;SYMLINK=vendor/lib64/arm.mali.pl
 vendor/lib64/mt6899/libdpframework.so;SYMLINK=vendor/lib64/libdpframework.so
 vendor/lib64/vendor.mediatek.hardware.composer_ext-V1-ndk.so
 vendor/lib64/vendor.mediatek.hardware.composer_ext@1.0.so
+vendor/priv-app/GpuGameDriver.mt6899/GpuGameDriver.mt6899.apk
 
 # HotwordEnrollment
 product/priv-app/HotwordEnrollmentXGoogleRISCV_WIDEBAND/HotwordEnrollmentXGoogleRISCV_WIDEBAND.apk
