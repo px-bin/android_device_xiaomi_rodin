@@ -83,8 +83,6 @@
         <effect name="spatializer" library="spatializer" uuid="cc4677de-ff72-11eb-9a03-0242ac130003"/>
 	    <!--Spatial Audio-->
     </effects>
-    <postprocess>
-    </postprocess>
     <preprocess>
         <stream type="voice_communication">
             <apply effect="agc"/>
@@ -92,13 +90,6 @@
             <apply effect="ns"/>
         </stream>
     </preprocess>
-
-    <!-- 
-        Post-processing Effects
-        Applied after audio playback for stream-specific enhancement
-        Valid stream types: music, ring, alarm, notification, voice_call
-        Uses standard AOSP audio effects
-    -->
     <postprocess>
         <!-- MUSIC & MEDIA: The high-fidelity stream -->
         <stream type="music">
@@ -122,11 +113,6 @@
         <stream type="alarm">
             <apply effect="dlb_alarm_listener"/>
             <apply effect="loudness_enhancer"/>
-        </stream>
-
-        <!-- NOTIFICATIONS: SMS and App alerts -->
-        <stream type="notification">
-            <apply effect="dlb_notification_listener"/>
         </stream>
 
         <!-- SYSTEM: UI sounds, keyboard clicks, touch sounds -->
