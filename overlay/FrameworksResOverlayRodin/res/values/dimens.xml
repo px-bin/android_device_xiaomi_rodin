@@ -15,5 +15,6 @@
     <dimen name="status_bar_height_portrait">130.0px</dimen>
     <dimen name="status_bar_padding_bottom">20.0px</dimen>
     <dimen name="status_bar_padding_top">16.0px</dimen>
+    <dimen name="toast_y_offset">180dp</dimen>
 
 </resources>
