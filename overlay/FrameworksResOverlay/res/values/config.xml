@@ -619,7 +619,7 @@
          alpha compositing functionality in hardware.  If set, the window
          manager will disable alpha trasformation in animations where notAdd commentMore actions
          strictly needed. -->
-    <bool name="config_sf_limitedAlpha">true</bool>
+    <bool name="config_sf_limitedAlpha">false</bool>
 
     <!-- The amount to scale fullscreen snapshots for Overview and snapshot starting windows. -->
     <item name="config_highResTaskSnapshotScale" format="float" type="dimen">0.7</item>
