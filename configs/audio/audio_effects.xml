@@ -95,8 +95,6 @@
         <effect name="spatializer" library="spatializer" uuid="cc4677de-ff72-11eb-9a03-0242ac130003"/>
 	    <!--Spatial Audio-->
     </effects>
-    <postprocess>
-    </postprocess>
     <preprocess>
         <stream type="voice_communication">
             <apply effect="agc"/>
@@ -104,4 +102,34 @@
             <apply effect="ns"/>
         </stream>
     </preprocess>
+    <postprocess>
+        <!-- MUSIC & MEDIA: The high-fidelity stream -->
+        <stream type="music">
+            <apply effect="dap"/> 
+            <apply effect="dlb_music_listener"/>
+        </stream>
+
+        <!-- VOICE CALLS: What you hear from the other person -->
+        <stream type="voice_call">
+            <apply effect="vqe"/>
+            <apply effect="dlb_voice_call_listener"/>
+        </stream>
+
+        <!-- RINGTONE: High volume without distortion -->
+        <stream type="ring">
+            <apply effect="dlb_ring_listener"/>
+            <apply effect="loudness_enhancer"/>
+        </stream>
+
+        <!-- ALARM: Maximum wake-up volume -->
+        <stream type="alarm">
+            <apply effect="dlb_alarm_listener"/>
+            <apply effect="loudness_enhancer"/>
+        </stream>
+
+        <!-- SYSTEM: UI sounds, keyboard clicks, touch sounds -->
+        <stream type="system">
+            <apply effect="dlb_system_listener"/>
+        </stream>
+    </postprocess>
 </audio_effects_conf>
