@@ -1,25 +1,6 @@
 {
   "Nodes": [
     {
-      "Name": "MemFreq",
-      "Path": "/sys/devices/platform/soc/1c00f000.dvfsrc/mtk-dvfsrc-devfreq/devfreq/mtk-dvfsrc-devfreq/userspace/set_freq",
-      "Values": [
-        "8533000000",
-        "7500000000",
-        "6378000000",
-        "5480000000",
-        "4218000000",
-        "3094000000",
-        "2068000000",
-        "1542000000",
-        "757000000"
-      ],
-      "ResetOnInit": true,
-      "Comments": [
-        "It is userspace gov, powerhal will have exclusive and direct control of the freq"
-      ]
-    },
-    {
       "Name": "GpuPwrLevel",
       "Path": "/proc/gpufreqv2/fix_target_opp_index",
       "Values": [
@@ -69,7 +50,7 @@
       "ResetOnInit": true,
       "DefaultIndex": 0,
       "Comments": [
-        "[-1] normal",
+        "[-1] normal — GED DVFS manages freely",
         "[00] freq: 1300000, volt:  93750, vsram:  93750",
         "[01] freq: 1274000, volt:  92500, vsram:  92500",
         "[02] freq: 1248000, volt:  91875, vsram:  91875",
@@ -114,35 +95,57 @@
       ]
     },
     {
-      "Name": "CPULittleClusterMaxFreq",
-      "Path": "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+      "Name": "GPUPowerOn",
+      "Path": "/sys/devices/platform/soc/13000000.mali/power/control",
       "Values": [
-        "2100000",
-        "2000000",
-        "1900000",
-        "1800000",
-        "1700000",
-        "1600000",
-        "1500000",
-        "1400000",
-        "1300000",
-        "1200000",
-        "1100000",
-        "1000000",
-        "900000",
-        "800000",
-        "700000",
-        "600000",
-        "500000",
-        "400000",
-        "300000"
+        "on",
+        "auto"
       ],
-      "DefaultIndex": 0,
+      "WriteOnly": true
+    },
+    {
+      "Name": "GPULoadPollInterval",
+      "Path": "/sys/class/devfreq/13000000.mali/polling_interval",
+      "Values": [
+        "10",
+        "20"
+      ],
       "ResetOnInit": true
     },
     {
       "Name": "CPULittleClusterMinFreq",
-      "Path": "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq",
+      "Values": [
+        "300000",
+        "400000",
+        "500000",
+        "600000",
+        "700000",
+        "800000",
+        "900000",
+        "1000000",
+        "1100000",
+        "1200000",
+        "1300000",
+        "1400000",
+        "1500000",
+        "1600000",
+        "1700000",
+        "1800000",
+        "1900000",
+        "2000000",
+        "2100000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true,
+      "Comments": [
+        "All-big-core: policy0 = 4x A725 @ 2.1GHz = efficiency cluster",
+        "Low floor = more time in low-power C-states"
+      ]
+    },
+    {
+      "Name": "CPULittleClusterMaxFreq",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq",
       "Values": [
         "2100000",
         "2000000",
@@ -164,46 +167,53 @@
         "400000",
         "300000"
       ],
-      "ResetOnInit": true
-    },
-    {
-      "Name": "CPUMidClusterMaxFreq",
-      "Path": "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq",
-      "Values": [
-        "3000000",
-        "2900000",
-        "2800000",
-        "2700000",
-        "2600000",
-        "2500000",
-        "2400000",
-        "2300000",
-        "2200000",
-        "2100000",
-        "2000000",
-        "1900000",
-        "1800000",
-        "1700000",
-        "1600000",
-        "1500000",
-        "1400000",
-        "1300000",
-        "1200000",
-        "1100000",
-        "1000000",
-        "900000",
-        "800000",
-        "700000",
-        "600000",
-        "500000",
-        "400000"
-      ],
       "DefaultIndex": 0,
-      "ResetOnInit": true
+      "ResetOnInit": true,
+      "Comments": [
+        "Full ceiling by default, capped to 800MHz during display-off"
+      ]
     },
     {
       "Name": "CPUMidClusterMinFreq",
-      "Path": "/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq",
+      "Values": [
+        "400000",
+        "500000",
+        "600000",
+        "700000",
+        "800000",
+        "900000",
+        "1000000",
+        "1100000",
+        "1200000",
+        "1300000",
+        "1400000",
+        "1500000",
+        "1600000",
+        "1700000",
+        "1800000",
+        "1900000",
+        "2000000",
+        "2100000",
+        "2200000",
+        "2300000",
+        "2400000",
+        "2500000",
+        "2600000",
+        "2700000",
+        "2800000",
+        "2900000",
+        "3000000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true,
+      "Comments": [
+        "policy4 = 3x A725 @ 3.0GHz"
+      ]
+    },
+    {
+      "Name": "CPUMidClusterMaxFreq",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq",
       "Values": [
         "3000000",
         "2900000",
@@ -233,11 +243,50 @@
         "500000",
         "400000"
       ],
-      "ResetOnInit": true
+      "DefaultIndex": 0,
+      "ResetOnInit": true,
+      "Comments": [
+        "Capped to 800MHz during display-off for big power saving"
+      ]
+    },
+    {
+      "Name": "CPUBigClusterMinFreq",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy7/scaling_min_freq",
+      "Values": [
+        "1000000",
+        "1100000",
+        "1200000",
+        "1300000",
+        "1400000",
+        "1500000",
+        "1600000",
+        "1700000",
+        "1800000",
+        "1900000",
+        "2000000",
+        "2100000",
+        "2200000",
+        "2300000",
+        "2400000",
+        "2500000",
+        "2600000",
+        "2700000",
+        "2800000",
+        "2900000",
+        "3000000",
+        "3100000",
+        "3200000",
+        "3250000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true,
+      "Comments": [
+        "policy7 = 1x A725 @ 3.25GHz \u2014 prime core, keep min low to save power"
+      ]
     },
     {
       "Name": "CPUBigClusterMaxFreq",
-      "Path": "/sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy7/scaling_max_freq",
       "Values": [
         "3250000",
         "3200000",
@@ -265,70 +314,122 @@
         "1000000"
       ],
       "DefaultIndex": 0,
-      "ResetOnInit": true
+      "ResetOnInit": true,
+      "Comments": [
+        "Capped to 1000MHz during display-off"
+      ]
     },
     {
-      "Name": "CPUBigClusterMinFreq",
-      "Path": "/sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq",
+      "Name": "SchedutilRateLimitLittle",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy0/schedutil/rate_limit_us",
       "Values": [
-        "3250000",
-        "3200000",
-        "3100000",
-        "3000000",
-        "2900000",
-        "2800000",
-        "2700000",
-        "2600000",
-        "2500000",
-        "2400000",
-        "2300000",
-        "2200000",
-        "2100000",
-        "2000000",
-        "1900000",
-        "1800000",
-        "1700000",
-        "1600000",
-        "1500000",
-        "1400000",
-        "1300000",
-        "1200000",
-        "1100000",
-        "1000000"
+        "0",
+        "500",
+        "1000",
+        "2000",
+        "3000",
+        "5000",
+        "10000",
+        "20000",
+        "50000"
       ],
-      "ResetOnInit": true
+      "DefaultIndex": 0,
+      "ResetOnInit": true,
+      "Comments": [
+        "Unified rate_limit_us \u2014 the only schedutil node this kernel exposes",
+        "Default=1000us: efficiency cluster transitions capped for battery saving",
+        "0=instant, higher=slower/more efficient for sustained workloads"
+      ]
     },
     {
-      "Name": "PMQoSCpuDmaLatency",
-      "Path": "/dev/cpu_dma_latency",
+      "Name": "SchedutilRateLimitMid",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy4/schedutil/rate_limit_us",
       "Values": [
-        "51",
-        "0"
+        "0",
+        "500",
+        "1000",
+        "2000",
+        "3000",
+        "5000",
+        "10000",
+        "20000",
+        "50000"
       ],
-      "HoldFd": true
+      "DefaultIndex": 0,
+      "ResetOnInit": true,
+      "Comments": [
+        "Default=1000us for mid cluster \u2014 balanced default"
+      ]
+    },
+    {
+      "Name": "SchedutilRateLimitBig",
+      "Path": "/sys/devices/system/cpu/cpufreq/policy7/schedutil/rate_limit_us",
+      "Values": [
+        "0",
+        "500",
+        "1000",
+        "2000",
+        "3000",
+        "5000",
+        "10000",
+        "20000",
+        "50000"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true,
+      "Comments": [
+        "Default=500us for prime core \u2014 slightly faster response, only 1 core"
+      ]
     },
     {
       "Name": "UclampFGMin",
       "Path": "/dev/cpuctl/foreground/cpu.uclamp.min",
       "Values": [
         "0",
+        "10",
         "15",
+        "20",
         "30"
       ],
       "DefaultIndex": 0,
-      "ResetOnInit": true
+      "ResetOnInit": true,
+      "Comments": [
+        "FG cgroup uclamp floor \u2014 0 = pure EAS scheduling, more efficient"
+      ]
     },
     {
       "Name": "UclampTAMin",
       "Path": "/dev/cpuctl/top-app/cpu.uclamp.min",
       "Values": [
         "0",
+        "10",
+        "15",
+        "20",
         "30",
-        "40",
+        "50",
         "100"
       ],
       "DefaultIndex": 0,
-      "ResetOnInit": true
+      "ResetOnInit": true,
+      "Comments": [
+        "TA uclamp floor \u2014 raised during interaction hints only"
+      ]
+    },
+    {
+      "Name": "UclampTAMax",
+      "Path": "/dev/cpuctl/top-app/cpu.uclamp.max",
+      "Values": [
+        "100",
+        "80",
+        "60",
+        "50",
+        "40"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true,
+      "Comments": [
+        "TA uclamp ceiling \u2014 40 during display-off saves significant power on all-big-core"
+      ]
     },
     {
       "Name": "CAMUClampBoost",
@@ -340,46 +441,31 @@
         "25",
         "0"
       ],
-      "ResetOnInit": true
-    },
-    {
-      "Name": "TopAppCpuset",
-      "Path": "/dev/cpuset/top-app/cpus",
-      "Values": [
-        "0-3",
-        "0-7"
-      ],
-      "ResetOnInit": true
-    },
-    {
-      "Name": "ForegroundCpuset",
-      "Path": "/dev/cpuset/foreground/cpus",
-      "Values": [
-        "0-2",
-        "0-6"
-      ],
-      "ResetOnInit": true
-    },
-    {
-      "Name": "ForegroundWindowCpuset",
-      "Path": "/dev/cpuset/foreground_window/cpus",
-      "Values": [
-        "0-2",
-        "0-6"
-      ],
-      "ResetOnInit": true
+      "ResetOnInit": true,
+      "DefaultIndex": 4,
+      "Comments": [
+        "Camera-daemon uclamp floor \u2014 0 default, boosted only during shot/launch"
+      ]
     },
     {
       "Name": "GPUBlockBoost",
       "Path": "/sys/kernel/ged/hal/gpu_boost_level",
       "Values": [
         "101",
+        "70",
         "50",
+        "30",
+        "25",
+        "20",
         "0",
         "-1"
       ],
       "ResetOnInit": true,
-      "DefaultIndex": 2
+      "DefaultIndex": 7,
+      "Comments": [
+        "101=max, 70=stock, 25=light boost, 0=off, -1=free DVFS",
+        "Mali-G720 MC7 with DVS is efficient \u2014 keep at 0 default, boost sparingly"
+      ]
     },
     {
       "Name": "PowerHALRenderingState",
@@ -388,29 +474,10 @@
         "EXPENSIVE_RENDERING",
         ""
       ],
-      "Type": "Property"
-    },
-    {
-      "Name": "Dex2oatThreads",
-      "Path": "vendor.powerhal.dalvik.vm.dex2oat-threads",
-      "Values": [
-        "1",
-        "2",
-        "4",
-        "6",
-        "8"
-      ],
-      "Type": "Property"
-    },
-    {
-      "Name": "Dex2oatCPUSet",
-      "Path": "vendor.powerhal.dalvik.vm.dex2oat-cpu-set",
-      "Values": [
-        "0,1,2,3",
-        "0,1,2,3,4,5",
-        "0,1,2,3,4,5,6,7"
-      ],
-      "Type": "Property"
+      "Type": "Property",
+      "Comments": [
+        "SurfaceFlinger expensive rendering flag"
+      ]
     },
     {
       "Name": "PowerHALCameraRunning",
@@ -420,208 +487,82 @@
         "0"
       ],
       "Type": "Property",
-      "ResetOnInit": true
+      "ResetOnInit": true,
+      "Comments": [
+        "Camera active flag"
+      ]
     },
     {
-      "Name": "CDCpuset",
-      "Path": "/dev/cpuset/camera-daemon/cpus",
+      "Name": "UclampFWMin",
+      "Path": "/dev/cpuctl/foreground_window/cpu.uclamp.min",
       "Values": [
-        "0-3",
-        "4-7",
-        "0-7"
-      ],
-      "ResetOnInit": true
-    },
-    {
-      "Name": "CDHighCpusetCpus",
-      "Path": "/dev/cpuset/camera-daemon-high-group/cpus",
-      "Values": [
-        "0-7"
-      ],
-      "ResetOnInit": true
-    },
-    {
-      "Name": "CDMidCpusetCpus",
-      "Path": "/dev/cpuset/camera-daemon-mid-group/cpus",
-      "Values": [
-        "4-7"
-      ],
-      "ResetOnInit": true
-    },
-    {
-      "Name": "CDMidHighCpusetCpus",
-      "Path": "/dev/cpuset/camera-daemon-mid-high-group/cpus",
-      "Values": [
-        "0-6"
-      ],
-      "ResetOnInit": true
-    },
-    {
-      "Name": "GEDDvfsMargin",
-      "Path": "/sys/kernel/ged/hal/dvfs_margin_value",
-      "Values": [
-        "6553599",
-        "1000000",
-        "329234",
-        "50000",
-        "10000",
-        "1000",
-        "138",
-        "120",
-        "110",
+        "0",
+        "10",
+        "15",
         "20",
-        "1"
-      ],
-      "ResetOnInit": true,
-      "Comments": [
-        "GPU DVFS margin. Range per powercontable.xml: Min=1, Max=6553599, Default=329234.",
-        "Higher = GPU stays at high freq longer (conservative). Lower = drops faster (power saving).",
-        "Values 20/110/120/138 extracted from power_app_cfg.xml gaming app entries.",
-        "6553599=max conservative, 329234=stock default, 138/120/110=gaming, 20=aggressive idle drop, 1=minimum."
-      ]
-    },
-    {
-      "Name": "GEDLoadingDvfsStep",
-      "Path": "/sys/kernel/ged/hal/loading_base_dvfs_step",
-      "Values": [
-        "25855",
-        "10000",
-        "2000",
-        "500",
-        "259",
-        "100",
+        "30",
         "50",
-        "8",
-        "0"
+        "100"
       ],
+      "DefaultIndex": 0,
       "ResetOnInit": true,
       "Comments": [
-        "GPU loading-based DVFS step. Range per powercontable.xml: Min=0, Max=25855, Default=259.",
-        "Higher = GPU responds more aggressively to load spikes (performance). Lower = smoother, less reactive.",
-        "Value 8 extracted from power_app_cfg.xml gaming app entries (com.tencent.jkchess, com.netmarble.kofg).",
-        "25855=max aggressive, 259=stock default, 8=smooth gaming, 0=minimum step."
-      ]
-    },
-    {
-      "Name": "DCSMode",
-      "Path": "/sys/kernel/ged/hal/dcs_mode",
-      "Values": [
-        "66",
-        "64",
-        "32",
-        "16",
-        "0"
-      ],
-      "ResetOnInit": true,
-      "Comments": [
-        "GPU Dynamic Clock Scaling mode. Range per powercontable.xml: Min=0, Max=66, Default=64.",
-        "64=stock default (DCS on, standard mode), 66=max DCS (most aggressive power-save scaling).",
-        "32/16=intermediate modes, 0=DCS off (GPU clocks freely, no dynamic scaling).",
-        "Use 66 for sustained load/gaming to reduce GPU idle power, 64 for balanced, 0 for FIXED_PERFORMANCE."
+        "foreground_window cgroup uclamp.min \u2014 SystemUI notification shade scrolls here",
+        "0=free EAS, 20=light floor so RenderThread prefers mid/big cluster during UI scroll"
       ]
     }
   ],
   "Actions": [
     {
       "PowerHint": "INTERACTION",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 500,
-      "Value": "800000",
-      "Comments": "Reduced from 1000000@1000ms. INTERACTION fires on every touch/scroll - 1s pin at 1GHz caused major drain."
+      "Node": "GPUPowerOn",
+      "Duration": 150,
+      "Value": "on"
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 500,
-      "Value": "1200000",
-      "Comments": "Reduced from 2100000@1000ms. Was pinning mid cluster nearly 3x higher than needed for UI responsiveness."
-    },
-    {
-      "PowerHint": "INTERACTION",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 500,
-      "Value": "1600000",
-      "Comments": "Reduced from 2200000@1000ms. Big core at 1.6GHz is sufficient for responsive UI interactions."
+      "Node": "UclampTAMin",
+      "Duration": 150,
+      "Value": "20"
     },
     {
       "PowerHint": "INTERACTION",
       "Node": "UclampFGMin",
-      "Duration": 58,
+      "Duration": 150,
       "Value": "15"
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "UclampTAMin",
-      "Duration": 58,
-      "Value": "100"
+      "Node": "SchedutilRateLimitLittle",
+      "Duration": 150,
+      "Value": "0"
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "GEDDvfsMargin",
-      "Duration": 500,
-      "Value": "329234",
-      "Comments": "Stock default margin during touch - let GPU respond normally to interaction load spikes."
+      "Node": "SchedutilRateLimitMid",
+      "Duration": 150,
+      "Value": "0"
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 500,
-      "Value": "259",
-      "Comments": "Stock default DVFS step during touch - standard GPU reactivity."
+      "Node": "SchedutilRateLimitBig",
+      "Duration": 150,
+      "Value": "0"
     },
     {
       "PowerHint": "INTERACTION",
-      "Node": "DCSMode",
-      "Duration": 500,
-      "Value": "64",
-      "Comments": "Stock DCS mode during interaction - balanced, not restricting GPU during touch response."
+      "Node": "GPUBlockBoost",
+      "Duration": 150,
+      "Value": "20"
     },
     {
-      "PowerHint": "LAUNCH",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 3000,
-      "Value": "3250000",
-      "Comments": "Reduced duration from 5000ms to 3000ms. Max freq cap stays same."
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 1500,
-      "Value": "2700000",
-      "Comments": "Reduced from 3250000@2000ms. 2.7GHz is still very responsive for app launch."
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 3000,
-      "Value": "3000000"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 1500,
-      "Value": "2400000",
-      "Comments": "Reduced from 2900000@2000ms."
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 3000,
-      "Value": "2100000"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 1500,
-      "Value": "1800000",
-      "Comments": "Reduced from 2000000@2000ms."
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "MemFreq",
-      "Duration": 3000,
-      "Value": "8533000000",
-      "Comments": "Reduced duration from 5000ms to 3000ms. Max memory freq still provided for fast load."
+      "PowerHint": "INTERACTION",
+      "Node": "UclampFWMin",
+      "Duration": 150,
+      "Value": "20",
+      "Comments": [
+        "Raise foreground_window (SystemUI/StatusBar) floor so RenderThread hits mid cluster"
+      ]
     },
     {
       "PowerHint": "LAUNCH",
@@ -633,281 +574,197 @@
       "PowerHint": "LAUNCH",
       "Node": "UclampFGMin",
       "Duration": 2000,
-      "Value": "30"
+      "Value": "20"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "CPULittleClusterMinFreq",
+      "Duration": 2000,
+      "Value": "1200000"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 2000,
+      "Value": "1200000"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 2000,
+      "Value": "1200000"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "SchedutilRateLimitLittle",
+      "Duration": 2000,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "SchedutilRateLimitMid",
+      "Duration": 2000,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "SchedutilRateLimitBig",
+      "Duration": 2000,
+      "Value": "0"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "GpuPwrLevel",
+      "Duration": 2000,
+      "Value": "-1"
     },
     {
       "PowerHint": "LAUNCH",
       "Node": "GPUBlockBoost",
-      "Duration": 3000,
-      "Value": "101",
-      "Comments": "Reduced duration from 5000ms to 3000ms."
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "GpuPwrLevel",
-      "Duration": 3000,
-      "Value": "8",
-      "Comments": "Slightly relaxed from index 6 (1144MHz) to index 8 (1092MHz). Saves ~50mW over the burst."
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "TopAppCpuset",
       "Duration": 2000,
-      "Value": "0-7"
+      "Value": "20"
     },
     {
-      "PowerHint": "LAUNCH",
-      "Node": "ForegroundCpuset",
-      "Duration": 2000,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 2000,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 2000,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "GEDDvfsMargin",
-      "Duration": 3000,
-      "Value": "1000",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 3000,
-      "Value": "500",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "LAUNCH",
-      "Node": "DCSMode",
-      "Duration": 3000,
-      "Value": "0",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "GpuPwrLevel",
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "UclampTAMin",
       "Duration": 0,
       "Value": "0"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "GPUBlockBoost",
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "UclampFGMin",
       "Duration": 0,
-      "Value": "101"
+      "Value": "0"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "CPUBigClusterMaxFreq",
+      "PowerHint": "DISPLAY_IDLE",
+      "Node": "UclampTAMax",
       "Duration": 0,
-      "Value": "3250000"
+      "Value": "50"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "3250000"
+      "PowerHint": "DISPLAY_IDLE",
+      "Type": "EndHint",
+      "Value": "DISPLAY_UPDATE_IMMINENT"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "CPUMidClusterMaxFreq",
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "UclampTAMax",
       "Duration": 0,
-      "Value": "3000000"
+      "Value": "40"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "3000000"
-    },
-    {
-      "PowerHint": "FIXED_PERFORMANCE",
+      "PowerHint": "DISPLAY_INACTIVE",
       "Node": "CPULittleClusterMaxFreq",
       "Duration": 0,
-      "Value": "2100000"
+      "Value": "800000"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "CPULittleClusterMinFreq",
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "CPUMidClusterMaxFreq",
       "Duration": 0,
-      "Value": "2100000"
+      "Value": "800000"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "CPUBigClusterMaxFreq",
+      "Duration": 0,
+      "Value": "1000000"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "SchedutilRateLimitLittle",
+      "Duration": 0,
+      "Value": "5000"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "SchedutilRateLimitMid",
+      "Duration": 0,
+      "Value": "5000"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Node": "SchedutilRateLimitBig",
+      "Duration": 0,
+      "Value": "5000"
+    },
+    {
+      "PowerHint": "DISPLAY_INACTIVE",
+      "Type": "EndHint",
+      "Value": "DISPLAY_UPDATE_IMMINENT"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "SchedutilRateLimitLittle",
+      "Duration": 50,
+      "Value": "2000"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "SchedutilRateLimitMid",
+      "Duration": 50,
+      "Value": "2000"
+    },
+    {
+      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
+      "Node": "SchedutilRateLimitBig",
+      "Duration": 50,
+      "Value": "2000"
+    },
+    {
+      "PowerHint": "LOW_POWER",
       "Node": "UclampTAMin",
       "Duration": 0,
-      "Value": "100"
+      "Value": "0"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "UclampFGMin",
+      "PowerHint": "LOW_POWER",
+      "Node": "UclampTAMax",
       "Duration": 0,
-      "Value": "30"
+      "Value": "40"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "MemFreq",
+      "PowerHint": "LOW_POWER",
+      "Node": "CPULittleClusterMaxFreq",
       "Duration": 0,
-      "Value": "8533000000"
+      "Value": "1000000"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "PMQoSCpuDmaLatency",
+      "PowerHint": "LOW_POWER",
+      "Node": "CPUMidClusterMaxFreq",
       "Duration": 0,
-      "Value": "51"
+      "Value": "1000000"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "TopAppCpuset",
+      "PowerHint": "LOW_POWER",
+      "Node": "CPUBigClusterMaxFreq",
       "Duration": 0,
-      "Value": "0-7"
+      "Value": "1000000"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "ForegroundCpuset",
+      "PowerHint": "LOW_POWER",
+      "Node": "SchedutilRateLimitLittle",
       "Duration": 0,
-      "Value": "0-6"
+      "Value": "10000"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "GEDDvfsMargin",
+      "PowerHint": "LOW_POWER",
+      "Node": "SchedutilRateLimitMid",
       "Duration": 0,
-      "Value": "6553599",
-      "Comments": "Max margin - GPU never drops during fixed performance mode. Range max per powercontable.xml."
+      "Value": "10000"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "GEDLoadingDvfsStep",
+      "PowerHint": "LOW_POWER",
+      "Node": "SchedutilRateLimitBig",
       "Duration": 0,
-      "Value": "25855",
-      "Comments": "Max DVFS step - GPU responds instantly to any load during fixed performance. Range max per powercontable.xml."
+      "Value": "5000"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "DCSMode",
-      "Duration": 0,
-      "Value": "0",
-      "Comments": "Disable DCS in fixed performance - let GPU clock freely without dynamic scaling constraints."
-    },
-    {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "GAME",
-      "Type": "EndHint",
-      "Value": "INTERACTION"
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 0,
-      "Value": "1500000",
-      "Comments": "Reduced from 2000000. Stock OEM gaming apps (powercontable/app_cfg) use 1500-1800MHz for little cluster."
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "2100000",
-      "Comments": "Reduced from 2900000. 2.1GHz sustained mid minimum prevents thermal throttle over long gaming sessions."
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "2400000",
-      "Comments": "Reduced from 3250000 (ABSOLUTE MAX). 3.25GHz sustained causes throttle within minutes. 2.4GHz is optimal sustained."
-    },
-    {
-      "PowerHint": "GAME",
+      "PowerHint": "LOW_POWER",
       "Node": "GpuPwrLevel",
       "Duration": 0,
-      "Value": "5",
-      "Comments": "Relaxed from index 3 (1222MHz) to index 5 (1170MHz). GED DVFS handles burst needs. Saves ~150mW sustained."
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "0",
-      "Comments": "Reduced from 50. Letting GED auto-manage GPU boost during gaming is more power-efficient than 50% forced floor."
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "GEDDvfsMargin",
-      "Duration": 0,
-      "Value": "138",
-      "Comments": "Gaming-tuned GPU DVFS margin from power_app_cfg.xml. Allows GPU to drop freq faster when not needed vs stock 329234."
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 0,
-      "Value": "8",
-      "Comments": "Smooth GPU DVFS stepping for gaming from power_app_cfg.xml. Lower than stock 259 = GPU scales more gradually."
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "DCSMode",
-      "Duration": 0,
-      "Value": "66",
-      "Comments": "Max DCS (66) during gaming - aggressive GPU dynamic clock scaling reduces sustained heat and power draw."
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "8533000000"
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "30",
-      "Comments": "Reduced from 40. Uclamp 30 is sufficient; app_cfg stock OEM entries don't rely on global uclamp min for gaming."
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "15"
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "TopAppCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "ForegroundCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "GAME",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 0,
-      "Value": "51"
+      "Value": "35"
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
@@ -917,190 +774,69 @@
     },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "GpuPwrLevel",
+      "Node": "GPULoadPollInterval",
       "Duration": 0,
-      "Value": "12",
-      "Comments": "Relaxed from index 10 (1040MHz) to index 12 (988MHz). Sufficient for sustained rendering with GED headroom."
+      "Value": "10"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "50"
+      "PowerHint": "GAME",
+      "Node": "UclampTAMin",
+      "Duration": 5000,
+      "Value": "30"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1800000",
-      "Comments": "Reduced from 2200000. Sustained 2.2GHz big core for rendering is excessive and hot."
+      "PowerHint": "GAME",
+      "Node": "UclampFGMin",
+      "Duration": 5000,
+      "Value": "10"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "1500000",
-      "Comments": "Reduced from 2000000."
-    },
-    {
-      "PowerHint": "EXPENSIVE_RENDERING",
+      "PowerHint": "GAME",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 0,
-      "Value": "1000000",
-      "Comments": "Reduced from 1300000."
+      "Value": "1400000"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "MemFreq",
+      "PowerHint": "GAME",
+      "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
-      "Value": "3094000000",
-      "Comments": "Reduced from 4218000000. Sufficient memory BW for most rendering workloads."
+      "Value": "1200000"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "UclampFGMin",
+      "PowerHint": "GAME",
+      "Node": "CPUBigClusterMinFreq",
       "Duration": 0,
-      "Value": "30"
+      "Value": "1000000"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "UclampTAMin",
+      "PowerHint": "GAME",
+      "Node": "SchedutilRateLimitLittle",
       "Duration": 0,
-      "Value": "30"
+      "Value": "500"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "TopAppCpuset",
+      "PowerHint": "GAME",
+      "Node": "SchedutilRateLimitMid",
       "Duration": 0,
-      "Value": "0-7"
+      "Value": "500"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "ForegroundCpuset",
+      "PowerHint": "GAME",
+      "Node": "SchedutilRateLimitBig",
       "Duration": 0,
-      "Value": "0-6"
+      "Value": "500"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 0,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "GEDDvfsMargin",
-      "Duration": 0,
-      "Value": "110",
-      "Comments": "Moderate GPU DVFS margin during rendering - from power_app_cfg.xml gaming tuning. Allows GPU to drop when idle."
-    },
-    {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 0,
-      "Value": "8",
-      "Comments": "Smooth GPU DVFS stepping during rendering - from power_app_cfg.xml. Prevents GPU from spiking unnecessarily."
-    },
-    {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "DCSMode",
-      "Duration": 0,
-      "Value": "66",
-      "Comments": "Max DCS during sustained rendering - GPU dynamically scales on idle frames to save power and reduce heat."
-    },
-    {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Type": "EndHint",
-      "Value": "INTERACTION"
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2000000"
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 0,
-      "Value": "1600000"
-    },
-    {
-      "PowerHint": "LOW_POWER",
+      "PowerHint": "GAME",
       "Node": "GpuPwrLevel",
       "Duration": 0,
-      "Value": "20"
+      "Value": "-1"
     },
     {
-      "PowerHint": "LOW_POWER",
+      "PowerHint": "GAME",
       "Node": "GPUBlockBoost",
       "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "2068000000"
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "GEDDvfsMargin",
-      "Duration": 0,
-      "Value": "20",
-      "Comments": "Most aggressive GPU downscaling margin in low power mode. From power_app_cfg.xml (com.tencent.jkchess @60fps). Min=1, Max=6553599."
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 0,
-      "Value": "0",
-      "Comments": "Zero DVFS step in low power - GPU frequency changes minimally under light load. Min per powercontable.xml."
-    },
-    {
-      "PowerHint": "LOW_POWER",
-      "Node": "DCSMode",
-      "Duration": 0,
-      "Value": "66",
-      "Comments": "Max DCS power saving in low power mode. Max=66 per powercontable.xml."
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1000,
-      "Value": "1000",
-      "Comments": "Low margin during camera launch burst - GPU should ramp up quickly for viewfinder/preview init."
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1000,
-      "Value": "500",
-      "Comments": "Higher DVFS step during camera launch - GPU responds aggressively to load for fast preview start."
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "DCSMode",
-      "Duration": 1000,
-      "Value": "0",
-      "Comments": "Disable DCS during camera launch burst - let GPU clock freely for maximum responsiveness."
+      "Value": "-1"
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
@@ -1110,1935 +846,153 @@
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
-      "Node": "MemFreq",
+      "Node": "CPULittleClusterMinFreq",
       "Duration": 1000,
-      "Value": "8533000000"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 1000,
-      "Value": "3250000"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 1000,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 1000,
-      "Value": "3000000"
+      "Value": "1200000"
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 1000,
-      "Value": "2000000"
+      "Value": "1200000"
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CPULittleClusterMaxFreq",
+      "Node": "CPUBigClusterMinFreq",
       "Duration": 1000,
-      "Value": "2100000"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 1000,
-      "Value": "1700000"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "GPUBlockBoost",
-      "Duration": 1000,
-      "Value": "101"
+      "Value": "1200000"
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
       "Node": "GpuPwrLevel",
       "Duration": 1000,
-      "Value": "5"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "UclampTAMin",
-      "Duration": 1000,
-      "Value": "100"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "UclampFGMin",
-      "Duration": 1000,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "TopAppCpuset",
-      "Duration": 1000,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "ForegroundCpuset",
-      "Duration": 1000,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 1000,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CDCpuset",
-      "Duration": 1000,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 1000,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 1000,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 1000,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_LAUNCH",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 1000,
-      "Value": "51"
+      "Value": "12"
     },
     {
       "PowerHint": "CAMERA_LAUNCH",
       "Node": "PowerHALCameraRunning",
-      "Duration": 1000,
+      "Duration": 0,
       "Value": "1"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 0,
-      "Value": "300000"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "400000"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1000000"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "GEDDvfsMargin",
-      "Duration": 0,
-      "Value": "20",
-      "Comments": "Aggressive GPU downscaling during display idle. Min=1, Max=6553599."
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "DCSMode",
-      "Duration": 0,
-      "Value": "66",
-      "Comments": "Max DCS when display idle. Max=66 per powercontable.xml."
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "757000000"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "ForegroundCpuset",
-      "Duration": 0,
-      "Value": "0-2"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-2"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "TopAppCpuset",
-      "Duration": 0,
-      "Value": "0-3"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Type": "EndHint",
-      "Value": "DISPLAY_UPDATE_IMMINENT"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Type": "EndHint",
-      "Value": "INTERACTION"
-    },
-    {
-      "PowerHint": "DISPLAY_IDLE",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "0",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "ForegroundCpuset",
-      "Duration": 0,
-      "Value": "0-2"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-2"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "TopAppCpuset",
-      "Duration": 0,
-      "Value": "0-3"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 0,
-      "Value": "1600000"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 0,
-      "Value": "400000"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2000000"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "400000"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1000000"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "20"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "1542000000"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "GEDDvfsMargin",
-      "Duration": 0,
-      "Value": "20",
-      "Comments": "Aggressive GPU downclocking when screen off. Min=1, Max=6553599, Default=329234."
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 0,
-      "Value": "0",
-      "Comments": "Minimal GPU DVFS step when display off - GPU almost static at low freq."
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Node": "DCSMode",
-      "Duration": 0,
-      "Value": "66",
-      "Comments": "Max DCS when display off. Max=66 per powercontable.xml."
-    },
-    {
-      "PowerHint": "DISPLAY_INACTIVE",
-      "Type": "EndHint",
-      "Value": "DISPLAY_UPDATE_IMMINENT"
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 50,
-      "Value": "1500000",
-      "Comments": "Reduced from 2100000. At 120Hz this fires every 8.3ms - the SINGLE BIGGEST heat source. 1.5GHz is adequate."
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 50,
-      "Value": "1400000",
-      "Comments": "Reduced from 2000000. Critical fix - mid cluster was being pinned at 2GHz minimum per frame at 120fps."
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 50,
-      "Value": "1800000",
-      "Comments": "Reduced from 2500000. Was forcing big core to 2.5GHz every single frame at 120Hz = constant high load."
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 50,
-      "Value": "2100000"
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 50,
-      "Value": "3000000"
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 50,
-      "Value": "3250000"
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "GpuPwrLevel",
-      "Duration": 50,
-      "Value": "8",
-      "Comments": "Relaxed from index 8 (1092MHz) - unchanged, this was already reasonable."
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "GPUBlockBoost",
-      "Duration": 50,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "MemFreq",
-      "Duration": 50,
-      "Value": "4218000000",
-      "Comments": "Reduced from 5480000000. 4.2GHz memory is plenty for a single frame draw window."
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "UclampTAMin",
-      "Duration": 50,
-      "Value": "40"
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "GEDDvfsMargin",
-      "Duration": 50,
-      "Value": "110",
-      "Comments": "Moderate GPU DVFS margin per frame. From power_app_cfg.xml (com.tencent.cf @60fps). Balances responsiveness vs power."
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 50,
-      "Value": "259",
-      "Comments": "Stock default DVFS step during frame render window - responsive but not excessive."
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 50,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "DISPLAY_UPDATE_IMMINENT",
-      "Node": "DCSMode",
-      "Duration": 50,
-      "Value": "64",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "GEDDvfsMargin",
-      "Duration": 5000,
-      "Value": "329234",
-      "Comments": "Stock default GPU DVFS margin during display change - let GPU handle transition load normally."
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 5000,
-      "Value": "259",
-      "Comments": "Stock default DVFS step during display change - normal GPU reactivity for transition."
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "DCSMode",
-      "Duration": 5000,
-      "Value": "64",
-      "Comments": "Stock DCS mode during display change - standard balanced mode, not restricting GPU during transition."
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 5000,
-      "Value": "3000000"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 2000,
-      "Value": "2200000",
-      "Comments": "Reduced from 2800000. 2.2GHz is sufficient for display mode transitions."
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 5000,
-      "Value": "2700000"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 2000,
-      "Value": "2000000",
-      "Comments": "Reduced from 2700000."
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 5000,
-      "Value": "1900000"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 2000,
-      "Value": "1500000",
-      "Comments": "Reduced from 1700000."
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "MemFreq",
-      "Duration": 5000,
-      "Value": "6378000000",
-      "Comments": "Reduced from 7500000000. 6.4GHz memory sufficient for display transition."
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "GpuPwrLevel",
-      "Duration": 2000,
-      "Value": "12"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "GPUBlockBoost",
-      "Duration": 2000,
-      "Value": "101"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "UclampTAMin",
-      "Duration": 5000,
-      "Value": "100"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "UclampFGMin",
-      "Duration": 5000,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "TopAppCpuset",
-      "Duration": 5000,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "ForegroundCpuset",
-      "Duration": 5000,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 5000,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "DISPLAY_CHANGE",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 2000,
-      "Value": "51"
     },
     {
       "PowerHint": "CAMERA_SHOT",
       "Node": "CAMUClampBoost",
-      "Duration": 100,
+      "Duration": 2000,
       "Value": "100"
     },
     {
       "PowerHint": "CAMERA_SHOT",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 100,
-      "Value": "3250000"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 100,
-      "Value": "3250000"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 100,
-      "Value": "3000000"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 100,
-      "Value": "3000000"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 100,
-      "Value": "2100000"
+      "Node": "UclampTAMin",
+      "Duration": 2000,
+      "Value": "100"
     },
     {
       "PowerHint": "CAMERA_SHOT",
       "Node": "CPULittleClusterMinFreq",
-      "Duration": 100,
-      "Value": "2100000"
+      "Duration": 2000,
+      "Value": "1800000"
     },
     {
       "PowerHint": "CAMERA_SHOT",
-      "Node": "MemFreq",
-      "Duration": 100,
-      "Value": "8533000000"
+      "Node": "CPUMidClusterMinFreq",
+      "Duration": 2000,
+      "Value": "1800000"
     },
     {
       "PowerHint": "CAMERA_SHOT",
-      "Node": "GPUBlockBoost",
-      "Duration": 100,
-      "Value": "50"
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 2000,
+      "Value": "1800000"
     },
     {
       "PowerHint": "CAMERA_SHOT",
       "Node": "GpuPwrLevel",
-      "Duration": 100,
+      "Duration": 2000,
       "Value": "5"
     },
     {
       "PowerHint": "CAMERA_SHOT",
-      "Node": "UclampTAMin",
-      "Duration": 100,
-      "Value": "100"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "UclampFGMin",
-      "Duration": 100,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 100,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "GEDDvfsMargin",
-      "Duration": 100,
-      "Value": "1000",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 100,
-      "Value": "500",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_SHOT",
-      "Node": "DCSMode",
-      "Duration": 100,
-      "Value": "0",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "MemFreq",
-      "Duration": 1000,
-      "Value": "8533000000"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 1000,
-      "Value": "2500000"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 1000,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 1000,
-      "Value": "1700000"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
       "Node": "GPUBlockBoost",
       "Duration": 1000,
       "Value": "50"
     },
     {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "GpuPwrLevel",
-      "Duration": 1000,
-      "Value": "8"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "CAMUClampBoost",
-      "Duration": 1000,
-      "Value": "75"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "UclampTAMin",
-      "Duration": 1000,
-      "Value": "40"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 1000,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1000,
-      "Value": "329234",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1000,
-      "Value": "259",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_BACKEND_BOOST",
-      "Node": "DCSMode",
-      "Duration": 1000,
-      "Value": "64",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 3000,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 3000,
-      "Value": "1600000"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 3000,
-      "Value": "1400000"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "CAMUClampBoost",
-      "Duration": 3000,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "GpuPwrLevel",
-      "Duration": 3000,
-      "Value": "12"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 3000,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "GEDDvfsMargin",
-      "Duration": 3000,
-      "Value": "138",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 3000,
-      "Value": "8",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_CAPTURE_CPU_THROTTLE",
-      "Node": "DCSMode",
-      "Duration": 3000,
-      "Value": "66",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "CAMUClampBoost",
-      "Duration": 100,
-      "Value": "100"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "MemFreq",
-      "Duration": 100,
-      "Value": "8533000000"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 100,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 100,
-      "Value": "2000000"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 100,
-      "Value": "1500000"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "GPUBlockBoost",
-      "Duration": 100,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "GpuPwrLevel",
-      "Duration": 100,
-      "Value": "8"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "UclampTAMin",
-      "Duration": 100,
-      "Value": "40"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "CDCpuset",
-      "Duration": 100,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 100,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 100,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 100,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 100,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "GEDDvfsMargin",
-      "Duration": 100,
-      "Value": "1000",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 100,
-      "Value": "500",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_MULTICAM_BOOST",
-      "Node": "DCSMode",
-      "Duration": 100,
-      "Value": "0",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "CAMUClampBoost",
-      "Duration": 100,
-      "Value": "75"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "MemFreq",
-      "Duration": 100,
-      "Value": "5480000000"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 100,
-      "Value": "2000000"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 100,
-      "Value": "1800000"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 100,
-      "Value": "1300000"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "GPUBlockBoost",
-      "Duration": 100,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "GpuPwrLevel",
-      "Duration": 100,
-      "Value": "10"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "UclampTAMin",
-      "Duration": 100,
-      "Value": "40"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "CDCpuset",
-      "Duration": 100,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 100,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 100,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 100,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 100,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "GEDDvfsMargin",
-      "Duration": 100,
-      "Value": "329234",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 100,
-      "Value": "259",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_ZOOMING_BOOST",
-      "Node": "DCSMode",
-      "Duration": 100,
-      "Value": "64",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "PowerHALCameraRunning",
-      "Duration": 0,
-      "Value": "1"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CAMUClampBoost",
-      "Duration": 0,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "5480000000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2800000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1400000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2400000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "1200000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 0,
-      "Value": "1900000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
+      "PowerHint": "CAMERA_STREAMING",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 0,
-      "Value": "800000"
+      "Value": "1000000"
     },
     {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "10"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "TopAppCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "ForegroundCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CDCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 0,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 0,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1,
-      "Value": "110",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "8",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_EXTREME",
-      "Node": "DCSMode",
-      "Duration": 1,
-      "Value": "66",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "PowerHALCameraRunning",
-      "Duration": 0,
-      "Value": "1"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CAMUClampBoost",
-      "Duration": 0,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "4218000000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2700000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1200000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "PowerHint": "CAMERA_STREAMING",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
       "Value": "1000000"
     },
     {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
+      "PowerHint": "CAMERA_STREAMING",
+      "Node": "CPUBigClusterMinFreq",
+      "Duration": 0,
+      "Value": "1000000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING",
       "Node": "CPULittleClusterMaxFreq",
+      "Duration": 0,
+      "Value": "2100000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING",
+      "Node": "CPUMidClusterMaxFreq",
       "Duration": 0,
       "Value": "1800000"
     },
     {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 0,
-      "Value": "700000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "12"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "TopAppCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "ForegroundCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CDCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 0,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 0,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1,
-      "Value": "110",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "8",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_HIGH",
-      "Node": "DCSMode",
-      "Duration": 1,
-      "Value": "66",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "PowerHALCameraRunning",
-      "Duration": 0,
-      "Value": "1"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CAMUClampBoost",
-      "Duration": 0,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "3094000000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
+      "PowerHint": "CAMERA_STREAMING",
       "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2500000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1100000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2000000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "900000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 0,
-      "Value": "1700000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 0,
-      "Value": "600000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "15"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "TopAppCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "ForegroundCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CDCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 0,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 0,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1,
-      "Value": "138",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "8",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_STANDARD",
-      "Node": "DCSMode",
-      "Duration": 1,
-      "Value": "66",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "PowerHALCameraRunning",
-      "Duration": 0,
-      "Value": "1"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "CAMUClampBoost",
-      "Duration": 0,
-      "Value": "25"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "2068000000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 0,
-      "Value": "1600000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 0,
-      "Value": "1400000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "20"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "CDCpuset",
-      "Duration": 0,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 0,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1,
-      "Value": "138",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "8",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_LOW",
-      "Node": "DCSMode",
-      "Duration": 1,
-      "Value": "66",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "PowerHALCameraRunning",
-      "Duration": 0,
-      "Value": "1"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CAMUClampBoost",
-      "Duration": 0,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "3094000000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2500000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1100000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2000000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "900000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CPULittleClusterMaxFreq",
-      "Duration": 0,
-      "Value": "1700000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 0,
-      "Value": "600000"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "15"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "TopAppCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "ForegroundCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CDCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 0,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 0,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1,
-      "Value": "138",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "8",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_STREAMING_VIDEO_CALL",
-      "Node": "DCSMode",
-      "Duration": 1,
-      "Value": "66",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "PowerHALCameraRunning",
-      "Duration": 0,
-      "Value": "1"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CAMUClampBoost",
-      "Duration": 0,
-      "Value": "75"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "4218000000"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CPUBigClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2700000"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "2000000"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CPUMidClusterMaxFreq",
-      "Duration": 0,
-      "Value": "2200000"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
       "Value": "1800000"
     },
     {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CPULittleClusterMaxFreq",
+      "PowerHint": "CAMERA_STREAMING",
+      "Node": "GpuPwrLevel",
       "Duration": 0,
-      "Value": "1900000"
+      "Value": "-1"
     },
     {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
+      "PowerHint": "CAMERA_STREAMING",
+      "Node": "PowerHALCameraRunning",
+      "Duration": 0,
+      "Value": "1"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING",
+      "Node": "SchedutilRateLimitLittle",
+      "Duration": 0,
+      "Value": "2000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING",
+      "Node": "SchedutilRateLimitMid",
+      "Duration": 0,
+      "Value": "2000"
+    },
+    {
+      "PowerHint": "CAMERA_STREAMING",
+      "Node": "SchedutilRateLimitBig",
+      "Duration": 0,
+      "Value": "1000"
+    },
+    {
+      "PowerHint": "AUDIO_STREAMING_LOW_LATENCY",
       "Node": "CPULittleClusterMinFreq",
       "Duration": 0,
-      "Value": "1300000"
+      "Value": "1000000"
     },
     {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "10"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "30"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "UclampFGMin",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "TopAppCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "ForegroundCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "ForegroundWindowCpuset",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CDCpuset",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CDHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-7"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CDMidCpusetCpus",
-      "Duration": 0,
-      "Value": "4-7"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "CDMidHighCpusetCpus",
-      "Duration": 0,
-      "Value": "0-6"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 0,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1,
-      "Value": "110",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "8",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_VIDEO_RECORDING",
-      "Node": "DCSMode",
-      "Duration": 1,
-      "Value": "66",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_HIGH",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "4"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_HIGH",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "50"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_HIGH",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "4218000000"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_HIGH",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1500000"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_HIGH",
+      "PowerHint": "AUDIO_STREAMING_LOW_LATENCY",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 0,
-      "Value": "1200000"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_HIGH",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1,
-      "Value": "10000",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_HIGH",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "500",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_HIGH",
-      "Node": "DCSMode",
-      "Duration": 1,
-      "Value": "0",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "12"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "GPUBlockBoost",
-      "Duration": 0,
-      "Value": "0"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "3094000000"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "CPUBigClusterMinFreq",
-      "Duration": 0,
-      "Value": "1100000"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "CPUMidClusterMinFreq",
-      "Duration": 0,
-      "Value": "900000"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "GEDDvfsMargin",
-      "Duration": 1,
-      "Value": "329234",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 1,
-      "Value": "259",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "CAMERA_GPU_STANDARD",
-      "Node": "DCSMode",
-      "Duration": 1,
-      "Value": "64",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
-    },
-    {
-      "PowerHint": "ML_ACC",
-      "Node": "PMQoSCpuDmaLatency",
-      "Duration": 2000,
-      "Value": "51"
-    },
-    {
-      "PowerHint": "ML_ACC",
-      "Node": "GEDDvfsMargin",
-      "Duration": 2000,
-      "Value": "329234",
-      "Comments": "GPU DVFS margin (Min=1, Max=6553599, Default=329234) - lower=faster GPU downscale"
-    },
-    {
-      "PowerHint": "ML_ACC",
-      "Node": "GEDLoadingDvfsStep",
-      "Duration": 2000,
-      "Value": "259",
-      "Comments": "GPU loading DVFS step (Min=0, Max=25855, Default=259) - lower=smoother GPU scaling"
-    },
-    {
-      "PowerHint": "ML_ACC",
-      "Node": "DCSMode",
-      "Duration": 2000,
-      "Value": "64",
-      "Comments": "GPU Dynamic Clock Scaling mode (Min=0, Max=66, Default=64) - 66=max power-save DCS"
+      "Value": "1000000"
     }
   ]
 }
