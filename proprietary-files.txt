@@ -1219,7 +1219,6 @@ odm/app/JVFactoryTest/JVFactoryTest.apk|8290bfb8cad4d1e1079b7367f2052ce0b3e77bb1
 odm/app/goodix_sz_rodin/goodix_sz_rodin.apk|7e09a157409f7b478e879fd03213dc82cad3d475
 product/app/MiuiCit/MiuiCit.apk|7f0d4f3790f7577106510e2339cb00ea4c5d823d
 odm/etc/cit_param_config.json
-odm/etc/device_info_qr_config.yml
 system_ext/bin/spkcal_88263s_n12a|134c5432213a5e04d327da0593287dc88cd8aaba
 system_ext/bin/spkcal_88263s_n12|e2ae8570e4e2383013e2d607d44b78ab3b330132
 system_ext/bin/spkcal_88263s_o10|6334336771c819882af03e37be48288b5d73d64d
@@ -1964,10 +1963,7 @@ vendor/lib64/vendor.xiaomi.hardware.aidl.tidaservice-V1-ndk.so
 
 # Thermal
 vendor/bin/mi_thermald
-vendor/etc/task_profiles.json
-system/etc/cgroups.json:vendor/etc/cgroups.json
 vendor/etc/thermal-map.conf
-vendor/etc/thermalbreakboostconfig.xml
 vendor/etc/thermald-devices.conf
 vendor/etc/thermal/disable_skin_control.conf
 vendor/etc/thermal/disable_thermal.conf
