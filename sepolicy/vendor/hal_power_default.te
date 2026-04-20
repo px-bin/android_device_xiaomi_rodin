@@ -2,12 +2,50 @@
 allow hal_power_default vendor_touchfeature_device:chr_file rw_file_perms;
 
 # To do powerhint on nodes defined in powerhint.json
+
 allow hal_power_default sysfs_devices_system_cpu:file rw_file_perms;
+allow hal_power_default sysfs_devices_system_cpu:dir { search getattr open read };
+
 allow hal_power_default cgroup:dir search;
 allow hal_power_default cgroup:file rw_file_perms;
+
 allow hal_power_default proc_cpufreq:dir search;
 allow hal_power_default proc_cpufreq:file rw_file_perms;
+
+allow hal_power_default proc_gpufreqv2:dir { search getattr open read };
+allow hal_power_default proc_gpufreqv2:file rw_file_perms;
+
 allow hal_power_default sysfs_gpu:file rw_file_perms;
 allow hal_power_default sysfs_ged:dir search;
 allow hal_power_default sysfs_ged:file rw_file_perms;
+
 allow hal_power_default cpu_dma_latency_device:chr_file rw_file_perms;
+
+allow hal_power_default sysfs_dvfsrc_devfreq:dir { search getattr open read };
+allow hal_power_default sysfs_dvfsrc_devfreq:file rw_file_perms;
+
+allow hal_power_default gpu_device:dir search;
+
+allow hal_power_default proc_cpuhvfs:dir r_dir_perms;
+allow hal_power_default proc_cpuhvfs:file rw_file_perms;
+
+allow hal_power_default proc_cpuidle:dir r_dir_perms;
+allow hal_power_default proc_cpuidle:file rw_file_perms;
+
+allow hal_power_default proc_displowpower:dir r_dir_perms;
+allow hal_power_default proc_displowpower:file rw_file_perms;
+
+allow hal_power_default proc_powerhal_cpu_ctrl:dir r_dir_perms;
+allow hal_power_default proc_powerhal_cpu_ctrl:file rw_file_perms;
+
+allow hal_power_default proc_thermal:dir r_dir_perms;
+allow hal_power_default proc_thermal:file rw_file_perms;
+
+allow hal_power_default sysfs_thermal_sram:dir search;
+
+set_prop(hal_power_default, vendor_mtk_camera_prop)
+
+allow hal_power_default sysfs:file { write open };
+
+neverallow { untrusted_app untrusted_app_25 untrusted_app_27 } proc_gpufreqv2:file write;
+neverallow { untrusted_app untrusted_app_25 untrusted_app_27 } sysfs_dvfsrc_devfreq:file write;
