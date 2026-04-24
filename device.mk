@@ -18,9 +18,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 # Inherit common MediaTek IMS
 $(call inherit-product, vendor/mediatek/ims/ims.mk)
 
-# Dolby
-$(call inherit-product-if-exists, hardware/dolby/dolby.mk)
-
 # Rootdir
 PRODUCT_PACKAGES += \
     init.batterysecret.rc \
@@ -127,7 +124,8 @@ PRODUCT_PACKAGES += \
     libextensioneffect
 
 PRODUCT_PACKAGES += \
-    MtkInCallService
+    MtkInCallService \
+    DolbyAtmos
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_effects_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects_config.xml \
