@@ -23,7 +23,7 @@
     <!-- root node for HBM-->
     <highBrightnessMode enabled="true">
         <!-- Transition point brightness from normal to HBM mode -->
-        <transitionPoint>0.85</transitionPoint>
+        <transitionPoint>0.7</transitionPoint>
         <!-- Minimum lux to enter HBM -->
         <minimumLux>5881</minimumLux>
         <!-- Time limitation for HBM-->
@@ -40,12 +40,24 @@
         <!-- Thermal limitation for HBM -->
         <thermalStatusLimit>critical</thermalStatusLimit>
         <!-- Low power mode limitation for HBM -->
-        <allowInLowPowerMode>true</allowInLowPowerMode>
+        <allowInLowPowerMode>false</allowInLowPowerMode>
         <minimumHdrPercentOfScreen>0</minimumHdrPercentOfScreen>
         <sdrHdrRatioMap>
             <point>
-                <sdrNits>2.0</sdrNits>
-                <hdrRatio>8.0</hdrRatio>
+                <sdrNits>1.000</sdrNits>
+                <hdrRatio>2.000</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>2.000</sdrNits>
+                <hdrRatio>4.000</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>5.000</sdrNits>
+                <hdrRatio>4.000</hdrRatio>
+            </point>
+            <point>
+                <sdrNits>100.000</sdrNits>
+                <hdrRatio>8.000</hdrRatio>
             </point>
             <point>
                 <sdrNits>1400.0</sdrNits>
@@ -53,9 +65,13 @@
             </point>
         </sdrHdrRatioMap>
     </highBrightnessMode>
-    <screenBrightnessRampFastDecrease>0.41587824</screenBrightnessRampFastDecrease>
-    <screenBrightnessRampFastIncrease>0.23228346</screenBrightnessRampFastIncrease>
-    <ambientLightHorizonLong>3000</ambientLightHorizonLong>
-    <ambientLightHorizonShort>1000</ambientLightHorizonShort>
+    <screenBrightnessRampIncreaseMaxMillis>2000</screenBrightnessRampIncreaseMaxMillis>
+    <screenBrightnessRampDecreaseMaxMillis>20000</screenBrightnessRampDecreaseMaxMillis> 
+    <screenBrightnessRampFastDecrease>0.7047244</screenBrightnessRampFastDecrease>
+    <screenBrightnessRampFastIncrease>0.7047244</screenBrightnessRampFastIncrease>
+    <screenBrightnessRampSlowDecrease>0.05</screenBrightnessRampSlowDecrease>
+    <screenBrightnessRampSlowIncrease>0.05</screenBrightnessRampSlowIncrease>
+    <ambientLightHorizonLong>5000</ambientLightHorizonLong>
+    <ambientLightHorizonShort>50</ambientLightHorizonShort>
 </displayConfiguration>
 <!-- END Adapt_MIUIAdaptFrame -->

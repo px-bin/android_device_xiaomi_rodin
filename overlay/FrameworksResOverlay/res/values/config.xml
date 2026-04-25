@@ -331,7 +331,8 @@
     <!-- Default screen brightness setting set.
          -2 is invalid so setting will resort to int value specified above.
          Must be in the range specified by minimum and maximum. -->
-    <item name="config_screenBrightnessSettingDefaultFloat" format="float" type="dimen">0.074743524</item>
+    <item name="config_screenBrightnessSettingDefaultFloat" format="float" type="dimen">0.4</item>
+
 
     <!-- Fast brightness animation ramp rate in brightness units per second-->
     <integer name="config_brightness_ramp_rate_fast" translatable="false">64</integer>
@@ -357,7 +358,7 @@
     <!-- Amount of time it takes for the light sensor to warm up in milliseconds.
          For this time after the screen turns on, the Power Manager
          will not debounce light sensor readings -->
-    <integer name="config_lightSensorWarmupTime">1000</integer>
+    <integer name="config_lightSensorWarmupTime">50</integer>
 
     <!-- The maximum range of gamma adjustment possible using the screen
          auto-brightness adjustment setting. -->
