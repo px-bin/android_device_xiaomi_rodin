@@ -22,9 +22,6 @@ ifeq ($(TARGET_SHIPS_DOLBY), true)
         LunarisDolby
 endif
 
-PRODUCT_PACKAGES += \
-    LunarisDolby
-
 # Camera Configuration
 ifeq ($(TARGET_SHIPS_MIUICAMERA), true)
     $(call inherit-product-if-exists, device/xiaomi/rodin-miuicamera/device.mk)
