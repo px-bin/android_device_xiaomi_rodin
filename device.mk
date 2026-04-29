@@ -35,24 +35,6 @@ else
         vendor.camera.aux.packagelist=org.lineageos.aperture,com.meitu.meiyancamera,com.ss.android.ugc.aweme
 endif
 
-# Inherit BCR
-ifeq ($(TARGET_SHIPS_BCR), true)
-    $(call inherit-product-if-exists, vendor/bcr/bcr.mk)
-endif
-
-# Inherit PixelPlay Music Player
-ifeq ($(TARGET_SHIPS_PIXELPLAY), true)
-    $(call inherit-product-if-exists, vendor/PixelPlay/PixelPlay.mk)
-endif
-
-# Inherit ViPER4Android FX
-ifeq ($(TARGET_SHIPS_VIPERFX), true)
-    $(call inherit-product-if-exists, packages/apps/ViPER4AndroidFX/config.mk)
-endif
-
-# Keys
--include vendor/infinity-priv/keys/keys.mk
-
 # Rootdir
 PRODUCT_PACKAGES += \
     init.connectivity.rc \
@@ -469,5 +451,5 @@ PRODUCT_PRODUCT_PROPERTIES += ro.arm64.memtag.bootctl_supported=0
 PRODUCT_PRODUCT_PROPERTIES += persist.arm64.memtag.default=off
 
 # Disable Matlog
-TARGET_DISABLE_MATLOG := true 
+TARGET_DISABLE_MATLOG := true
 
