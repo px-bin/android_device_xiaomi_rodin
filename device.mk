@@ -15,25 +15,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
 # Dolby
-ifeq ($(TARGET_SHIPS_DOLBY), true)
-    $(call inherit-product-if-exists, hardware/dolby/dolby.mk)
+$(call inherit-product-if-exists, hardware/dolby/dolby.mk)
     PRODUCT_PACKAGES += \
         LunarisDolby
-endif
 
 # Camera Configuration
-ifeq ($(TARGET_SHIPS_MIUICAMERA), true)
-    $(call inherit-product-if-exists, device/xiaomi/rodin-miuicamera/device.mk)
-    PRODUCT_VENDOR_PROPERTIES += \
-        vendor.camera.aux.packagelist=com.xiaomi.cameratest,com.xiaomi.factory.mmi,com.xiaomi.runin,com.android.camera
-else ifeq ($(TARGET_SHIPS_GCAM), true)
-    $(call inherit-product-if-exists, vendor/gcam/gcam.mk)
-    PRODUCT_VENDOR_PROPERTIES += \
-        vendor.camera.aux.packagelist=com.ss.android.ugc.aweme,org.codeaurora.snapcam,com.meitu.meiyancamera
-else
     PRODUCT_VENDOR_PROPERTIES += \
         vendor.camera.aux.packagelist=org.lineageos.aperture,com.meitu.meiyancamera,com.ss.android.ugc.aweme
-endif
 
 # Rootdir
 PRODUCT_PACKAGES += \
