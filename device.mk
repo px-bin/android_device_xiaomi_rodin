@@ -14,6 +14,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 # Project ID Quota
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
+# Dalvik
+$(call inherit-product, frameworks/native/build/phone-xhdpi-8192-dalvik-heap.mk)
+
 # Dolby
 $(call inherit-product-if-exists, hardware/dolby/dolby.mk)
     PRODUCT_PACKAGES += \
@@ -159,42 +162,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.consumerir.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.consumerir.xml
 
-# Dalvik
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.appimageformat=lz4 \
-    dalvik.vm.background-dex2oat-threads=4 \
-    dalvik.vm.boot-dex2oat-threads=6 \
-    dalvik.vm.dex2oat-Xms=64m \
-    dalvik.vm.dex2oat-Xmx=512m \
-    dalvik.vm.dex2oat-resolve-startup-strings=true \
-    dalvik.vm.dex2oat-threads=6 \
-    dalvik.vm.dex2oat64.enabled=true \
-    dalvik.vm.dexopt.secondary=true \
-    dalvik.vm.dexopt.thermal-cutoff=2 \
-    dalvik.vm.enable_pr_dexopt=true \
-    dalvik.vm.finalizer-timeout-ms=40000 \
-    dalvik.vm.heapgrowthlimit=256m \
-    dalvik.vm.heapmaxfree=32m \
-    dalvik.vm.heapminfree=8m \
-    dalvik.vm.heapsize=512m \
-    dalvik.vm.heapstartsize=8m \
-    dalvik.vm.heaptargetutilization=0.5 \
-    dalvik.vm.image-dex2oat-Xms=64m \
-    dalvik.vm.image-dex2oat-Xmx=64m \
-    dalvik.vm.isa.arm64.features=default \
-    dalvik.vm.isa.arm64.variant=cortex-a55 \
-    dalvik.vm.ps-min-first-save-ms=8000 \
-    dalvik.vm.usap_pool_enabled=false \
-    dalvik.vm.usap_pool_refill_delay_ms=3000 \
-    dalvik.vm.usap_pool_size_max=3 \
-    dalvik.vm.usap_pool_size_min=1 \
-    dalvik.vm.usap_refill_threshold=1 \
-    dalvik.vm.useartservice=true \
-    dalvik.vm.usejit=true \
-    persist.dalvik.vm.dex2oat-threads=6 \
-    persist.sys.dalvik.vm.lib.2=libart.so \
-    ro.dalvik.vm.enable_uffd_gc=true \
-    ro.dalvik.vm.native.bridge=0
 
 
 # DRM (Clearkey)
