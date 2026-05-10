@@ -1309,6 +1309,26 @@ vendor/etc/init/fuelgauged_init.rc
 vendor/etc/init/fuelgauged_nvram_init.rc
 vendor/lib64/libfgauge_gm30.so
 
+# Batteryantiaging
+odm/etc/charger/BAA_config_common.json
+odm/etc/charger/BAA_config_rodin.json
+vendor/bin/hw/vendor.xiaomi.hardware.batteryantiaging-service
+vendor/etc/init/vendor.xiaomi.hardware.batteryantiaging-service.rc
+vendor/etc/vintf/manifest/vendor.xiaomi.hardware.batteryantiaging.xml
+vendor/lib64/libbaa_BasedOnCC_VolDown.so
+vendor/lib64/libbaa_ChargeInfo.so
+vendor/lib64/libbaa_common.so
+vendor/lib64/libbaa_ExampleClass.so
+vendor/lib64/libbaa_FreqChgFvDown.so
+vendor/lib64/libbaa_LowSohFvDown.so
+vendor/lib64/vendor.xiaomi.hardware.batteryantiaging-V1-ndk.so
+
+# Micharge
+vendor/bin/hw/vendor.xiaomi.hardware.micharge-service
+vendor/etc/init/vendor.xiaomi.hardware.micharge-service.rc
+vendor/etc/vintf/manifest/vendor.xiaomi.hardware.micharge.xml
+vendor/lib64/vendor.xiaomi.hardware.micharge-V2-ndk.so
+
 # Gatekeeper
 vendor/bin/hw/android.hardware.gatekeeper-service.mitee
 vendor/etc/init/android.hardware.gatekeeper-service.mitee.rc
@@ -1816,6 +1836,33 @@ vendor/lib64/vendor.xiaomi.hardware.aidl.tidaservice-V1-ndk.so
 vendor/bin/mi_thermald
 vendor/etc/thermal-map.conf
 vendor/etc/thermald-devices.conf
+
+# Thermal Configs
+odm/etc/thermal-4k.conf
+odm/etc/thermal-arvr.conf
+odm/etc/thermal-camera.conf
+odm/etc/thermal-cclassvideo.conf
+odm/etc/thermal-cgame.conf
+odm/etc/thermal-charge.conf
+odm/etc/thermal-chg-only.conf
+odm/etc/thermal-class0.conf
+odm/etc/thermal-hp-mgame.conf
+odm/etc/thermal-hp-normal.conf
+odm/etc/thermal-huanji.conf
+odm/etc/thermal-mgame.conf
+odm/etc/thermal-navigation.conf
+odm/etc/thermal-nolimits.conf
+odm/etc/thermal-normal.conf
+odm/etc/thermal-per-class0.conf
+odm/etc/thermal-per-normal.conf
+odm/etc/thermal-per-video.conf
+odm/etc/thermal-phone.conf
+odm/etc/thermal-region-map.conf
+odm/etc/thermal-tgame.conf
+odm/etc/thermal-video.conf
+odm/etc/thermal-videochat.conf
+odm/etc/thermal-yuanshen.conf
+odm/etc/device_info_qr_config.yml
 
 # Tether Offload
 vendor/bin/hw/tetheroffloadservice

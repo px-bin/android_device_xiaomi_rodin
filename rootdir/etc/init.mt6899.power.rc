@@ -140,13 +140,6 @@ on property:sys.boot_completed=1
     # Enable PowerHAL hint processing
     setprop vendor.powerhal.init 1
 
-    # batterysecret
-    chmod 0664 /sys/class/Charging_Adapter/pd_adapter/usbpd_verifed
-    chmod 0664 /sys/class/Charging_Adapter/pd_adapter/request_vdm_cmd
-    chmod 0664 /sys/class/Charging_Adapter/pd_adapter/verify_process
-    chmod 0664 /sys/class/power_supply/usb/pd_authentication
-    start batterysecret
-
     # Adjust watermark level
     write /proc/sys/vm/watermark_scale_factor 200
 
@@ -182,12 +175,6 @@ on charger
     write /dev/sys/block/by-name/rootdisk/queue/nr_requests 128
     write /dev/sys/block/by-name/rootdisk/queue/rq_affinity 2
 
-    chmod 0664 /sys/class/Charging_Adapter/pd_adapter/usbpd_verifed
-    chmod 0664 /sys/class/Charging_Adapter/pd_adapter/request_vdm_cmd
-    chmod 0664 /sys/class/Charging_Adapter/pd_adapter/verify_process
-    chmod 0664 /sys/class/power_supply/usb/pd_authentication
-    start batterysecret
-
 service vendor.gralloc-v2 /vendor/bin/hw/android.hardware.graphics.allocator-V2-service-mediatek
     class hal animation
     user system
@@ -197,9 +184,3 @@ service vendor.gralloc-v2 /vendor/bin/hw/android.hardware.graphics.allocator-V2-
     onrestart restart vendor.hwcomposer
     onrestart restart camerahalserver
     task_profiles ProcessCapacityHigh HighPerformance
-
-service batterysecret /vendor/bin/batterysecret
-    class last_start
-    user root
-    group system system wakelock
-    disabled
