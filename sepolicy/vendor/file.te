@@ -46,3 +46,6 @@ type batteryantiaging_cfg_file, file_type, vendor_file_type;
 # Persist files
 type persist_file, file_type, vendor_file_type;
 
+# Binder priority kernel module
+type proc_binder_prio, fs_type, proc_type;
+

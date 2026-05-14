@@ -4,3 +4,7 @@ allow init sysfs_battery_supply:file setattr;
 # Usb PD
 allow init sysfs_usbpd_device:file setattr;
 
+# Allow init to access binder_prio module nodes
+allow init proc_binder_prio:dir r_dir_perms;
+allow init proc_binder_prio:file rw_file_perms;
+
