@@ -1,0 +1,3 @@
+# Allow USB HAL to search through sysfs_udc directories
+allow mtk_hal_usb sysfs_udc:dir search;
+allow mtk_hal_usb sysfs_udc:file r_file_perms;
