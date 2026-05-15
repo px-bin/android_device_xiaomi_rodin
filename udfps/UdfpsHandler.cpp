@@ -227,10 +227,10 @@ class XiaomiRodinUdfpsHandler : public UdfpsHandler {
         // causes the display driver to silently discard the ioctl, leaving the
         // FOD circle on. A short delay lets the panel finish its wake sequence
         // so LHBM_OFF lands on a ready panel and is actually processed.
-        // 500 ms comfortably covers the typical panel wake time (~60-80 ms)
+        // 300 ms comfortably covers the typical panel wake time (~60-80 ms)
         // without any perceptible delay to the user.
         std::thread([this]() {
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
             onFingerUp();
         }).detach();
     }
