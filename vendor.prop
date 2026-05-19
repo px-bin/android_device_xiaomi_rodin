@@ -423,10 +423,16 @@ ro.vendor.wifi.sap.interface=ap0
 ro.vendor.wlan.chrdev=wmt_chrdev_wifi_connac2
 ro.vendor.wlan.gen=gen4m_6899
 
+# LMK
+ro.lmk.filecache_min_kb=153600
+ro.lmk.kill_timeout_ms=50
+ro.lmk.stall_limit_critical=40
+
 # ZRAM writeback
+ro.zram.first_wb_delay_mins=1440
 ro.zram.mark_idle_delay_mins=60
-ro.zram.first_wb_delay_mins=180
 ro.zram.periodic_wb_delay_hours=24
+ro.zram_backing_device_min_free_mb=1536
 
 # Zygote
 zygote.critical_window.minute=10
