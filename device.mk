@@ -18,6 +18,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 # Inherit common MediaTek IMS
 $(call inherit-product, vendor/mediatek/ims/ims.mk)
 
+# Dalvik
+$(call inherit-product, frameworks/native/build/phone-xhdpi-8192-dalvik-heap.mk)
+
+
 # Rootdir
 PRODUCT_PACKAGES += \
     init.batterysecret.rc \
@@ -183,15 +187,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.consumerir.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.consumerir.xml
-
-# Dalvik
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapstartsize=24m \
-    dalvik.vm.heapgrowthlimit=256m \
-    dalvik.vm.heapsize=512m \
-    dalvik.vm.heaptargetutilization=0.46 \
-    dalvik.vm.heapminfree=8m \
-    dalvik.vm.heapmaxfree=48m
 
 # DRM (Clearkey)
 PRODUCT_PACKAGES += \
