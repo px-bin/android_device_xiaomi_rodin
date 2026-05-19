@@ -21,7 +21,6 @@ vendor/lib64/vendor.mediatek.hardware.apuware.utils@2.0.so;MODULE_SUFFIX=-vendor
 
 # Audio
 odm/lib64/vendor.xiaomi.hardware.mediaeventgatherservice-V1-ndk.so
-system/lib64/av-audio-types-aidl-V1-ndk.so
 system_ext/bin/hw/android.hardware.audio.parameter_parser.service
 system_ext/etc/init/android.hardware.audio.parameter_parser.service.rc
 vendor/bin/hw/android.hardware.audio.service-aidl.mediatek
@@ -349,12 +348,13 @@ odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.mihisv3.so
 odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.mimotionvideo.so
 odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.misat.so
 odm/lib64/camera/plugins/streaming/com.xiaomi.plugin.videofilter.so
+odm/lib64/camera/plugins/com.xiaomi.plugin.heifedit.so
 odm/lib64/camera/zsl/com.xiaomi.zsl.default.so
 odm/lib64/camera/zsl/com.xiaomi.zsl.dsac.so
 odm/lib64/camera/zsl/com.xiaomi.zsl.hdr.so
 odm/lib64/libHISCppAlgos.so
 odm/lib64/libMiEmojiEffect.so
-odm/lib64/libMiVideoFilter.so;MODULE_SUFFIX=-odm
+odm/lib64/libMiPhotoFilter.so
 odm/lib64/libalCFR.so
 odm/lib64/libanc_dc_base.so
 odm/lib64/libanc_single_bokeh.so
@@ -362,6 +362,7 @@ odm/lib64/libanc_single_rt_bokeh.so
 odm/lib64/libanc_supervq.so
 odm/lib64/libc++_shared.so
 odm/lib64/libcamera_scene.so
+odm/lib64/libcameraheif.so
 odm/lib64/libdeflicker.so
 odm/lib64/libhandgesture.arcsoft.so
 odm/lib64/libhis_motion_tracker.so
@@ -412,7 +413,6 @@ vendor/lib64/libAF.so
 vendor/lib64/libBasicModule.so
 vendor/lib64/libJpgEncPipe.so
 vendor/lib64/libMiMotion.so
-vendor/lib64/libMiPhotoFilter.so
 vendor/lib64/libXMFaceFocus.so
 vendor/lib64/libaaa_aaautil.so
 vendor/lib64/libaaa_afassist_V2.so
@@ -943,6 +943,7 @@ odm/etc/camera/beauty/beauty_config_in.json
 odm/etc/camera/beauty/beauty_config_ru.json
 odm/etc/camera/beauty/resources/style_xiaomi_o10.hdcg
 odm/etc/camera/camerabooster.json
+odm/etc/camera/cameraopt_reclaim.json
 odm/etc/camera/com.xiaomi.dcal.w1u1.golden
 odm/etc/camera/com.xiaomi.dcal.w2u2.golden
 odm/etc/camera/com.xiaomi.dcal.wu.golden
@@ -1256,16 +1257,16 @@ odm/app/JVFactoryTest/JVFactoryTest.apk
 odm/app/goodix_sz_rodin/goodix_sz_rodin.apk
 
 # Speaker Calibration
-system_ext/bin/spkcal_88263s_n12a
-system_ext/bin/spkcal_88263s_n12
-system_ext/bin/spkcal_88263s_o10
-system_ext/bin/spkcal_tfa
-system_ext/bin/spkcal_88263s_m9
-system_ext/bin/spkcal_88263s
-system_ext/bin/climax_tfa9873
-system_ext/bin/spkcal
-system_ext/bin/spkcal_88263s_m16
-system_ext/lib64/libtfa98xx_cal.so
+system_ext/bin/spkcal_88263s_n12a|134c5432213a5e04d327da0593287dc88cd8aaba
+system_ext/bin/spkcal_88263s_n12|e2ae8570e4e2383013e2d607d44b78ab3b330132
+system_ext/bin/spkcal_88263s_o10|6334336771c819882af03e37be48288b5d73d64d
+system_ext/bin/spkcal_tfa|5bc9184b29aea0b42afdc702ad4507b429684e87
+system_ext/bin/spkcal_88263s_m9|aa9eee09d14ce5fdaa53df1661417e74c42afd9c
+system_ext/bin/spkcal_88263s|c5a3c04196a5f23668a7d150f659cfd4c7376b51
+system_ext/bin/climax_tfa9873|fcc8c0542bc3b9fa721bffd72598aad24fe4c232
+system_ext/bin/spkcal|342f05ebcb1efc68aeef3b441be60815dfcb7148
+system_ext/bin/spkcal_88263s_m16|fa3efffa0ce9c1e44a5540c6ef946ca58d841315
+system_ext/lib64/libtfa98xx_cal.so|aaf0a3d144ba280945e861201328ee63dc7911d3
 vendor/etc/spk_cal_silence.wav
 odm/etc/spk.wav
 odm/etc/bottom_spk.wav
@@ -1622,22 +1623,29 @@ system_ext/lib64/libmvpu_cic_ci_compiler.mtk.so
 system_ext/lib64/libmvpu_cic_ci_compiler_25.mtk.so
 system_ext/lib64/libmvpu_clc_14_mvpu_elf_25.mtk.so
 system_ext/lib64/libmvpu_clc_mvpu_elf.mtk.so
+system_ext/lib64/libmvpu_cic_ci_compiler_30.mtk.so
+system_ext/lib64/libmvpu_clc_30_mvpu_elf.mtk.so
+system_ext/lib64/libmvpu_clc_30_mvpu_utility.mtk.so
 system_ext/lib64/libmvpu_config.mtk.so
 system_ext/lib64/libmvpu_engine.mtk.so
 system_ext/lib64/libmvpu_engine_25.mtk.so
 system_ext/lib64/libmvpu_engine_25_pub.mtk.so
+system_ext/lib64/libmvpu_engine_30.mtk.so
 system_ext/lib64/libmvpu_engine_pub.mtk.so
 system_ext/lib64/libmvpu_pattern.mtk.so
 system_ext/lib64/libmvpu_pattern_25.mtk.so
 system_ext/lib64/libmvpu_pattern_25_pub.mtk.so
+system_ext/lib64/libmvpu_pattern_30.mtk.so
 system_ext/lib64/libmvpu_pattern_pub.mtk.so
 system_ext/lib64/libmvpu_runtime.mtk.so
 system_ext/lib64/libmvpu_runtime_25.mtk.so
 system_ext/lib64/libmvpu_runtime_25_pub.mtk.so
+system_ext/lib64/libmvpu_runtime_30.mtk.so
 system_ext/lib64/libmvpu_runtime_builtin.mtk.so
 system_ext/lib64/libmvpu_runtime_pub.mtk.so
 system_ext/lib64/libmvpuop25_mtk_cv.mtk.so
 system_ext/lib64/libmvpuop25_mtk_nn.mtk.so
+system_ext/lib64/libmvpuop30_mtk_nn.mtk.so
 system_ext/lib64/libmvpuop_mtk_cv.mtk.so
 system_ext/lib64/libmvpuop_mtk_nn.mtk.so
 system_ext/lib64/libneuron_graph_delegate.mtk.so
@@ -1889,6 +1897,7 @@ odm/etc/vintf/manifest/vendor.xiaomi.sensor.citsensorservice.aidl.xml
 vendor/lib64/vendor.xiaomi.sensor.citsensorservice-V1-ndk.so
 
 # TEE
+odm/mitee/ta/123af5d1-d6f5-cc54-f78fa19030b2e76a.ta
 odm/mitee/ta/a3ba6512-6e0e-4065-93165e4a7d04ca08.ta
 vendor/bin/miteelog
 vendor/bin/tee-supplicant

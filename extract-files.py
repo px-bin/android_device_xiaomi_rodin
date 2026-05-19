@@ -85,7 +85,6 @@ lib_fixups: lib_fixups_user_type = {
         'vendor.mediatek.hardware.apuware.utils@2.0',
         'vendor.mediatek.hardware.videotelephony@1.0',
     ): lib_fixup_vendor_suffix,
-    ('odm/lib64/libMiVideoFilter.so'): lib_fixup_odm_suffix,
 }
 
 blob_fixups: blob_fixups_user_type = {
@@ -171,7 +170,7 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/lib64/libMiPhotoFilter.so',
      'odm/lib64/libMiEmojiEffect.so',
      'vendor/lib64/mt6899/libneuron_adapter_mgvi.so',
-     'odm/lib64/libMiVideoFilter.so'): blob_fixup()
+     'odm/lib64/libMiPhotoFilter.so'): blob_fixup()
         .clear_symbol_version('AHardwareBuffer_allocate')
         .clear_symbol_version('AHardwareBuffer_createFromHandle')
         .clear_symbol_version('AHardwareBuffer_describe')
@@ -230,14 +229,19 @@ blob_fixups: blob_fixups_user_type = {
     'vendor/lib64/libaudio_aidl_conversion_common_ndk_prebuilt.so': blob_fixup()
         .replace_needed('android.media.audio.common.types-V5-ndk.so', 'android.media.audio.common.types-V3-ndk.so'),
     (
-         'vendor/lib64/soundfx/libswdapaidl.so',
-         'vendor/lib64/soundfx/libswgamedapaidl.so',
-         'vendor/lib64/soundfx/libswspatializeraidl.so'
+        'vendor/lib64/soundfx/libswdapaidl.so',
+        'vendor/lib64/soundfx/libswgamedapaidl.so',
+        'vendor/lib64/soundfx/libswspatializeraidl.so'
     ): blob_fixup()
         .replace_needed('android.media.audio.common.types-V5-ndk.so', 'android.media.audio.common.types-V3-ndk.so')
         .replace_needed('libaudio_aidl_conversion_common_ndk.so', 'libaudio_aidl_conversion_common_ndk_prebuilt.so'),
     'vendor/lib64/soundfx/libdlbvolaidl.so': blob_fixup()
         .replace_needed('android.media.audio.common.types-V5-ndk.so', 'android.media.audio.common.types-V3-ndk.so'),
+
+    (
+        'system_ext/bin/hw/android.hardware.audio.parameter_parser.service'
+    ): blob_fixup()
+        .replace_needed('android.hardware.audio.core-V3-ndk.so', 'android.hardware.audio.core-V4-ndk.so'),
 }  # fmt: skip
 
 module = ExtractUtilsModule(
