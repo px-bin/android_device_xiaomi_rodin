@@ -1267,6 +1267,7 @@ system_ext/bin/climax_tfa9873|fcc8c0542bc3b9fa721bffd72598aad24fe4c232
 system_ext/bin/spkcal|342f05ebcb1efc68aeef3b441be60815dfcb7148
 system_ext/bin/spkcal_88263s_m16|fa3efffa0ce9c1e44a5540c6ef946ca58d841315
 system_ext/lib64/libtfa98xx_cal.so|aaf0a3d144ba280945e861201328ee63dc7911d3
+system_ext/bin/spkcal_p10
 vendor/etc/spk_cal_silence.wav
 odm/etc/spk.wav
 odm/etc/bottom_spk.wav
