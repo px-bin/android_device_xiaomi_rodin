@@ -1,0 +1,46 @@
+# =============================================================================
+# SELinux Type Enforcement for TI BQ25985 Charge Pump (90W Fast Charging)
+# Stock source: vendor/etc/selinux/vendor_sepolicy.cil (OS3.0.10.0.WOJMIXM)
+# Device: POCO X7 Pro (rodin)
+# =============================================================================
+
+# ---- Type Declaration -------------------------------------------------------
+# sysfs nodes for TI BQ25985 charge pump IC on I2C bus
+# Registered as both fs_type and sysfs_type per stock policy typeattributeset
+type sysfs_ti_battery, fs_type, sysfs_type;
+
+# ---- Stock Policy Rules (confirmed from vendor_sepolicy.cil) ----------------
+
+# charger process: reads charge pump status on boot/charge events
+allow charger sysfs_ti_battery:dir search;
+allow charger sysfs_ti_battery:file { ioctl read getattr lock map open watch watch_reads };
+
+# Health HAL: monitors battery and charge pump health
+allow hal_health_default sysfs_ti_battery:dir search;
+allow hal_health_default sysfs_ti_battery:file { ioctl read getattr lock map open watch watch_reads };
+
+# System apps: battery stats UI, charge monitoring overlays
+allow system_app sysfs_ti_battery:dir { ioctl read getattr lock open watch watch_reads search };
+allow system_app sysfs_ti_battery:file { ioctl read getattr lock map open watch watch_reads };
+
+# ---- Additional Rules (derived from charging stack binaries in stock dump) --
+
+# Xiaomi micharge HAL: primary 90W charging coordinator
+allow hal_micharge_default sysfs_ti_battery:dir search;
+allow hal_micharge_default sysfs_ti_battery:file { ioctl read getattr lock map open watch watch_reads };
+
+# smartcharging daemon: adaptive charge curve management
+allow smartcharging sysfs_ti_battery:dir search;
+allow smartcharging sysfs_ti_battery:file { ioctl read getattr lock map open watch watch_reads };
+
+# batterysecret: reads calibration data from secure storage
+allow batterysecret sysfs_ti_battery:dir search;
+allow batterysecret sysfs_ti_battery:file { ioctl read getattr lock map open watch watch_reads };
+
+# batteryantiaging HAL: limits charge rate over time to protect battery life
+allow hal_batteryantiaging_default sysfs_ti_battery:dir search;
+allow hal_batteryantiaging_default sysfs_ti_battery:file { ioctl read getattr lock map open watch watch_reads };
+
+# fuelgauged: fuel gauge daemon, monitors battery state-of-charge
+allow fuelgauged sysfs_ti_battery:dir search;
+allow fuelgauged sysfs_ti_battery:file { ioctl read getattr lock map open watch watch_reads };

@@ -32,3 +32,7 @@ allow mtk_hal_camera audioserver_service:service_manager find;
 # system_data_file: PreviewAlgoFwkT searches /data for AI model/tuning files
 allow mtk_hal_camera system_data_file:dir search;
 
+# Allow MTK Camera HAL to access camera persist files
+allow mtk_hal_camera camera_persist_file:dir search;
+allow mtk_hal_camera camera_persist_file:file { read getattr open };
+

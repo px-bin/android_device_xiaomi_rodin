@@ -2,3 +2,10 @@ set_prop(vendor_init, vendor_sensors_prop)
 set_prop(vendor_init, vendor_batterysecret_prop)
 set_prop(vendor_init, vendor_displayfeature_prop)
 set_prop(vendor_init, vendor_fingerprint_prop)
+
+# Mtk Fast Charge
+get_prop(vendor_init, vendor_mtk_fast_charging_support_prop)
+
+# batteryantiaging
+get_prop(vendor_init, vendor_batteryantiaging_prop)
+set_prop(vendor_init, vendor_batteryantiaging_prop)
