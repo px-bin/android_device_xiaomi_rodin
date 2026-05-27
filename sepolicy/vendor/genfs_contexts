@@ -5,8 +5,6 @@ genfscon sysfs /class/fs16xx/fsm_re25 u:object_r:sysfs_fsm_re25:s0
 genfscon sysfs /class/fs16xx/fsm_f0 u:object_r:sysfs_fsm_f0:s0
 
 # Camera
-genfscon proc /c2ps u:object_r:proc_c2ps:s0
-genfscon proc /ppb u:object_r:proc_ppb:s0
 genfscon proc /mv u:object_r:procfs_memory:s0
 
 # Display
@@ -22,9 +20,6 @@ genfscon sysfs /devices/platform/soc/11e10000.dp-tx/extcon/dp_audio/cable.0/name
 
 # Fingerprint
 genfscon sysfs /devices/virtual/touch/touch_dev/fod_press_status u:object_r:vendor_fingerprint_sysfs:s0
-
-# Light
-genfscon sysfs /devices/platform/mtk-leds/leds/lcd-backlight u:object_r:sysfs_leds:s0
 
 # Gpu Boost
 genfscon sysfs /sys/class/devfreq/13000000.mali/available_frequencies                   u:object_r:sysfs_gpu:s0
@@ -45,7 +40,6 @@ genfscon sysfs /devices/platform/11e01000.i2c/i2c-5/5-0034/11e01000.i2c:mt6375@3
 genfscon sysfs /sys/devices/platform/11e01000.i2c/i2c-5/5-0034/11e01000.i2c:mt6375@34:mtk_gauge/power_supply/battery                           u:object_r:sysfs_battery_supply:s0
 
 genfscon sysfs /devices/platform/11280000.i2c/i2c-10/10-0055/power_supply/                                                                     u:object_r:sysfs_batteryinfo:s0
-genfscon sysfs /devices/platform/soc/11280000.i2c/i2c-5/5-0034/11280000.i2c:mt6375@34:mtk-gauge/power_supply/                                  u:object_r:sysfs_batteryinfo:s0
 genfscon sysfs /sys/devices/platform/soc/11280000.i2c/i2c-10/10-006f/power_supply/cp_master                                                    u:object_r:sysfs_usb_supply:s0
 genfscon sysfs /sys/devices/platform/soc/11280000.i2c/i2c-5/5-0034/11280000.i2c:mt6375@34:mtk_gauge/power_supply/battery                       u:object_r:sysfs_usb_supply:s0
 genfscon sysfs /sys/devices/platform/soc/11280000.i2c/i2c-10/10-0055/power_supply/bms                                                          u:object_r:sysfs_battery_supply:s0
@@ -55,9 +49,6 @@ genfscon sysfs /devices/platform/soc/11f01000.i2c/i2c-5/5-0034/11f01000.i2c:mt63
 genfscon sysfs /devices/platform/11f01000.i2c/i2c-5/5-0034/11f01000.i2c:mt6375@34:mtk-gauge/power_supply/                                      u:object_r:sysfs_batteryinfo:s0
 genfscon sysfs /devices/platform/soc/11f01000.i2c/i2c-5/5-0034/11f01000.i2c:mt6375@34:mtk-gauge/power_supply/                                  u:object_r:sysfs_batteryinfo:s0
 
-
-# Trusted Execution Environment (TEE)
-genfscon proc /mitee_log 									 u:object_r:proc_mitee_log:s0
 
 # Wakeup (https://lkml.org/lkml/2019/8/6/1275)
 genfscon sysfs /devices/platform/18000000.consys/wakeup u:object_r:sysfs_wakeup:s0
@@ -123,9 +114,7 @@ genfscon sysfs /devices/platform/11f01000.i2c/i2c-5/5-0034/11f01000.i2c:mt6375@3
 genfscon sysfs /devices/platform/soc/11f01000.i2c/i2c-5/5-0034/11f01000.i2c:mt6375@34:mtk-gauge/power_supply/battery/wakeup                    u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/soc/11f01000.i2c/i2c-5/5-0034/11f01000.i2c:mt6375@34:mtk-gauge/power_supply/mt6375-gauge/wakeup               u:object_r:sysfs_wakeup:s0
 
-genfscon sysfs /devices/platform/charger/power_supply/mtk-mst-div-chg/wakeup                                                                   u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/charger/power_supply/mtk-mst-hvdiv-chg/wakeup                                                                 u:object_r:sysfs_wakeup:s0
-genfscon sysfs /devices/platform/charger/power_supply/mtk-slv-div-chg/wakeup                                                                   u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/charger/power_supply/mtk-slv-hvdiv-chg/wakeup                                                                 u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/battery-manager/power_supply/battery/wakeup                                                                   u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/charger/power_supply/usb/wakeup                                                                               u:object_r:sysfs_wakeup:s0
@@ -168,7 +157,6 @@ genfscon sysfs /devices/virtual/touch/touch_dev/abnormal_event u:object_r:sysfs_
 genfscon sysfs /devices/virtual/touch/touch_dev/touch_thp_cmd u:object_r:sysfs_touch_hostprocess:s0
 genfscon sysfs /devices/virtual/touch/touch_dev/suspend_state u:object_r:sysfs_touch_hostprocess:s0
 genfscon sysfs /devices/virtual/touch/touch_dev/touch_irq_no u:object_r:sysfs_touch_hostprocess:s0
-genfscon proc /touch_boost u:object_r:proc_touch_boost:s0
 genfscon proc /tp_fw_version u:object_r:proc_tp_file:s0
 genfscon proc /tp_hal_version u:object_r:proc_tp_file:s0
 
