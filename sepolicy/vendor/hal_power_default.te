@@ -15,6 +15,7 @@ allow hal_power_default proc_cpufreq:file rw_file_perms;
 allow hal_power_default proc_gpufreqv2:dir { search getattr open read };
 allow hal_power_default proc_gpufreqv2:file rw_file_perms;
 
+allow hal_power_default sysfs_gpu:dir search;
 allow hal_power_default sysfs_gpu:file rw_file_perms;
 allow hal_power_default sysfs_ged:dir search;
 allow hal_power_default sysfs_ged:file rw_file_perms;
