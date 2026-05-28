@@ -11,68 +11,36 @@ import java.io.File
 
 private const val TAG = "FileUtils"
 
-/*
- * Reads the first line of text from the given file.
- *
- * @return the read line contents, or null on failure
- */
+/** Reads the first line of [fileName]. Returns null on any failure. */
 fun readOneLine(fileName: String): String? =
     runCatching { File(fileName).useLines { it.firstOrNull() } }
         .onFailure { e -> Log.e(TAG, "Could not read from file $fileName", e) }
         .getOrNull()
 
-/*
- * Writes the given value into the given file
- *
- * @return true on success, false on failure
- */
+/** Writes [value] to [fileName]. Returns true on success, false on failure. */
 fun writeLine(fileName: String, value: String): Boolean =
     runCatching { File(fileName).writeText(value) }
         .onFailure { e -> Log.e(TAG, "Could not write to file $fileName", e) }
         .isSuccess
 
-/*
- * Checks whether the given file exists
- *
- * @return true if exists, false if not
- */
+/** Returns true if [fileName] exists on the filesystem. */
 fun fileExists(fileName: String): Boolean = File(fileName).exists()
 
-/*
- * Checks whether the given file is readable
- *
- * @return true if readable, false if not
- */
-fun isFileReadable(fileName: String): Boolean {
-    val file = File(fileName)
-    return file.exists() && file.canRead()
-}
+/** Returns true if [fileName] exists and is readable. */
+fun isFileReadable(fileName: String): Boolean =
+    File(fileName).let { it.exists() && it.canRead() }
 
-/*
- * Checks whether the given file is writable
- *
- * @return true if writable, false if not
- */
-fun isFileWritable(fileName: String): Boolean {
-    val file = File(fileName)
-    return file.exists() && file.canWrite()
-}
+/** Returns true if [fileName] exists and is writable. */
+fun isFileWritable(fileName: String): Boolean =
+    File(fileName).let { it.exists() && it.canWrite() }
 
-/*
- * Deletes an existing file
- *
- * @return true if the delete was successful, false if not
- */
+/** Deletes [fileName]. Returns true on success. */
 fun delete(fileName: String): Boolean =
     runCatching { File(fileName).delete() }
         .onFailure { e -> Log.w(TAG, "Failed to delete $fileName", e) }
         .getOrDefault(false)
 
-/*
- * Renames an existing file
- *
- * @return true if the rename was successful, false if not
- */
+/** Renames [srcPath] to [dstPath]. Returns true on success. */
 fun rename(srcPath: String, dstPath: String): Boolean =
     runCatching { File(srcPath).renameTo(File(dstPath)) }
         .onFailure { e -> Log.w(TAG, "Failed to rename $srcPath to $dstPath", e) }

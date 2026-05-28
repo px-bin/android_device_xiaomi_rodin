@@ -1,6 +1,13 @@
 /*
  * SPDX-FileCopyrightText: 2023-2025 Paranoid Android
  * SPDX-License-Identifier: Apache-2.0
+ *
+ * Thin wrapper around the vendor.xiaomi.hardware.displayfeature_aidl
+ * IDisplayFeature AIDL service.
+ *
+ * All calls are dispatched on a background Thread so callers on the
+ * main thread are never blocked. The binder is cached and re-obtained
+ * automatically after a service death.
  */
 
 package com.xiaomi.settings.display
@@ -16,48 +23,47 @@ object DisplayFeatureWrapper {
 
     @Volatile private var displayFeature: IDisplayFeature? = null
 
-    private val deathRecipient =
-        IBinder.DeathRecipient {
-            if (DEBUG) Log.d(TAG, "DisplayFeature service died")
-            displayFeature = null
-        }
-
-    @Synchronized
-    private fun getDisplayFeature(): IDisplayFeature? {
-        displayFeature?.let {
-            if (it.asBinder().isBinderAlive) return it
-        }
-        return try {
-            val binder =
-                ServiceManager.waitForService(
-                    "vendor.xiaomi.hardware.displayfeature_aidl.IDisplayFeature/default",
-                )
-            val service = IDisplayFeature.Stub.asInterface(binder)
-            service?.asBinder()?.linkToDeath(deathRecipient, 0)
-            displayFeature = service
-            if (DEBUG) Log.d(TAG, "Connected to DisplayFeature service")
-            service
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to get DisplayFeature service", e)
-            null
-        }
+    /** Clears the cached binder on service death so it will be re-fetched next call. */
+    private val deathRecipient = IBinder.DeathRecipient {
+        if (DEBUG) Log.d(TAG, "DisplayFeature service died — binder cleared")
+        displayFeature = null
     }
 
-    fun setFeature(
-        mode: Int,
-        value: Int,
-        cookie: Int,
-    ) {
+    /** Returns a live IDisplayFeature binder, blocking until it is available. */
+    @Synchronized
+    private fun getDisplayFeature(): IDisplayFeature? {
+        displayFeature?.let { if (it.asBinder().isBinderAlive) return it }
+        return runCatching {
+            val binder = ServiceManager.waitForService(
+                "vendor.xiaomi.hardware.displayfeature_aidl.IDisplayFeature/default",
+            )
+            IDisplayFeature.Stub.asInterface(binder).also { service ->
+                service?.asBinder()?.linkToDeath(deathRecipient, 0)
+                displayFeature = service
+                if (DEBUG) Log.d(TAG, "Connected to DisplayFeature service")
+            }
+        }.onFailure { e ->
+            Log.e(TAG, "Failed to get DisplayFeature service", e)
+        }.getOrNull()
+    }
+
+    /**
+     * Calls [IDisplayFeature.setFeature] on display 0 asynchronously.
+     *
+     * @param mode   Feature mode identifier
+     * @param value  Feature value
+     * @param cookie Feature cookie
+     */
+    fun setFeature(mode: Int, value: Int, cookie: Int) {
         Thread {
-            val feature = getDisplayFeature()
-            if (feature == null) {
-                if (DEBUG) Log.d(TAG, "DisplayFeature is null, skipping setFeature")
+            val feature = getDisplayFeature() ?: run {
+                if (DEBUG) Log.d(TAG, "DisplayFeature is null — skipping setFeature")
                 return@Thread
             }
-            try {
+            runCatching {
                 if (DEBUG) Log.d(TAG, "setFeature: mode=$mode value=$value cookie=$cookie")
-                feature.setFeature(0, mode, value, cookie) // displayId 0
-            } catch (e: Exception) {
+                feature.setFeature(/* displayId= */ 0, mode, value, cookie)
+            }.onFailure { e ->
                 Log.e(TAG, "setFeature failed!", e)
             }
         }.start()

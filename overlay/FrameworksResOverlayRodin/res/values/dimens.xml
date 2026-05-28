@@ -5,14 +5,14 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <dimen name="rounded_corner_content_padding">69.0px</dimen>
+    <dimen name="rounded_corner_content_padding">24.0dp</dimen>
     <dimen name="notification_min_height">106.0dp</dimen>
-    <dimen name="rounded_corner_radius">104.0px</dimen>
-    <dimen name="rounded_corner_radius_bottom">104.0px</dimen>
-    <dimen name="rounded_corner_radius_top">104.0px</dimen>
+    <dimen name="rounded_corner_radius">38.0dp</dimen>
+    <dimen name="rounded_corner_radius_bottom">38.0dp</dimen>
+    <dimen name="rounded_corner_radius_top">38.0dp</dimen>
     <item type="dimen" name="status_bar_height">@dimen/status_bar_height_portrait</item>
-    <dimen name="status_bar_height_default">115.0px</dimen>
+    <dimen name="status_bar_height_default">40.0dp</dimen>
     <item type="dimen" name="status_bar_height_landscape">@dimen/status_bar_height_portrait</item>
-    <dimen name="status_bar_height_portrait">115.0px</dimen>
-    <dimen name="toast_y_offset">8.0dp</dimen>
+    <dimen name="status_bar_height_portrait">40.0dp</dimen>
+    <dimen name="toast_y_offset">24.0dp</dimen>
 </resources>

@@ -1,17 +1,21 @@
 /*
- * Copyright (C) 2025 The LineageOS Project
+ * SPDX-FileCopyrightText: 2025 The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Background service that applies the high touch sampling rate (HTSR)
+ * to the Xiaomi touch AIDL on screen-on and unlock events.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Enabled state:   setTouchMode calls boost polling rate + sensitivity
+ * Disabled state:  setTouchMode calls return hardware to baseline
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SharedPreferences key: HTSR_STATE in the SHAREDHTSR file.
+ * The service is started at locked-boot via BootCompletedReceiver.
+ *
+ * RECEIVER_NOT_EXPORTED must NOT be used for ACTION_SCREEN_ON and
+ * ACTION_USER_PRESENT: they are system-protected broadcasts sent exclusively
+ * by the OS. Registering them with NOT_EXPORTED can silently drop the
+ * registration on some Xiaomi kernels and triggers a StrictMode warning
+ * on AOSP 16.
  */
 
 package com.xiaomi.settings.touchsampling
@@ -26,34 +30,23 @@ import android.os.IBinder
 import android.util.Log
 import vendor.xiaomi.hw.touchfeature.ITouchFeature
 
+/** Maintains the high touch sampling rate state across screen-on events. */
 class TouchSamplingService : Service() {
 
-    private var mTouchFeature: ITouchFeature? = null
-    private var mScreenUnlockReceiver: BroadcastReceiver? = null
-    private var mPreferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
+    private var touchFeature: ITouchFeature? = null
+    private var screenUnlockReceiver: BroadcastReceiver? = null
+    private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "TouchSamplingService started")
-
-        // Initialize the touchfeature
         initTouchFeature()
-
-        // Initialize and register the broadcast receiver
         registerScreenUnlockReceiver()
-
-        // Initialize and register the SharedPreferences listener
         registerPreferenceChangeListener()
-
-        // Apply the touch sampling rate initially
         applyTouchSamplingRateFromPreferences()
     }
 
-    override fun onStartCommand(
-        intent: Intent?,
-        flags: Int,
-        startId: Int,
-    ): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (DEBUG) Log.d(TAG, "onStartCommand")
         return START_STICKY
     }
@@ -61,111 +54,124 @@ class TouchSamplingService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "TouchSamplingService stopped")
-
-        // Unregister the broadcast receiver
-        if (mScreenUnlockReceiver != null) {
-            unregisterReceiver(mScreenUnlockReceiver)
-        }
-
-        // Unregister the SharedPreferences change listener
-        val sharedPref = getSharedPreferences(
-            TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE
-        )
-        if (mPreferenceChangeListener != null) {
-            sharedPref.unregisterOnSharedPreferenceChangeListener(mPreferenceChangeListener)
+        runCatching { if (screenUnlockReceiver != null) unregisterReceiver(screenUnlockReceiver) }
+        runCatching {
+            getSharedPreferences(SHAREDHTSR, Context.MODE_PRIVATE)
+                .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
         }
     }
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent): IBinder? = null
 
+    /** Binds to the Xiaomi TouchFeature AIDL service. Fails silently if unavailable. */
     private fun initTouchFeature() {
-        try {
-            val name = "default"
-            val fqName = ITouchFeature.DESCRIPTOR + "/" + name
+        runCatching {
+            val fqName = ITouchFeature.DESCRIPTOR + "/default"
             val binder = android.os.Binder.allowBlocking(
-                android.os.ServiceManager.waitForDeclaredService(fqName)
+                android.os.ServiceManager.waitForDeclaredService(fqName),
             )
-            mTouchFeature = ITouchFeature.Stub.asInterface(binder)
-        } catch (e: Exception) {
-            // Silent catch
+            touchFeature = ITouchFeature.Stub.asInterface(binder)
+            if (DEBUG) Log.d(TAG, "TouchFeature AIDL connected")
+        }.onFailure { e ->
+            Log.w(TAG, "Failed to bind TouchFeature AIDL: $e")
         }
     }
 
-    /**
-     * Registers a BroadcastReceiver to handle screen unlock and screen on events.
-     */
+    /** Re-applies the touch sampling rate when the screen turns on or the user unlocks. */
     private fun registerScreenUnlockReceiver() {
-        mScreenUnlockReceiver = object : BroadcastReceiver() {
+        screenUnlockReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                if (Intent.ACTION_USER_PRESENT == intent.action || Intent.ACTION_SCREEN_ON == intent.action) {
-                    Log.d(TAG, "Screen turned on or device unlocked. Reapplying touch sampling rate.")
+                if (intent.action == Intent.ACTION_USER_PRESENT ||
+                    intent.action == Intent.ACTION_SCREEN_ON) {
+                    Log.d(TAG, "Screen on / unlock — reapplying touch sampling rate")
                     applyTouchSamplingRateFromPreferences()
                 }
             }
         }
-
-        val filter = IntentFilter()
-        filter.addAction(Intent.ACTION_USER_PRESENT)
-        filter.addAction(Intent.ACTION_SCREEN_ON)
-        registerReceiver(mScreenUnlockReceiver, filter)
+        // ACTION_SCREEN_ON and ACTION_USER_PRESENT are system-protected broadcasts.
+        // Do NOT pass RECEIVER_NOT_EXPORTED — the OS delivers these to all
+        // registered receivers and the flag can silently prevent receipt on
+        // some kernels.
+        @Suppress("UnspecifiedRegisterReceiverFlag")
+        registerReceiver(
+            screenUnlockReceiver,
+            IntentFilter().apply {
+                addAction(Intent.ACTION_USER_PRESENT)
+                addAction(Intent.ACTION_SCREEN_ON)
+            },
+        )
     }
 
-    /**
-     * Registers a SharedPreferences.OnSharedPreferenceChangeListener to monitor
-     * changes in the touch sampling rate setting.
-     */
+    /** Reacts to SharedPreferences changes so the service stays in sync with the UI. */
     private fun registerPreferenceChangeListener() {
-        val sharedPref = getSharedPreferences(
-            TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE
-        )
-
-        mPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-            if (TouchSamplingSettingsFragment.HTSR_STATE == key) {
-                Log.d(TAG, "Preference changed. Reapplying touch sampling rate.")
-                val htsrEnabled = sharedPreferences.getBoolean(key, false)
-                applyTouchSamplingRate(if (htsrEnabled) 1 else 0)
+        val sharedPref = getSharedPreferences(SHAREDHTSR, Context.MODE_PRIVATE)
+        preferenceChangeListener =
+            SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+                if (key == HTSR_STATE) {
+                    Log.d(TAG, "Preference $key changed — reapplying touch sampling rate")
+                    applyTouchSamplingRate(if (prefs.getBoolean(key, false)) 1 else 0)
+                }
             }
-        }
-
-        sharedPref.registerOnSharedPreferenceChangeListener(mPreferenceChangeListener)
+        sharedPref.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
-    /**
-     * Reads the touch sampling rate preference and applies the appropriate state.
-     */
     private fun applyTouchSamplingRateFromPreferences() {
-        val sharedPref = getSharedPreferences(
-            TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE
-        )
-        val htsrEnabled = sharedPref.getBoolean(TouchSamplingSettingsFragment.HTSR_STATE, false)
-        applyTouchSamplingRate(if (htsrEnabled) 1 else 0)
+        val enabled = getSharedPreferences(SHAREDHTSR, Context.MODE_PRIVATE)
+            .getBoolean(HTSR_STATE, false)
+        applyTouchSamplingRate(if (enabled) 1 else 0)
     }
 
     /**
-     * Applies the given touch sampling rate state directly to the hardware file.
+     * Applies [state] (1 = boost, 0 = normal) to the touch hardware.
+     * All setTouchMode calls are wrapped in runCatching so a single AIDL
+     * failure does not crash the service.
      *
-     * @param state 1 to enable high touch sampling rate, 0 to disable it.
+     * Mode indices correspond to ITouchFeature constants for garnet:
+     *   0   = GAME_MODE         (main game-mode flag)
+     *   1   = HIGH_RATE         (enable high polling rate path)
+     *   2   = SENSITIVITY       (finger sensitivity; 99 = max)
+     *   3   = REPORT_RATE       (touch report rate Hz; 34 = ~240 Hz)
+     *   7   = POWER_SAVE        (invert: 0 = boost on, 1 = power save on)
+     *   202 = SAMPLE_RATE_EXT   (extended polling rate toggle)
      */
     private fun applyTouchSamplingRate(state: Int) {
-        try {
-            if (mTouchFeature != null) {
-                mTouchFeature!!.setTouchMode(0, TOUCH_GAME_MODE, state)
-                mTouchFeature!!.setTouchMode(0, 202, state)
-                mTouchFeature!!.setTouchMode(0, 1, state)
-                mTouchFeature!!.setTouchMode(0, 3, if (state == 1) 34 else 0)
-                mTouchFeature!!.setTouchMode(0, 2, if (state == 1) 99 else 0)
-                mTouchFeature!!.setTouchMode(0, 7, if (state == 1) 0 else 1)
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to set touch sampling state", e)
+        val tf = touchFeature ?: run {
+            Log.w(TAG, "TouchFeature AIDL not available — skipping rate apply")
+            return
         }
+        runCatching { tf.setTouchMode(0, 0,   state) }
+        runCatching { tf.setTouchMode(0, 202, state) }
+        runCatching { tf.setTouchMode(0, 1,   state) }
+        runCatching { tf.setTouchMode(0, 3,   if (state == 1) 34 else 0) }
+        runCatching { tf.setTouchMode(0, 2,   if (state == 1) 99 else 0) }
+        runCatching { tf.setTouchMode(0, 7,   if (state == 1) 0  else 1) }
+        if (DEBUG) Log.d(TAG, "Touch sampling rate applied: state=$state")
     }
 
     companion object {
         private const val TAG = "TouchSamplingService"
-        private val DEBUG = Log.isLoggable(TAG, Log.DEBUG)
-        private const val TOUCH_GAME_MODE = 0
+        private val DEBUG     = Log.isLoggable(TAG, Log.DEBUG)
+
+        /** SharedPreferences file name — must match TouchBoostScreen. */
+        const val SHAREDHTSR = "htsr_prefs"
+        /** Preference key for the HTSR enabled boolean. */
+        const val HTSR_STATE = "htsr_enable"
+
+        /** Returns the current enabled state from SharedPreferences. */
+        fun isEnabled(context: Context): Boolean =
+            context.getSharedPreferences(SHAREDHTSR, Context.MODE_PRIVATE)
+                .getBoolean(HTSR_STATE, false)
+
+        /**
+         * Persists the enabled state. The running service picks up the change
+         * via its [SharedPreferences.OnSharedPreferenceChangeListener] and
+         * re-applies the hardware sampling rate immediately.
+         */
+        fun setEnabled(context: Context, enabled: Boolean) {
+            context.getSharedPreferences(SHAREDHTSR, Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean(HTSR_STATE, enabled)
+                .apply()
+        }
     }
 }

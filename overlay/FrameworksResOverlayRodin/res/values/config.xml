@@ -476,16 +476,6 @@
          we only enabled it while the device has ability of mixed color spaces composition -->
     <bool name="config_enableWcgMode">true</bool>
 
-    <!-- Indicate available ColorDisplayManager.COLOR_MODE_xxx. -->
-    <integer-array name="config_availableColorModes">
-        <item>257</item> <!-- standard -->
-        <item>258</item> <!-- vivid -->
-        <item>256</item> <!-- saturated -->
-        <item>269</item> <!-- expert original -->
-        <item>268</item> <!-- expert P3 -->
-        <item>267</item> <!-- expert sRGB -->
-    </integer-array>
-
     <!-- Whether WiFi display is supported by this device.
          There are many prerequisites for this feature to work correctly.
          Here are a few of them:

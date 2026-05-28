@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2023 Paranoid Android
-
      SPDX-License-Identifier: Apache-2.0
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,13 +14,16 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.BATTERY_STATS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".XiaomiPartsApp"
         android:label="@string/app_name"
-        android:persistent="true"
+        android:theme="@style/XiaomiParts.Theme"
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">
 
@@ -30,111 +32,92 @@
             android:exported="true">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <service
             android:name=".display.ColorService"
-            android:exported="false">
-        </service>
+            android:exported="false" />
 
         <service
             android:name=".thermal.ThermalService"
-            android:permission="ThermalService">
-        </service>
-
-        <activity
-            android:name=".thermal.ThermalSettingsActivity"
-            android:label="@string/thermal_title"
-            android:theme="@style/Theme.SubSettingsBase.Thermal"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-            </intent-filter>
-            <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.battery" />
-            <meta-data
-                android:name="com.android.settings.summary"
-                android:resource="@string/thermal_summary" />
-        </activity>
-
-        <!-- GameBar Overlay -->
-        <activity
-            android:name=".gamebar.GameBarSettingsActivity"
-            android:label="@string/game_bar_title"
-            android:theme="@style/Theme.SubSettingsBase"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-            </intent-filter>
-            <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.apps" />
-            <meta-data
-                android:name="com.android.settings.summary"
-                android:resource="@string/game_bar_summary" />
-        </activity>
-
-        <!-- GameBar AppSelector -->
-        <activity android:name=".gamebar.GameBarAppSelectorActivity" />
-        <activity android:name=".gamebar.GameBarAppRemoverActivity" />
-
-        <!-- GameBar Overlay Tile Service -->
-        <service
-            android:name=".gamebar.GameBarTileService"
-            android:label="@string/game_bar_tile_label"
-            android:icon="@drawable/ic_gamebar"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
-                android:value="true" />
-        </service>
-
-        <!-- GameBar Overlay Monitor Service -->
-        <service
-            android:name=".gamebar.GameBarMonitorService"
             android:exported="false" />
 
-        <!-- GameBar BootReceiver -->
-        <receiver
-            android:name=".gamebar.GameBarBootReceiver"
-            android:exported="true"
-            android:enabled="true"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-                <category android:name="android.intent.category.DEFAULT" />
-             </intent-filter>
-        </receiver>
-
-        <!-- Activity for Touch Sampling Settings -->
-        <activity
-            android:name=".touchsampling.TouchSamplingSettingsActivity"
-            android:label="@string/htsr_enable_title"
-            android:theme="@style/Theme.SubSettingsBase"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-            </intent-filter>
-            <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.display" />
-            <meta-data
-                android:name="com.android.settings.summary"
-                android:resource="@string/htsr_enable_summary" />
-        </activity>
-
-        <!-- Service for managing Touch Sampling -->
         <service
             android:name=".touchsampling.TouchSamplingService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false" />
+
+        <activity
+            android:name=".XiaomiPartsActivity"
+            android:label="@string/xiaomi_parts_title"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+<!-- Single Settings homepage tile for modern ROMs -->
+        <activity-alias
+            android:name=".XiaomiPartsSettingsTile"
+            android:targetActivity=".XiaomiPartsActivity"
+            android:label="@string/xiaomi_parts_title"
+            android:icon="@drawable/ic_xiaomi_parts"
+            android:exported="true">
+
+            <!-- Pure IA_SETTINGS injection, just like Digital Wellbeing -->
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.homepage" />
+
+            <!-- THIS IS THE FIX: Tells Android to wrap this item in a fully rounded Card -->
+            <meta-data
+                android:name="com.android.settings.group_key"
+                android:value="top_level_xiaomi_parts_group" />
+
+            <meta-data
+                android:name="com.android.settings.order"
+                android:value="110" />
+
+            <meta-data
+                android:name="com.android.settings.title"
+                android:resource="@string/xiaomi_parts_title" />
+
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/xiaomi_parts_summary" />
+
+            <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_xiaomi_parts" />
+            
+            <meta-data
+                android:name="com.android.settings.icon_color_scheme" 
+                android:value="cyan"/>
+
+            <meta-data
+                android:name="com.android.settings.bg.hint"
+                android:resource="@color/settings_background_icon_color" />
+
+            <meta-data
+                android:name="com.android.settings.bg.argb"
+                android:value="-16725933" />
+
+            <meta-data
+                android:name="com.android.settings.keyhint"
+                android:value="top_level_xiaomi_parts" />
+
+            <!-- Optional: Prevents the tile from duplicating if the user has a Work Profile -->
+            <meta-data
+                android:name="com.android.settings.profile"
+                android:value="primary_profile_only" />
+
+        </activity-alias>
+
     </application>
 </manifest>
