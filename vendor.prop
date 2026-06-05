@@ -1,4 +1,7 @@
 # Audio
+AUDIO_FEATURE_SEPARATE_RCV_SPK_CALL_TX=true
+AUDIO_CAMERA_GAIN=true
+AUDIO_FEATURE_REVERSE_MIC_DIRECTION_SUPPORT=true
 aaudio.mmap_exclusive_policy=2
 aaudio.mmap_policy=2
 audio.deep_buffer.media=true

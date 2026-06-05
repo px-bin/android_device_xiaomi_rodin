@@ -20,3 +20,47 @@ get_prop(hal_sensors_default, vendor_sensors_prop)
 # Allow Sensors hal to find hal_audio_hwservice
 hal_client_domain(hal_sensors_default, hal_audio)
 allow hal_sensors_default hal_audio_hwservice:hwservice_manager find;
+
+# 1. Block suspend capability — CRITICAL for sensor wakelock operation
+allow hal_sensors_default self:capability2 block_suspend;
+allow hal_sensors_default self:cap2_userns block_suspend;
+
+# 3. hwservicemanager interactions
+allow hal_sensors_default fwk_scheduler_hwservice:hwservice_manager find;
+allow hal_sensors_default hidl_manager_hwservice:hwservice_manager find;
+allow hal_sensors_default hwservicemanager_prop:file { read getattr map open };
+
+# 4. Input device access (for gesture/virtual sensor routing)
+allow hal_sensors_default input_device:dir { ioctl read getattr lock open watch watch_reads search };
+allow hal_sensors_default input_device:chr_file { ioctl read getattr lock map open watch watch_reads };
+
+# 5. Sysfs wakelock
+allow hal_sensors_default sysfs_wake_lock:file { ioctl read write getattr lock append map open };
+
+# 6. sensors_device (the AIDL sensor event FMQ device)
+allow hal_sensors_default sensors_device:chr_file { ioctl read write getattr lock append map open };
+
+# 7. DMA-BUF heap device
+allow hal_sensors_default dmabuf_system_heap_device:chr_file { ioctl read getattr lock map open };
+
+# 8. hidraw device
+allow hal_sensors_default hidraw_device:chr_file { ioctl read write getattr lock append open };
+
+# 9. graphics allocator tmpfs
+allow hal_sensors_default hal_graphics_allocator_default_tmpfs:file { read write };
+
+# 10. tp virtual prox sysfs — Elliptic virtual proximity node
+allow hal_sensors_default sysfs_tp_virtual_prox:file rw_file_perms;
+
+# 11. vendor display feature sysfs (you have file rw but missing dir search)
+allow hal_sensors_default vendor_displayfeature_sysfs:dir search;
+
+# 12. vendor CIT sensor service callback
+allow vendor_hal_citsensorservice_xiaomi_default hal_sensors_default:binder { call transfer };
+
+# 13. servicemanager interactions
+allow hal_sensors_default servicemanager:binder { call transfer };
+allow servicemanager hal_sensors_default:binder { call transfer };
+allow servicemanager hal_sensors_default:dir search;
+allow servicemanager hal_sensors_default:file { read open };
+allow servicemanager hal_sensors_default:process getattr;
