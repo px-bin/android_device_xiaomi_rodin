@@ -94,6 +94,7 @@ vendor/lib64/vendor.mediatek.hardware.audio-V1-ndk.so
 # Audio Configs
 vendor/etc/audio_device.xml
 vendor/etc/audio_device_fs.xml
+vendor/etc/bluetooth_a2dp_offload_ums_offload_audio_policy_configuration.xml
 vendor/etc/audio_param/AudioParamOptions_mgvi.xml
 vendor/etc/audio_param/AudioParamOptions_vext.xml
 vendor/etc/audio_param/BtInfo_AudioParam.xml
@@ -235,6 +236,14 @@ vendor/etc/smartpa_param_fs/preset_music.bin
 vendor/etc/smartpa_param_fs/preset_ringtone.bin
 vendor/etc/smartpa_param_fs/preset_voice.bin
 vendor/etc/smartpa_param_fs/preset_voip.bin
+
+# LE Audio Configs
+vendor/etc/le_audio_codec_capabilities.xml
+vendor/etc/aidl/hfp/hfp_codec_capabilities.xml
+vendor/etc/aidl/le_audio/aidl_audio_set_configurations.bfbs
+vendor/etc/aidl/le_audio/aidl_audio_set_configurations.json
+vendor/etc/aidl/le_audio/aidl_audio_set_scenarios.bfbs
+vendor/etc/aidl/le_audio/aidl_audio_set_scenarios.json
 
 # Batterysecret
 vendor/bin/batterysecret
