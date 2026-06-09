@@ -22,18 +22,20 @@ persist.vendor.speech.usb.offload=true
 ro.audio.monitorRotation=true
 ro.audio.spatializer_enabled=true
 ro.config.media_vol_default=20
-ro.config.vc_call_vol_default=8
-ro.config.vc_call_vol_steps=10
-ro.vendor.audio.camera_gain=true
-ro.vendor.audio.dolby.dax.support=true
-ro.vendor.audio.gain.support=true
+ro.config.vc_call_vol_default=4
+ro.config.vc_call_vol_steps=11
+ro.vendor.audio.spk.stereo=true
+ro.vendor.audio.media_vol_stepless=30
 ro.vendor.audio.media.volume.steps=30
+ro.vendor.audio.feature.fade=true
+ro.vendor.audio.camera_gain=true
+ro.vendor.audio.gain.support=true
 ro.vendor.audio.meeting.mode=true
 ro.vendor.audio.offload_to_music=true
 ro.vendor.audio.reverse_mic=true
 ro.vendor.audio.us.proximity=true
 ro.vendor.audio.us.proximity_waitfornegative_feature=true
-ro.vendor.audio.soundtrigger.aosp_supported=true
+ro.vendor.audio.soundtrigger.aosp_supported=1
 ro.vendor.audio.soundtrigger.support_record_type=0x0011
 ro.vendor.audio.voiceassist.support_record_type=0x0002
 ro.vendor.audio.soundtrigger.wakeupword=1
@@ -43,6 +45,7 @@ ro.vendor.audio.spatializer.support.speaker=true
 ro.vendor.audio.feature.spatial=5
 ro.vendor.audio.bluetooth.support.misound=false
 ro.vendor.audio.misound.bluetooth.enable=false
+ro.vendor.audio.playbackcapture.screen=true
 vendor.audio.spkcal.copy.inhal=true
 vendor.audio.spatializer_enable_stereo=true
 vendor.audio.useXiaomiSpatializer=false
@@ -65,16 +68,15 @@ ro.apk_verity.mode=2
 
 # Bluetooth
 ro.vendor.bt.platform=6899
-persist.bluetooth.a2dp_offload.coex_buf_count=3
+ro.bluetooth.a2dp_offload.supported=true
 persist.bluetooth.a2dp_offload.disabled=false
-persist.bluetooth.a2dp_offload.mtk_coex=true
+persist.vendor.bluetooth.supportopphdt=false
+persist.vendor.bluetooth.leaudio_mode=ums-cg
+ro.bluetooth.leaudio_offload.supported=true
 persist.bluetooth.leaudio_offload.disabled=false
 persist.vendor.bluetooth.broadcaster.tx_pwr=10
-persist.vendor.bluetooth.connection_improve=yes
-persist.vendor.bluetooth.leaudio_mode=ums-cg
-persist.vendor.bluetooth.supportopphdt=false
-ro.bluetooth.a2dp_offload.supported=true
-ro.bluetooth.leaudio_offload.supported=true
+persist.bluetooth.a2dp_offload.mtk_coex=true
+persist.bluetooth.a2dp_offload.coex_buf_count=3
 
 # Connectivity
 persist.vendor.connsys.chipid=-1
@@ -149,6 +151,20 @@ ro.vendor.mtk_svp_on_mtee_support=1
 ro.vendor.mtk_wfd_support=1
 ro.vendor.wfd.dummy.enable=0
 ro.vendor.wfd.iframesize.level=0
+
+# Dolby
+vendor.audio.dolby.control.support=true
+vendor.audio.dolby.control.tunning.by.volume.support=false
+ro.vendor.audio.ring.filter=true
+ro.vendor.dolby.dax.version=DAX3_3.12.0.8_r1
+ro.vendor.audio.dolby.dax.version=DAX3_3.12.0.8_r1
+ro.vendor.audio.dolby.dax.support=true
+ro.vendor.audio.device.dbcom=dolby_common
+ro.vendor.audio.device.db=DB_XM
+persist.vendor.audio.auto.scenario=true
+persist.vendor.audio.misoundasc=false
+persist.vendor.audio.hwdap=false
+ro.vendor.audio.soundfx.usb=true
 
 # DRM
 drm.service.enabled=true
