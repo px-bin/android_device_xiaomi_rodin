@@ -645,4 +645,13 @@
 
     <!-- Preferred max refresh rate at AOD & Ambient Display, if supported by the display. -->
     <integer name="config_aodMaxRefreshRate">60</integer>
+    <bool name="config_ignoreRssnrSignalLevel">true</bool>
+
+    <!-- Smart 5G -->
+    <bool name="config_supportSmart5G">true</bool>
+
+    <!-- Whether doze feature is enabled by default in settings -->
+    <bool name="config_doze_enabled_by_default">false</bool>
+
+    <!-- Whether the device supports Smart Pixels -->
 </resources>

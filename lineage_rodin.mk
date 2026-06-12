@@ -14,6 +14,13 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Inherit from rodin device
 $(call inherit-product, device/xiaomi/rodin/device.mk)
 
+#crDroid flags
+IS_PHONE := true
+TARGET_FACE_UNLOCK_SUPPORTED := true
+TARGET_SUPPORTS_QUICK_TAP := true
+TARGET_SUPPORTS_BLUR := true
+TARGET_HAS_UDFPS := true
+
 PRODUCT_DEVICE := rodin
 PRODUCT_NAME := lineage_rodin
 PRODUCT_BRAND := POCO
