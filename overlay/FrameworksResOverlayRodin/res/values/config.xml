@@ -631,7 +631,7 @@
     <bool name="config_dozeAlwaysOnDisplayAvailable">true</bool>
     <bool name="config_dozePickupGestureEnabled">true</bool>
     <bool name="config_dozePulsePickup">false</bool>
-    <bool name="config_dozeSupportsAodWallpaper">false</bool>
+    <bool name="config_dozeSupportsAodWallpaper">true</bool>
     <bool name="config_dozeWakeLockScreenSensorAvailable">false</bool>
 
     <bool name="config_adaptive_sleep_available">true</bool>
