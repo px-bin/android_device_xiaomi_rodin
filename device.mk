@@ -299,7 +299,7 @@ PRODUCT_PACKAGES += \
     SettingsResOverlayRodin \
     SettingsProviderResOverlayRodin \
     SystemUIOverlayRodin \
-    TetheringResOverlayRodin \
+    NcmTetheringOverlay \
     WifiResOverlayRodin
 
 # Parts
