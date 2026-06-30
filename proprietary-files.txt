@@ -1763,6 +1763,20 @@ odm/etc/libnfc-nxp.conf
 odm/etc/libnfc-nxp_RF.conf:vendor/libnfc-nxp_RF.conf
 vendor/lib64/libsn220u_fw.so
 
+# NFC — nqnfc 
+vendor/bin/hw/android.hardware.nqnfc-service.nxp
+vendor/etc/init/nfc-service-nxp.rc:vendor/etc/init/nqnfc-service-nxp.rc
+vendor/etc/libnfc-nxp-pnscr.conf
+vendor/lib64/vendor.nxp.nxpese@1.0.so
+vendor/etc/sn100u_nfcon.pnscr
+vendor/lib64/nfc_nci.nqx.default.hw.so
+vendor/lib64/android.hardware.nfc-V1-ndk.so
+vendor/lib64/android.hardware.nfc@1.0.so
+vendor/lib64/android.hardware.nfc@1.1.so
+vendor/lib64/android.hardware.nfc@1.2.so
+vendor/lib64/vendor.nxp.hardware.nfc@2.0.so
+vendor/lib64/vendor.nxp.nxpnfc_aidl-V1-ndk.so
+
 # NVRAM
 vendor/bin/hw/vendor.mediatek.hardware.nvram-service
 vendor/bin/nvram_daemon
