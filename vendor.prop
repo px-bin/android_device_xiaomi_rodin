@@ -115,6 +115,8 @@ persist.vendor.camera3.pipeline.bufnum.base.rsso=4
 persist.vendor.camera3.pipeline.bufnum.min.high_ram.fdyuv=5
 persist.vendor.camera3.pipeline.bufnum.min.low_ram.fdyuv=5
 persist.vendor.vt.camera.rotate=1
+persist.vendor.vcb.enable=false
+ro.camerax.extensions.enabled=true
 ro.vendor.dynamiccamera.ability_level=2
 ro.vendor.afbc.enable=3
 ro.vendor.hdr10plus.enable=1
@@ -124,6 +126,7 @@ vendor.camera.mdp.cz.enable=1
 vendor.camera.mdp.dre.enable=1
 vendor.mtk.camera.app.fd.video=1
 ro.vendor.camera3.zsl.default=260
+ro.vendor.camera.directfdyuv.support=1
 
 # Charger
 persist.vendor.accelerate.charge=true
